@@ -1,5 +1,14 @@
 package cn.elvea.openlrs.xapi;
 
+import cn.elvea.openlrs.xapi.exception.UnrecognizedInteractionType;
+import lombok.Getter;
+
+/**
+ * InteractionType
+ *
+ * @author elvea
+ */
+@Getter
 public enum InteractionType {
     /**
      *
@@ -42,9 +51,19 @@ public enum InteractionType {
      */
     OTHER("other");
 
-    private InteractionType(final String text) {
+    private final String text;
+
+    InteractionType(final String text) {
         this.text = text;
     }
 
-    private final String text;
+    public static InteractionType getByString(String type) throws UnrecognizedInteractionType {
+        for (InteractionType it : InteractionType.values()) {
+            if (type.equals(it.toString())) {
+                return it;
+            }
+        }
+        throw new UnrecognizedInteractionType(type);
+    }
+
 }

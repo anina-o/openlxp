@@ -1,8 +1,11 @@
 package cn.elvea.openlrs.xapi;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import static cn.elvea.openlrs.xapi.XApiConstants.OBJECT_TYPE_AGENT;
 
 /**
  * Agent
@@ -16,25 +19,10 @@ public class Agent extends Actor {
     /**
      *
      */
-    private final String objectType = "Agent";
-    /**
-     *
-     */
-    private String name;
-    /**
-     *
-     */
-    private String mbox;
-    /**
-     *
-     */
-    private String mboxSHA1Sum;
-    /**
-     *
-     */
-    private String openID;
-    /**
-     *
-     */
-    private AgentAccount account;
+    private final String objectType = OBJECT_TYPE_AGENT;
+
+    public Agent(JsonNode jsonNode) {
+        super(jsonNode);
+    }
+
 }
