@@ -1,3 +1,3 @@
-# openlrs
+# lxp
 
-Open LRS
+Learning Experience Platform

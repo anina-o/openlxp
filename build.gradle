@@ -27,8 +27,6 @@ allprojects {
         guavaVersion = "27.1-jre"
     }
 
-    apply plugin: 'idea'
-    apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
 
     dependencyManagement {
@@ -39,6 +37,8 @@ allprojects {
 }
 
 project("webapp") {
+    apply plugin: 'idea'
+    apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
 
     group = 'cn.elvea.openlrs'
