@@ -1,0 +1,10 @@
+{
+    "rulesDirectory" : [
+        "node_modules/tslint-eslint-rules/dist/rules"
+    ],
+    "rules" : {
+        "promise-function-async" : false,
+        "no-floating-promises" : false,
+        "await-promise" : false
+    }
+}

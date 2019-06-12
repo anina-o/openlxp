@@ -1,0 +1,40 @@
+{
+    "compilerOptions" : {
+        "allowSyntheticDefaultImports" : true,
+        "noFallthroughCasesInSwitch" : true,
+        "noUnusedParameters" : true,
+        "noImplicitReturns" : true,
+        "moduleResolution" : "node",
+        "esModuleInterop" : true,
+        "noUnusedLocals" : true,
+        "importHelpers" : true,
+        "noImplicitAny" : true,
+        "target" : "esnext",
+        "module" : "esnext",
+        "sourceMap" : true,
+        "strict" : true,
+        "jsx" : "react",
+        "baseUrl" : ".",
+        "paths" : {
+            "@common/*" : [
+                "../common/src/*"
+            ],
+            "@mobile/*" : [
+                "../mobile/src/*"
+            ],
+            "@admin/*" : [
+                "../admin/src/*"
+            ],
+            "@/*" : [
+                "./src/*"
+            ]
+        }
+    },
+    "include" : [
+        "src/**/*"
+    ],
+    "exclude" : [
+        "node_modules",
+        "dist"
+    ]
+}
