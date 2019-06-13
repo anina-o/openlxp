@@ -65,16 +65,17 @@ module.exports = {
             }]
         }, {
             test : /\.(ttf|eot)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-            loader :
-                'file-loader'
+            loader : 'file-loader'
         }, {
             test : /\.(jpe?g|png|gif|svg)$/i,
-            loader :
-                'file-loader'
+            loader : 'file-loader'
         }]
     },
     resolve : {
         extensions : [".ts", ".tsx", ".js", ".jsx", ".json"],
+        alias : {
+            'react-dom' : '@hot-loader/react-dom'
+        },
         plugins : [new TSConfigPathsPlugin.TsconfigPathsPlugin({})]
     },
     plugins : [
@@ -87,7 +88,7 @@ module.exports = {
         }),
         new HtmlWebpackPlugin({
             filename : 'index.html',
-            template : path.resolve(__dirname, './src/index.html')
+            template : path.resolve(__dirname, './public/index.html')
         }),
         new WebpackBundleAnalyzer.BundleAnalyzerPlugin(),
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),

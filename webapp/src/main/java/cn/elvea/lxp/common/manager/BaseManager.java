@@ -1,7 +1,7 @@
 package cn.elvea.lxp.common.manager;
 
 /**
- * AuthorityDto
+ * BaseManager
  *
  * @author elvea
  */

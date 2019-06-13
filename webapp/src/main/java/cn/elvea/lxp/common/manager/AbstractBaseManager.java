@@ -1,7 +1,7 @@
 package cn.elvea.lxp.common.manager;
 
 /**
- * AbstractBaseService
+ * AbstractBaseManager
  *
  * @author elvea
  */

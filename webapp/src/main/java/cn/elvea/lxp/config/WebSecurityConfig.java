@@ -13,8 +13,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    /**
+     * @see WebSecurityConfigurerAdapter#configure(HttpSecurity)
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests().anyRequest().permitAll();
     }
+
 }

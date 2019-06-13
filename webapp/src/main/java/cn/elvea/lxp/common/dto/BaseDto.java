@@ -3,7 +3,7 @@ package cn.elvea.lxp.common.dto;
 import java.io.Serializable;
 
 /**
- * BaseEntity
+ * BaseDto
  *
  * @author elvea
  */

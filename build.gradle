@@ -25,6 +25,17 @@ allprojects {
 
     ext {
         guavaVersion = "27.1-jre"
+
+        // Apache Commons
+        commonsIoVersion = '2.6'
+        commonsLangVersion = '3.9'
+        commonsTextVersion = '1.6'
+        commonsCodecVersion = '1.12'
+        commonsFileuploadVersion = '1.4'
+        commonsBeanutilsVersion = '1.9.3'
+        commonsCollectionsVersion = '4.2'
+        commonsCompressVersion = '1.18'
+        commonsMailVersion = '1.5'
     }
 
     apply plugin: 'io.spring.dependency-management'
@@ -52,6 +63,11 @@ project("webapp") {
     configurations {
         compile.exclude module: 'spring-boot-starter-logging'
         compile.exclude group: 'junit'
+
+        developmentOnly
+        runtimeClasspath {
+            extendsFrom developmentOnly
+        }
     }
 
     dependencies {
@@ -61,15 +77,21 @@ project("webapp") {
         implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation 'org.springframework.boot:spring-boot-starter-security'
-        // 3rd party
+        // lombok
         implementation 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
         testImplementation 'org.projectlombok:lombok'
         testAnnotationProcessor 'org.projectlombok:lombok'
+        // commons
+        implementation group: 'org.apache.commons', name: 'commons-text', version: commonsTextVersion
+        implementation group: 'org.apache.commons', name: 'commons-lang3', version: commonsLangVersion
+        implementation group: 'org.apache.commons', name: 'commons-collections4', version: commonsCollectionsVersion
         // 3rd party
         implementation 'joda-time:joda-time'
         implementation 'mysql:mysql-connector-java'
         implementation group: 'com.google.guava', name: 'guava', version: guavaVersion
+        // development 
+        developmentOnly("org.springframework.boot:spring-boot-devtools")
         // test
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         testImplementation 'org.springframework.security:spring-security-test'

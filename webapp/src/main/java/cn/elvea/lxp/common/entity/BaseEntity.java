@@ -16,6 +16,11 @@ import java.io.Serializable;
 @Setter
 @MappedSuperclass
 public class BaseEntity implements Serializable {
+
+    /**
+     * ID
+     */
     @Id
     private Long id;
+
 }
