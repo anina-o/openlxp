@@ -11,4 +11,5 @@ public interface BaseManager<T, ID> {
 
     T findById(ID id);
 
+    void delete(T entity);
 }

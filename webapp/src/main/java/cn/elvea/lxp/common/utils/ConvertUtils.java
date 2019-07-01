@@ -4,9 +4,12 @@ import cn.elvea.lxp.common.Constants;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.support.DefaultConversionService;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,6 +18,7 @@ import java.util.List;
  *
  * @author elvea
  */
+@Slf4j
 public class ConvertUtils {
 
     /**
@@ -113,6 +117,41 @@ public class ConvertUtils {
             }
         }
         return str;
+    }
+
+    public static <S, T> void copyProperties(S source, T target, String... ignoreProperties) {
+        BeanUtils.copyProperties(source, target, ignoreProperties);
+    }
+
+    public static <S, T> T sourceToTarget(S source, Class<T> targetClass, String... ignoreProperties) {
+        if (source == null) {
+            return null;
+        }
+        T targetObject = null;
+        try {
+            targetObject = BeanUtils.instantiateClass(targetClass);
+            copyProperties(source, targetObject, ignoreProperties);
+        } catch (Exception e) {
+            log.error("convert error ", e);
+        }
+        return targetObject;
+    }
+
+    public static <S, T> List<T> sourceToTarget(Collection<S> sourceList, Class<T> targetClass) {
+        if (sourceList == null) {
+            return null;
+        }
+        List<T> targetList = Lists.newArrayList();
+        try {
+            for (Object source : sourceList) {
+                T targetObject = BeanUtils.instantiateClass(targetClass);
+                BeanUtils.copyProperties(source, targetObject);
+                targetList.add(targetObject);
+            }
+        } catch (Exception e) {
+            log.error("convert error ", e);
+        }
+        return targetList;
     }
 
 }

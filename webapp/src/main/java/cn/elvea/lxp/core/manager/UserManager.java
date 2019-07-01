@@ -9,4 +9,13 @@ import cn.elvea.lxp.core.entity.UserEntity;
  * @author elvea
  */
 public interface UserManager extends BaseManager<UserEntity, Long> {
+
+    /**
+     * 根据用户名查询用户实体
+     *
+     * @param username 用户名
+     * @return 用户
+     */
+    UserEntity findByUsername(String username);
+
 }

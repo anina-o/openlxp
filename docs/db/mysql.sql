@@ -15,6 +15,7 @@ CREATE TABLE `sys_user` (
     `fullname`    VARCHAR(150) COMMENT '全名',
     `email`       VARCHAR(255) COMMENT '邮箱',
     `mobile`      VARCHAR(255) COMMENT '手机',
+    `password`    VARCHAR(255) COMMENT '密码',
     `status`      TINYINT(1) UNSIGNED COMMENT '用户状态' NOT NULL DEFAULT 0,
     `active`      TINYINT(1) UNSIGNED COMMENT '启用状态' NOT NULL DEFAULT 0,
     `created_at`  DATETIME COMMENT '创建时间',
@@ -29,10 +30,16 @@ ALTER TABLE `sys_user` COMMENT '用户表';
 
 /* 权限表 */
 CREATE TABLE `sys_role` (
-    `id`     BIGINT UNSIGNED COMMENT 'ID'       NOT NULL,
-    `code`   VARCHAR(150) COMMENT '编号'          NOT NULL,
-    `label`  VARCHAR(150) COMMENT '文本'          NOT NULL,
-    `active` TINYINT(1) UNSIGNED COMMENT '启用状态' NOT NULL DEFAULT 0,
+    `id`          BIGINT UNSIGNED COMMENT 'ID'       NOT NULL,
+    `code`        VARCHAR(150) COMMENT '编号'          NOT NULL,
+    `label`       VARCHAR(150) COMMENT '文本'          NOT NULL,
+    `active`      TINYINT(1) UNSIGNED COMMENT '启用状态' NOT NULL DEFAULT 0,
+    `created_at`  DATETIME COMMENT '创建时间',
+    `created_by`  BIGINT UNSIGNED COMMENT '创建人',
+    `modified_at` DATETIME COMMENT '修改时间',
+    `modified_by` BIGINT UNSIGNED COMMENT '修改人',
+    `deleted_at`  DATETIME COMMENT '删除人',
+    `deleted_by`  BIGINT UNSIGNED COMMENT '删除时间',
     CONSTRAINT `pk_sys_authority_id` PRIMARY KEY (`id`)
 );
 ALTER TABLE `sys_role` COMMENT '角色表';
@@ -200,3 +207,17 @@ CREATE TABLE `sys_resource_attendance_history` (
     CONSTRAINT `pk_sys_resource_attendance_history_id` PRIMARY KEY (`id`)
 );
 ALTER TABLE `sys_resource_attendance_history` COMMENT '资源学习历史记录表';
+
+/* 系统角色 */
+INSERT INTO `sys_role` (`id`, `code`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (1, 'sysadmin', 'role_system_administrator', 1, now(), now());
+
+INSERT INTO `sys_role` (`id`, `code`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (2, 'admin', 'role_administrator', 1, now(), now());
+
+INSERT INTO `sys_role` (`id`, `code`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (3, 'user', 'role_user', 1, now(), now());
+
+/* 系统管理员 */
+INSERT INTO `sys_user` (`id`, `username`, `nickname`, `status`, `active`, `password`, `created_at`, `created_by`, `modified_at`, `modified_by`)
+VALUES (1, 'admin', 'Administrator', 1, 1, '$2a$10$xq4enPCLvDBgiJX6rczJK.LgwaLyLtbgqgaC8Nj0kqsVdHZ6KJEg.', now(), 1, now(), 1);
