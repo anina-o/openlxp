@@ -9,19 +9,20 @@ USE `lxp`;
 
 /* 用户表 */
 CREATE TABLE `sys_user` (
-    `id`         BIGINT UNSIGNED COMMENT 'ID'       NOT NULL,
-    `username`   VARCHAR(150) COMMENT '编号'          NOT NULL,
-    `nickname`   VARCHAR(150) COMMENT '昵称'          NOT NULL,
-    `fullname`   VARCHAR(150) COMMENT '全名'          NOT NULL,
-    `email`      VARCHAR(255) COMMENT '邮箱'          NOT NULL,
-    `status`     TINYINT(1) UNSIGNED COMMENT '用户状态' NOT NULL DEFAULT 0,
-    `active`     TINYINT(1) UNSIGNED COMMENT '启用状态' NOT NULL DEFAULT 0,
-    `created_at` DATETIME COMMENT '创建时间',
-    `created_by` BIGINT UNSIGNED COMMENT '创建人',
-    `updated_at` DATETIME COMMENT '修改时间',
-    `updated_by` BIGINT UNSIGNED COMMENT '修改人',
-    `deleted_at` DATETIME COMMENT '删除人',
-    `deleted_by` BIGINT UNSIGNED COMMENT '删除时间',
+    `id`          BIGINT UNSIGNED COMMENT 'ID'       NOT NULL,
+    `username`    VARCHAR(150) COMMENT '用户名',
+    `nickname`    VARCHAR(150) COMMENT '昵称',
+    `fullname`    VARCHAR(150) COMMENT '全名',
+    `email`       VARCHAR(255) COMMENT '邮箱',
+    `mobile`      VARCHAR(255) COMMENT '手机',
+    `status`      TINYINT(1) UNSIGNED COMMENT '用户状态' NOT NULL DEFAULT 0,
+    `active`      TINYINT(1) UNSIGNED COMMENT '启用状态' NOT NULL DEFAULT 0,
+    `created_at`  DATETIME COMMENT '创建时间',
+    `created_by`  BIGINT UNSIGNED COMMENT '创建人',
+    `modified_at` DATETIME COMMENT '修改时间',
+    `modified_by` BIGINT UNSIGNED COMMENT '修改人',
+    `deleted_at`  DATETIME COMMENT '删除人',
+    `deleted_by`  BIGINT UNSIGNED COMMENT '删除时间',
     CONSTRAINT `pk_sys_user_id` PRIMARY KEY (`id`)
 );
 ALTER TABLE `sys_user` COMMENT '用户表';

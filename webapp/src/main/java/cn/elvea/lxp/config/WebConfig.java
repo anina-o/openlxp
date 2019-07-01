@@ -3,6 +3,7 @@ package cn.elvea.lxp.config;
 import cn.elvea.lxp.common.web.jackson.CustomJsonModule;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -16,6 +17,7 @@ import java.util.List;
  * @author elvea
  */
 @Configuration
+@EnableSpringDataWebSupport
 public class WebConfig implements WebMvcConfigurer {
 
     /**

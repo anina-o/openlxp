@@ -5,5 +5,10 @@ package cn.elvea.lxp.common.manager;
  *
  * @author elvea
  */
-public interface BaseManager {
+public interface BaseManager<T, ID> {
+
+    T save(T entity);
+
+    T findById(ID id);
+
 }

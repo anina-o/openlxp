@@ -6,11 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * 用户组
+ * 角色
  *
  * @author elvea
  */
 @Entity
-@Table(name = "sys_user_group")
-public class UserGroup extends BaseEntity {
+@Table(name = "sys_role")
+public class RoleEntity extends BaseEntity {
 }
