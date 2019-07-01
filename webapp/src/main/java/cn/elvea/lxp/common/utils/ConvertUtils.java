@@ -1,6 +1,6 @@
 package cn.elvea.lxp.common.utils;
 
-import cn.elvea.lxp.core.Constants;
+import cn.elvea.lxp.common.Constants;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;

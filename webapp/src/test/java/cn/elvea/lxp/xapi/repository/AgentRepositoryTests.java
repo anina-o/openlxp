@@ -30,7 +30,7 @@ public class AgentRepositoryTests extends BaseTests {
     @Test
     public void testGroupCurd() {
         Group group = new Group();
-        group.setName("Test Group");
+        group.setName("Test UserGroup");
         AgentEntity agentEntity = new AgentEntity();
         BeanUtils.copyProperties(group, agentEntity);
         this.agentRepository.save(agentEntity);

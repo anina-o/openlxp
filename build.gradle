@@ -10,7 +10,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.5.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.6.RELEASE")
     }
 }
 
@@ -24,7 +24,7 @@ allprojects {
     }
 
     ext {
-        guavaVersion = "27.1-jre"
+        guavaVersion = "28.0-jre"
 
         // Apache Commons
         commonsIoVersion = '2.6'
@@ -52,7 +52,7 @@ project("webapp") {
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
 
-    group = 'cn.elvea.openlrs'
+    group = 'cn.elvea.lxp'
     version = '1.0.0'
     sourceCompatibility = '11'
 

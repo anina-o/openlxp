@@ -1,11 +1,11 @@
 /*
 建库
 */
-DROP DATABASE IF EXISTS `lrs`;
+DROP DATABASE IF EXISTS `lxp`;
 
-CREATE DATABASE IF NOT EXISTS `lrs` DEFAULT CHARACTER SET `utf8mb4` DEFAULT COLLATE `utf8mb4_unicode_ci`;
+CREATE DATABASE IF NOT EXISTS `lxp` DEFAULT CHARACTER SET `utf8mb4` DEFAULT COLLATE `utf8mb4_unicode_ci`;
 
-USE `lrs`;
+USE `lxp`;
 
 /* 用户表 */
 CREATE TABLE `sys_user` (
@@ -27,25 +27,25 @@ CREATE TABLE `sys_user` (
 ALTER TABLE `sys_user` COMMENT '用户表';
 
 /* 权限表 */
-CREATE TABLE `sys_authority` (
+CREATE TABLE `sys_role` (
     `id`     BIGINT UNSIGNED COMMENT 'ID'       NOT NULL,
     `code`   VARCHAR(150) COMMENT '编号'          NOT NULL,
     `label`  VARCHAR(150) COMMENT '文本'          NOT NULL,
     `active` TINYINT(1) UNSIGNED COMMENT '启用状态' NOT NULL DEFAULT 0,
     CONSTRAINT `pk_sys_authority_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_authority` COMMENT '权限表';
+ALTER TABLE `sys_role` COMMENT '角色表';
 
 /* 用户权限关联表 */
-CREATE TABLE `sys_user_authority` (
-    `id`           BIGINT UNSIGNED COMMENT 'ID'   NOT NULL,
-    `user_id`      BIGINT UNSIGNED COMMENT '用户ID' NOT NULL,
-    `authority_id` BIGINT UNSIGNED COMMENT '权限ID' NOT NULL,
-    `created_at`   DATETIME COMMENT '创建时间',
-    `created_by`   BIGINT UNSIGNED COMMENT '创建人',
+CREATE TABLE `sys_user_role` (
+    `id`         BIGINT UNSIGNED COMMENT 'ID'   NOT NULL,
+    `user_id`    BIGINT UNSIGNED COMMENT '用户ID' NOT NULL,
+    `role_id`    BIGINT UNSIGNED COMMENT '角色ID' NOT NULL,
+    `created_at` DATETIME COMMENT '创建时间',
+    `created_by` BIGINT UNSIGNED COMMENT '创建人',
     CONSTRAINT `pk_sys_user_authority_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_user_authority` COMMENT '用户权限关联表';
+ALTER TABLE `sys_user_role` COMMENT '用户权限关联表';
 
 /* 附件文件表 */
 CREATE TABLE `sys_attachment_file` (
@@ -121,7 +121,7 @@ CREATE TABLE `sys_course_enrollment` (
 ALTER TABLE `sys_course_enrollment` COMMENT '课程报名记录表';
 
 /* 资源表 */
-CREATE TABLE `sys_res` (
+CREATE TABLE `sys_resource` (
     `id`                        BIGINT UNSIGNED COMMENT 'ID'       NOT NULL,
     `type`                      VARCHAR(100) COMMENT '类型'          NOT NULL,
     `code`                      VARCHAR(150) COMMENT '编号'          NOT NULL,
@@ -152,12 +152,12 @@ CREATE TABLE `sys_res` (
     `updated_by`                BIGINT UNSIGNED COMMENT '修改人',
     `deleted_at`                DATETIME COMMENT '删除人',
     `deleted_by`                BIGINT UNSIGNED COMMENT '删除时间',
-    CONSTRAINT `pk_sys_res_id` PRIMARY KEY (`id`)
+    CONSTRAINT `pk_sys_resource_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_res` COMMENT '资源表';
+ALTER TABLE `sys_resource` COMMENT '资源表';
 
 /* 资源学习记录表 */
-CREATE TABLE `sys_res_attendance` (
+CREATE TABLE `sys_resource_attendance` (
     `id`                   BIGINT UNSIGNED COMMENT 'ID'   NOT NULL,
     `user_id`              BIGINT UNSIGNED COMMENT '用户ID' NOT NULL,
     `resource_id`          BIGINT UNSIGNED COMMENT '资源ID' NOT NULL,
@@ -180,12 +180,12 @@ CREATE TABLE `sys_res_attendance` (
     `updated_by`           BIGINT UNSIGNED COMMENT '修改人',
     `deleted_at`           DATETIME COMMENT '删除人',
     `deleted_by`           BIGINT UNSIGNED COMMENT '删除时间',
-    CONSTRAINT `pk_sys_res_attendance_id` PRIMARY KEY (`id`)
+    CONSTRAINT `pk_sys_resource_attendance_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_res_attendance` COMMENT '资源学习记录表';
+ALTER TABLE `sys_resource_attendance` COMMENT '资源学习记录表';
 
 /* 资源学习历史记录表 */
-CREATE TABLE `sys_res_att_history` (
+CREATE TABLE `sys_resource_attendance_history` (
     `id`              BIGINT UNSIGNED COMMENT 'ID'   NOT NULL,
     `user_id`         BIGINT UNSIGNED COMMENT '用户ID' NOT NULL,
     `resource_id`     BIGINT UNSIGNED COMMENT '资源ID' NOT NULL,
@@ -196,6 +196,6 @@ CREATE TABLE `sys_res_att_history` (
     `json_data`       LONGTEXT COMMENT '附加数据',
     `created_at`      DATETIME COMMENT '创建时间',
     `created_by`      BIGINT COMMENT '创建人',
-    CONSTRAINT `pk_sys_res_att_history_id` PRIMARY KEY (`id`)
+    CONSTRAINT `pk_sys_resource_attendance_history_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_res_att_history` COMMENT '资源学习历史记录表';
+ALTER TABLE `sys_resource_attendance_history` COMMENT '资源学习历史记录表';
