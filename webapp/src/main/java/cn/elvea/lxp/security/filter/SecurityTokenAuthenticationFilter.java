@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author elvea
  */
-public class SecurityAuthenticationFilter extends SecurityBaseAuthenticationFilter {
+public class SecurityTokenAuthenticationFilter extends SecurityBaseAuthenticationFilter {
 
     /**
      * 只有登录认证请求才需要做登录认证
      */
     @Override
     protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        return SecurityUtils.isApiLogin(request);
+        return SecurityUtils.isApiRequest(request);
     }
 
 }

@@ -13,6 +13,8 @@ import java.io.IOException;
 
 /**
  * 处理登录失败
+ *
+ * @author elvea
  */
 @Slf4j
 @Service
@@ -24,7 +26,9 @@ public class SecurityAuthenticationFailureHandler extends SimpleUrlAuthenticatio
         if (SecurityUtils.isApiRequest(request)) {
             WebUtils.renderJson(response, response);
         } else if (SecurityUtils.isXApiRequest(request)) {
-
+            WebUtils.renderJson(response, response);
+        } else {
+            super.onAuthenticationFailure(request, response, exception);
         }
     }
 

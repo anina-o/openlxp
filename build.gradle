@@ -25,6 +25,7 @@ allprojects {
 
     ext {
         guavaVersion = "28.0-jre"
+        nimbusJoseJwtVersion = "7.3"
 
         // Apache Commons
         commonsIoVersion = '2.6'
@@ -92,6 +93,7 @@ project("webapp") {
         implementation 'joda-time:joda-time'
         implementation 'mysql:mysql-connector-java'
         implementation group: 'com.google.guava', name: 'guava', version: guavaVersion
+        implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: nimbusJoseJwtVersion
         // development 
         developmentOnly("org.springframework.boot:spring-boot-devtools")
         // test

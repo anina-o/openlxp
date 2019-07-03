@@ -40,6 +40,7 @@ public class WebConfig implements WebMvcConfigurer {
                 MappingJackson2HttpMessageConverter jsonMessageConverter = (MappingJackson2HttpMessageConverter) converter;
                 ObjectMapper objectMapper = jsonMessageConverter.getObjectMapper();
                 objectMapper.registerModule(new CustomJsonModule());
+//                objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
                 break;
             }
         }

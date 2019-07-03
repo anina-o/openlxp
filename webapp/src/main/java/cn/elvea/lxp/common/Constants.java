@@ -1,5 +1,7 @@
 package cn.elvea.lxp.common;
 
+import cn.elvea.lxp.core.type.LangType;
+
 import java.util.Locale;
 
 /**
@@ -22,6 +24,6 @@ public class Constants {
     /**
      * 默认区域
      */
-    public static final Locale DEFAULT_LOCALE = Locale.SIMPLIFIED_CHINESE;
+    public static final Locale DEFAULT_LOCALE = LangType.getDefaultLangType().getLocale();
 
 }

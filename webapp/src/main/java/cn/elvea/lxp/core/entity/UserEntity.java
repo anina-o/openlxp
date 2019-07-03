@@ -30,6 +30,10 @@ public class UserEntity extends BaseEntity {
      */
     private String username;
     /**
+     * 密码
+     */
+    private String password;
+    /**
      * 昵称
      */
     private String nickname;
@@ -52,7 +56,7 @@ public class UserEntity extends BaseEntity {
     /**
      * 启用状态
      */
-    @Column()
+    @Column
     private Boolean active;
     /**
      * 创建时间

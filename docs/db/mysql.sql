@@ -28,11 +28,74 @@ CREATE TABLE `sys_user` (
 );
 ALTER TABLE `sys_user` COMMENT '用户表';
 
+/* 用户组表 */
+CREATE TABLE `sys_user_group` (
+    `id`          BIGINT UNSIGNED COMMENT 'ID'       NOT NULL,
+    `code`        VARCHAR(150) COMMENT '编号',
+    `title`       VARCHAR(150) COMMENT '标题',
+    `active`      TINYINT(1) UNSIGNED COMMENT '启用状态' NOT NULL DEFAULT 0,
+    `created_at`  DATETIME COMMENT '创建时间',
+    `created_by`  BIGINT UNSIGNED COMMENT '创建人',
+    `modified_at` DATETIME COMMENT '修改时间',
+    `modified_by` BIGINT UNSIGNED COMMENT '修改人',
+    `deleted_at`  DATETIME COMMENT '删除人',
+    `deleted_by`  BIGINT UNSIGNED COMMENT '删除时间',
+    CONSTRAINT `pk_sys_user_group_id` PRIMARY KEY (`id`)
+);
+ALTER TABLE `sys_user_group` COMMENT '用户组表';
+
+/* 用户登录会话记录 */
+CREATE TABLE `sys_user_session` (
+    `id`                   BIGINT UNSIGNED COMMENT 'ID'   NOT NULL,
+    `user_id`              BIGINT UNSIGNED COMMENT '用户ID' NOT NULL,
+    `session_id`           VARCHAR(150) COMMENT '会话ID',
+    `username`             VARCHAR(150) COMMENT '用户名',
+    `host`                 VARCHAR(255) COMMENT '登录主机',
+    `device`               VARCHAR(100) COMMENT '登录设备',
+    `platform`             VARCHAR(100) COMMENT '登录平台',
+    `client_version`       VARCHAR(100) COMMENT '客户端版本',
+    `start_datetime`       DATETIME COMMENT '会话开始时间',
+    `last_access_datetime` DATETIME COMMENT '最近访问时间',
+    `end_datetime`         DATETIME COMMENT '会话结束时间',
+    `start_year`           INT COMMENT '会话开始年',
+    `start_month`          INT COMMENT '会话开始月',
+    `start_day`            INT COMMENT '会话开始天',
+    `start_hour`           INT COMMENT '会话开始小时',
+    `start_minute`         INT COMMENT '会话开始分钟',
+    CONSTRAINT `pk_sys_user_session_id` PRIMARY KEY (`id`)
+);
+ALTER TABLE `sys_user_session` COMMENT '用户会话表';
+
+CREATE INDEX `ix_sys_user_session_user_id` ON `sys_user_session`(`user_id`);
+
+CREATE INDEX `ix_sys_user_session_session_id` ON `sys_user_session`(`session_id`);
+
+CREATE INDEX `ix_sys_user_session_start_id` ON `sys_user_session`(`start_year`, `start_month`, `start_day`, `start_hour`, `start_minute`);
+
+/* 用户会话凭证表 */
+CREATE TABLE `sys_user_token` (
+    `id`            BIGINT UNSIGNED COMMENT 'ID'   NOT NULL,
+    `user_id`       BIGINT UNSIGNED COMMENT '用户ID' NOT NULL,
+    `session_id`    VARCHAR(150) COMMENT '会话ID',
+    `username`      VARCHAR(150) COMMENT '用户名',
+    `token`         VARCHAR(255) COMMENT 'Token',
+    `refresh_token` VARCHAR(255) COMMENT 'Refresh Token',
+    `created_at`    DATETIME COMMENT '创建时间',
+    `created_by`    BIGINT COMMENT '创建人',
+    CONSTRAINT `pk_sys_user_token_id` PRIMARY KEY (`id`)
+);
+ALTER TABLE `sys_user_token` COMMENT '用户会话凭证表';
+
+CREATE INDEX `ix_sys_user_token_user_id` ON `sys_user_token`(`user_id`);
+
+CREATE INDEX `ix_sys_user_token_session_id` ON `sys_user_token`(`session_id`);
+
 /* 权限表 */
 CREATE TABLE `sys_role` (
     `id`          BIGINT UNSIGNED COMMENT 'ID'       NOT NULL,
-    `code`        VARCHAR(150) COMMENT '编号'          NOT NULL,
-    `label`       VARCHAR(150) COMMENT '文本'          NOT NULL,
+    `code`        VARCHAR(150) COMMENT '编号',
+    `label`       VARCHAR(150) COMMENT '文本',
+    `title`       VARCHAR(150) COMMENT '标题',
     `active`      TINYINT(1) UNSIGNED COMMENT '启用状态' NOT NULL DEFAULT 0,
     `created_at`  DATETIME COMMENT '创建时间',
     `created_by`  BIGINT UNSIGNED COMMENT '创建人',

@@ -1,6 +1,5 @@
 package cn.elvea.lxp.security;
 
-import cn.elvea.lxp.security.service.SecurityUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,7 +19,7 @@ import org.springframework.util.Assert;
 public class SecurityAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 
     @Autowired
-    private SecurityUserService securityUserService;
+    private SecurityUserDetailsService securityUserDetailsService;
 
     public SecurityAuthenticationProvider() {
         // 登录成功后，把登录凭证强制转为String，也就是用户名
@@ -29,7 +28,7 @@ public class SecurityAuthenticationProvider extends AbstractUserDetailsAuthentic
 
     @Override
     protected void doAfterPropertiesSet() {
-        Assert.notNull(this.securityUserService, "A UserDetailsService must be set");
+        Assert.notNull(this.securityUserDetailsService, "A UserDetailsService must be set");
     }
 
     @Override
@@ -42,7 +41,7 @@ public class SecurityAuthenticationProvider extends AbstractUserDetailsAuthentic
             throws AuthenticationException {
         UserDetails loadedUser;
         try {
-            loadedUser = securityUserService.loadUserByUsername(username);
+            loadedUser = securityUserDetailsService.loadUserByUsername(username);
         } catch (UsernameNotFoundException notFound) {
             throw notFound;
         } catch (Exception repositoryProblem) {
@@ -53,4 +52,5 @@ public class SecurityAuthenticationProvider extends AbstractUserDetailsAuthentic
         }
         return loadedUser;
     }
+
 }
