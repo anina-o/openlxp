@@ -32,8 +32,10 @@ public class SecurityUserDetailsService implements UserDetailsService {
         }
         return new SecurityUserDetails(
                 userDto.getUsername(),
+                userDto.getNickname(),
                 userDto.getPassword(),
-                true, true, true, true, Sets.newHashSet()
+                true,
+                Sets.newHashSet()
         );
     }
 

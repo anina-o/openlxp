@@ -22,8 +22,6 @@ public class SecurityAuthenticationProvider extends AbstractUserDetailsAuthentic
     private SecurityUserDetailsService securityUserDetailsService;
 
     public SecurityAuthenticationProvider() {
-        // 登录成功后，把登录凭证强制转为String，也就是用户名
-        this.setForcePrincipalAsString(true);
     }
 
     @Override

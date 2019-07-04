@@ -61,6 +61,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static class ApiSecurityConfigAdapter extends WebSecurityBaseConfig {
 
         @Autowired
+        private SecurityAuthenticationDetailsSource securityAuthenticationDetailsSource;
+
+        @Autowired
         private SecurityAuthenticationFailureHandler authenticationFailureHandler;
 
         @Autowired
@@ -73,6 +76,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             authenticationFilter.setAuthenticationManager(authenticationManager());
             authenticationFilter.setAuthenticationFailureHandler(authenticationFailureHandler);
             authenticationFilter.setAuthenticationSuccessHandler(authenticationSuccessHandler);
+            authenticationFilter.setAuthenticationDetailsSource(securityAuthenticationDetailsSource);
             return authenticationFilter;
         }
 

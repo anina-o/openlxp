@@ -94,10 +94,10 @@ public class SecurityUtils {
      */
     public static SecurityUserDetails getLoginUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.getDetails() != null) {
-            Object details = authentication.getDetails();
-            if (details instanceof SecurityUserDetails) {
-                return (SecurityUserDetails) details;
+        if (authentication != null && authentication.getPrincipal() != null) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof SecurityUserDetails) {
+                return (SecurityUserDetails) principal;
             }
         }
         return null;
@@ -133,7 +133,7 @@ public class SecurityUtils {
     /**
      * 公共秘钥
      */
-    private static final byte[] SECRET = "elveahuang".getBytes();
+    private static final byte[] SECRET = "LXP2019".getBytes();
 
     /**
      * 生成JWT

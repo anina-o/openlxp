@@ -10,14 +10,14 @@ public class SecurityConstants {
     /**
      * 登录认证请求
      */
-    static final String LOGIN_URL = "/api/login";
+    public static final String LOGIN_URL = "/api/login";
     /**
      * 接口请求
      */
-    static final String API_REQUEST_URL = "/api/**";
+    public static final String API_REQUEST_URL = "/api/**";
     /**
      * xAPI请求
      */
-    static final String XAPI_REQUEST_URL = "/xAPI/**";
+    public static final String XAPI_REQUEST_URL = "/xAPI/**";
 
 }
