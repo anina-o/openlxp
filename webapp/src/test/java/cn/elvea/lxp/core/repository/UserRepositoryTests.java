@@ -21,6 +21,9 @@ public class UserRepositoryTests extends BaseTests {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    RoleRepository roleRepository;
+
     @Test
     public void baseCrudTests() {
         String randomUsername = String.valueOf(idWorker.nextId());

@@ -1,6 +1,6 @@
 package cn.elvea.lxp.core.entity;
 
-import cn.elvea.lxp.common.entity.BaseEntity;
+import cn.elvea.lxp.common.model.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

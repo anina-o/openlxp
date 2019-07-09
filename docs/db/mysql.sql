@@ -91,15 +91,15 @@ CREATE TABLE `sys_role` (
 ALTER TABLE `sys_role` COMMENT '角色表';
 
 /* 用户权限关联表 */
-CREATE TABLE `sys_user_role` (
+CREATE TABLE `sys_user_role_relation` (
     `id`         BIGINT UNSIGNED COMMENT 'ID'   NOT NULL,
     `user_id`    BIGINT UNSIGNED COMMENT '用户ID' NOT NULL,
     `role_id`    BIGINT UNSIGNED COMMENT '角色ID' NOT NULL,
     `created_at` DATETIME COMMENT '创建时间',
     `created_by` BIGINT UNSIGNED COMMENT '创建人',
-    CONSTRAINT `pk_sys_user_authority_id` PRIMARY KEY (`id`)
+    CONSTRAINT `pk_sys_user_role_relation_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_user_role` COMMENT '用户权限关联表';
+ALTER TABLE `sys_user_role_relation` COMMENT '用户角色关联表';
 
 /* 附件文件表 */
 CREATE TABLE `sys_attachment_file` (

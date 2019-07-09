@@ -1,6 +1,6 @@
 package cn.elvea.lxp.resource.entity;
 
-import cn.elvea.lxp.common.entity.BaseEntity;
+import cn.elvea.lxp.common.model.BaseEntity;
 
 /**
  * Resource

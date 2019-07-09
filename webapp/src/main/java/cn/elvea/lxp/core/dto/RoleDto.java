@@ -13,4 +13,15 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class RoleDto implements Serializable {
+
+    /**
+     * 编号
+     */
+    private String code;
+
+    /**
+     * 标题
+     */
+    private String title;
+
 }

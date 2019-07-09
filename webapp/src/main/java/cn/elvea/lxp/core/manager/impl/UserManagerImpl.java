@@ -1,7 +1,8 @@
-package cn.elvea.lxp.core.manager;
+package cn.elvea.lxp.core.manager.impl;
 
 import cn.elvea.lxp.common.Context;
 import cn.elvea.lxp.core.entity.UserEntity;
+import cn.elvea.lxp.core.manager.UserManager;
 import cn.elvea.lxp.core.repository.UserRepository;
 import cn.elvea.lxp.core.type.UserStatusType;
 import cn.elvea.lxp.security.SecurityUtils;

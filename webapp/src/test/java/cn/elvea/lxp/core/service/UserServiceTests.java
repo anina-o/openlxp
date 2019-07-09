@@ -1,6 +1,8 @@
 package cn.elvea.lxp.core.service;
 
 import cn.elvea.lxp.BaseTests;
+import cn.elvea.lxp.core.dto.UserDto;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,7 +18,8 @@ public class UserServiceTests extends BaseTests {
 
     @Test
     void findByUsernameTest() {
-        this.userService.findByUsername("admin");
+        UserDto userDto = this.userService.findByUsername("admin");
+        Assertions.assertNotNull(userDto);
     }
 
 }

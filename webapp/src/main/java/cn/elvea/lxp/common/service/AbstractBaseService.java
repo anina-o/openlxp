@@ -5,5 +5,5 @@ package cn.elvea.lxp.common.service;
  *
  * @author elvea
  */
-public abstract class AbstractBaseService {
+public abstract class AbstractBaseService implements BaseService {
 }

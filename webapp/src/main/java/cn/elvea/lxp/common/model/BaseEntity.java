@@ -1,4 +1,4 @@
-package cn.elvea.lxp.common.entity;
+package cn.elvea.lxp.common.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,5 +24,9 @@ public class BaseEntity implements Serializable {
     @GenericGenerator(name = "SnowflakeGenerator",
             strategy = "cn.elvea.lxp.common.jpa.SnowflakeGenerator")
     private Long id;
+
+    public BaseEntity(Long id) {
+        this.id = id;
+    }
 
 }

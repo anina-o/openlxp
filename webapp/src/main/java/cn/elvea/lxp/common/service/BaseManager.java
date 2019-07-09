@@ -1,4 +1,4 @@
-package cn.elvea.lxp.common.manager;
+package cn.elvea.lxp.common.service;
 
 /**
  * BaseManager

@@ -1,5 +1,6 @@
-package cn.elvea.lxp.core.manager;
+package cn.elvea.lxp.core.manager.impl;
 
+import cn.elvea.lxp.core.manager.UserSessionManager;
 import org.springframework.stereotype.Service;
 
 /**

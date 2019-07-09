@@ -1,4 +1,4 @@
-package cn.elvea.lxp.common.dto;
+package cn.elvea.lxp.common.model;
 
 import java.io.Serializable;
 

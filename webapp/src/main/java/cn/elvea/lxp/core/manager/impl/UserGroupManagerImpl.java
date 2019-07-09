@@ -1,7 +1,8 @@
-package cn.elvea.lxp.core.manager;
+package cn.elvea.lxp.core.manager.impl;
 
 import cn.elvea.lxp.common.Context;
 import cn.elvea.lxp.core.entity.UserGroupEntity;
+import cn.elvea.lxp.core.manager.UserGroupManager;
 import cn.elvea.lxp.core.repository.UserGroupRepository;
 import cn.elvea.lxp.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;

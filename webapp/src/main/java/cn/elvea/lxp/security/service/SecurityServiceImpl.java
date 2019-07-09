@@ -3,12 +3,15 @@ package cn.elvea.lxp.security.service;
 import cn.elvea.lxp.core.dto.UserDto;
 import cn.elvea.lxp.core.service.UserService;
 import cn.elvea.lxp.security.SecurityUser;
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * SecurityServiceImpl
@@ -22,7 +25,7 @@ public class SecurityServiceImpl implements SecurityService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     /**
      * 根据用户名加载用户
@@ -34,7 +37,9 @@ public class SecurityServiceImpl implements SecurityService {
             // 找不到用户
             throw new UsernameNotFoundException("");
         }
-        SecurityUser securityUser = new SecurityUser(userDto.getUsername(), userDto.getPassword(), true, Lists.newArrayList());
+        List<SimpleGrantedAuthority> authorities = userDto.getRoles().stream()
+                .map(roleDto -> new SimpleGrantedAuthority(roleDto.getCode())).collect(Collectors.toList());
+        SecurityUser securityUser = new SecurityUser(userDto.getUsername(), userDto.getPassword(), true, authorities);
         securityUser.setId(userDto.getId());
         securityUser.setNickname(userDto.getNickname());
         securityUser.setEmail(userDto.getEmail());
