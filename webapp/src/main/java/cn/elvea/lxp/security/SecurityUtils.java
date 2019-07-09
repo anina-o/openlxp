@@ -1,21 +1,22 @@
 package cn.elvea.lxp.security;
 
 import cn.elvea.lxp.core.type.LangType;
-import com.google.common.collect.Maps;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
-import net.minidev.json.JSONObject;
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.SignedJWT;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
-import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 
 /**
  * SecurityUtils
@@ -88,16 +89,51 @@ public class SecurityUtils {
     }
 
     /**
-     * 获取当前登录用户
-     *
-     * @return 当前登录用户
+     * 是否是匿名用户
      */
-    public static SecurityUserDetails getLoginUser() {
+    public static boolean isAnonymous() {
+        return getPrincipal() == null;
+    }
+
+    /**
+     * 获取当前登录用户名
+     */
+    public static String getPrincipal() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() != null) {
             Object principal = authentication.getPrincipal();
-            if (principal instanceof SecurityUserDetails) {
-                return (SecurityUserDetails) principal;
+            if (principal instanceof UserDetails) {
+                return ((UserDetails) principal).getUsername();
+            } else if (principal instanceof String) {
+                return (String) principal;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获取当前登录用户ID
+     */
+    public static Long getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() != null) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof SecurityUser) {
+                return ((SecurityUser) principal).getId();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 获取当前登录用户
+     */
+    public static SecurityUser getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() != null) {
+            Object principal = authentication.getPrincipal();
+            if (principal instanceof SecurityUser) {
+                return ((SecurityUser) principal);
             }
         }
         return null;
@@ -108,17 +144,8 @@ public class SecurityUtils {
      *
      * @return Locale 国际化区域
      */
-    public static Locale getCurLocale() {
+    public static Locale getCurrentLocale() {
         return LangType.getDefaultLangType().getLocale();
-    }
-
-    /**
-     * 是否是匿名用户
-     *
-     * @return boolean
-     */
-    public static boolean isAnonymous() {
-        return getLoginUser() == null;
     }
 
     /**
@@ -126,75 +153,69 @@ public class SecurityUtils {
      *
      * @return 当前语言
      */
-    public static String getCurLang() {
+    public static String getCurrentLang() {
         return LangType.getDefaultLang();
     }
 
     /**
      * 公共秘钥
      */
-    private static final byte[] SECRET = "LXP2019".getBytes();
+    private static final byte[] SECRET = "jHwskkOFNmBISheIpxBvUBwVjvTahXgP".getBytes();
+
+    private static final String HEADER_PREFIX = "Bearer ";
 
     /**
-     * 生成JWT
+     * 获取请求中的Token
      *
-     * @param payloadMap 载荷
-     * @return String
-     * @throws JOSEException JOSEException
+     * @param request {{@link HttpServletRequest}}
+     * @return Token
      */
-    public static String sign(Map<String, Object> payloadMap) throws JOSEException {
-
-        // JWSHeader
-        JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS512);
-        // Payload
-        Payload payload = new Payload(new JSONObject(payloadMap));
-        // JWSObject
-        JWSObject jwsObject = new JWSObject(jwsHeader, payload);
-        // JWSSigner
-        JWSSigner jwsSigner = new MACSigner(SECRET);
-        // 签名
-        jwsObject.sign(jwsSigner);
-
-        return jwsObject.serialize();
+    public static String getRequestToken(HttpServletRequest request) {
+        // 检查Header是否包含Token信息
+        String header = request.getHeader("Authorization");
+        if (StringUtils.isBlank(header)) {
+            throw new AuthenticationServiceException("Authorization header cannot be blank!");
+        }
+        if (header.length() < HEADER_PREFIX.length()) {
+            throw new AuthenticationServiceException("Invalid authorization header size.");
+        }
+        return header.substring(HEADER_PREFIX.length());
     }
 
     /**
-     * 生成JWT
-     *
-     * @param token JWT
-     * @return String
-     * @throws JOSEException JOSEException
+     * Create JWT
      */
-    public static Map<String, Object> verify(String token) throws JOSEException, ParseException {
-        // JWSObject
-        JWSObject jwsObject = JWSObject.parse(token);
-        // Payload
-        Payload payload = jwsObject.getPayload();
+    public static String sign(String uuid, SecurityUser user) throws JOSEException {
+        // JWSHeader
+        JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS256);
+        // JWSSigner
+        JWSSigner jwsSigner = new MACSigner(SECRET);
+        // JWTClaimsSet
+        JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
+                .jwtID(uuid)
+                .subject(user.getUsername())
+                .claim("id", user.getId())
+                .claim("email", user.getEmail())
+                .claim("mobile", user.getMobile())
+                .claim("nickname", user.getNickname())
+                .claim("authorities", user.getAuthorities())
+                .build();
+        //
+        SignedJWT signedJWT = new SignedJWT(jwsHeader, claimsSet);
+        signedJWT.sign(jwsSigner);
+        return signedJWT.serialize();
+    }
+
+    /**
+     * Verify JWT
+     */
+    public static JWTClaimsSet verify(String token) throws JOSEException, ParseException {
         // JWSVerifier
-        JWSVerifier jwsVerifier = new MACVerifier(SECRET);
-
-        Map<String, Object> resultMap = Maps.newHashMap();
-        if (jwsObject.verify(jwsVerifier)) {
-            resultMap.put("Result", 0);
-            // 载荷的数据解析成json对象。
-            JSONObject jsonObject = payload.toJSONObject();
-            resultMap.put("data", jsonObject);
-
-            //判断token是否过期
-            if (jsonObject.containsKey("exp")) {
-                Long expTime = Long.valueOf(jsonObject.get("exp").toString());
-                Long nowTime = new Date().getTime();
-                //判断是否过期
-                if (nowTime > expTime) {
-                    //已经过期
-                    resultMap.clear();
-                    resultMap.put("Result", 2);
-                }
-            }
-        } else {
-            resultMap.put("Result", 1);
-        }
-        return resultMap;
+        JWSVerifier verifier = new MACVerifier(SECRET);
+        // SignedJWT
+        SignedJWT signedJWT = SignedJWT.parse(token);
+        signedJWT.verify(verifier);
+        return signedJWT.getJWTClaimsSet();
     }
 
 }

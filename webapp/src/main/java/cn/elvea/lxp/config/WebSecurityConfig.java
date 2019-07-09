@@ -3,6 +3,7 @@ package cn.elvea.lxp.config;
 import cn.elvea.lxp.core.type.RoleType;
 import cn.elvea.lxp.security.*;
 import cn.elvea.lxp.security.filter.SecurityAuthenticationFilter;
+import cn.elvea.lxp.security.service.SecurityService;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +32,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private SecurityUserDetailsService securityUserDetailsService;
+    private SecurityService securityService;
 
     @Autowired
     private SecurityAuthenticationProvider authenticationProvider;
@@ -39,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider)
-                .userDetailsService(securityUserDetailsService)
+                .userDetailsService(securityService)
                 .passwordEncoder(passwordEncoder());
     }
 
@@ -89,6 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
+                    .formLogin().disable()
                     .authorizeRequests()
                     .antMatchers("/admin/**").hasAnyRole(RoleType.SYSTEM_ADMINISTRATOR.getCode(), RoleType.ADMINISTRATOR.getCode())
                     .anyRequest().authenticated();

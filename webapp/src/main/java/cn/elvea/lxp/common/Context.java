@@ -1,7 +1,7 @@
 package cn.elvea.lxp.common;
 
-import cn.elvea.lxp.security.SecurityUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -11,6 +11,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -51,10 +52,6 @@ public class Context implements InitializingBean {
      * @return Locale
      */
     public Locale getLocale() {
-        // 如果用户已经登录，那返回用户喜好设定的语言
-        if (SecurityUtils.getLoginUser() != null) {
-            return SecurityUtils.getCurLocale();
-        }
         return Constants.DEFAULT_LOCALE;
     }
 
@@ -169,6 +166,13 @@ public class Context implements InitializingBean {
      */
     public String getMessage(String code, Object[] args, String defaultMessage, Locale locale) {
         return messages.getMessage(code, args, defaultMessage, locale);
+    }
+
+    /**
+     * 获取当前日期
+     */
+    public Date getDate() {
+        return new DateTime().toDate();
     }
 
     @Lazy

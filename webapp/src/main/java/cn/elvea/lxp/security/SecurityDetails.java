@@ -9,7 +9,7 @@ import org.springframework.util.StringUtils;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * SecurityUserDetails
+ * SecurityDetails
  *
  * @author elvea
  */

@@ -28,6 +28,10 @@ public class UserSessionEntity extends BaseEntity {
      */
     private String sessionId;
     /**
+     * Token
+     */
+    private String token;
+    /**
      * 用户名
      */
     private String username;

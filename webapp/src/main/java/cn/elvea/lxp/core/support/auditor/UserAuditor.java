@@ -1,8 +1,8 @@
 package cn.elvea.lxp.core.support.auditor;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
@@ -11,8 +11,8 @@ import java.util.Optional;
  *
  * @author elvea
  */
-@Configuration
 @Slf4j
+@Component("userAuditor")
 public class UserAuditor implements AuditorAware<Long> {
 
     /**

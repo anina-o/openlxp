@@ -28,17 +28,10 @@ public class SecurityAuthenticationSuccessHandler extends SimpleUrlAuthenticatio
     public void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // 生成唯一会话ID
         String uuid = UUIDUtils.randomUUID();
-
-        SecurityUtils.getLoginUser();
+        SecurityUser user = SecurityUtils.getCurrentUser();
         // 生成Token
         try {
-            if (authentication.getPrincipal() instanceof SecurityUserDetails) {
-
-            }
-            if (authentication.getDetails() instanceof SecurityDetails) {
-
-            }
-            SecurityUtils.sign(Maps.newHashMap());
+            SecurityUtils.sign(uuid, user);
         } catch (JOSEException e) {
             log.error("token sign failed.", e);
         }

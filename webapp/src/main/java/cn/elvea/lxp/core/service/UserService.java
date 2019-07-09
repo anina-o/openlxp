@@ -17,4 +17,12 @@ public interface UserService {
      */
     UserDto findByUsername(String username);
 
+    /**
+     * 根据用户ID查询用户
+     *
+     * @param id ID
+     * @return 用户
+     */
+    UserDto findById(Long id);
+
 }

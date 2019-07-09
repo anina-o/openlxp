@@ -18,8 +18,7 @@ public class AuthTests extends BaseWebTests {
         mockMvc.perform(post("/api/login")
                 .param("username", "admin")
                 .param("password", "123456"))
-                .andExpect(status().isOk())
-        ;
+                .andExpect(status().isOk());
     }
 
 }

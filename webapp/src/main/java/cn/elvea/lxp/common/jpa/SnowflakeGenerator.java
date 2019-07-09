@@ -1,6 +1,7 @@
 package cn.elvea.lxp.common.jpa;
 
 import cn.elvea.lxp.common.utils.IdWorker;
+import cn.elvea.lxp.common.utils.SpringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.MappingException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
@@ -19,13 +20,10 @@ import java.util.Properties;
  */
 public class SnowflakeGenerator implements IdentifierGenerator, Configurable {
 
-    IdWorker getIdWorker() {
-        return new IdWorker();
-    }
-
     @Override
     public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
-        return getIdWorker().nextId();
+        IdWorker idWorker = SpringUtils.getBean(IdWorker.class);
+        return idWorker.nextId();
     }
 
     @Override

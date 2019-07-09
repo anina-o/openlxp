@@ -24,8 +24,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto findByUsername(String username) {
         UserEntity userEntity = this.userManager.findByUsername(username);
-        UserDto userDto = ConvertUtils.sourceToTarget(userEntity, UserDto.class);
-        return userDto;
+        return ConvertUtils.sourceToTarget(userEntity, UserDto.class);
+    }
+
+    /**
+     * @see UserService#findById(Long)
+     */
+    @Override
+    public UserDto findById(Long id) {
+        UserEntity userEntity = this.userManager.findById(id);
+        return ConvertUtils.sourceToTarget(userEntity, UserDto.class);
     }
 
 }

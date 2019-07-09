@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
  */
 @Configuration
 @ComponentScan("cn.elvea.lxp")
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "userAuditor")
 @EnableCaching
 public class Config {
 

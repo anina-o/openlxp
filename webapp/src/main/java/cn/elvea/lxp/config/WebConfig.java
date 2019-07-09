@@ -7,6 +7,7 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
@@ -19,6 +20,17 @@ import java.util.List;
 @Configuration
 @EnableSpringDataWebSupport
 public class WebConfig implements WebMvcConfigurer {
+
+    /**
+     * @see WebMvcConfigurer#addCorsMappings(CorsRegistry)
+     */
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE")
+                .maxAge(3600);
+    }
 
     /**
      * @see WebMvcConfigurer#addArgumentResolvers(List)

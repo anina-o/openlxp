@@ -25,7 +25,6 @@ public class UserRepositoryTests extends BaseTests {
     public void baseCrudTests() {
         String randomUsername = String.valueOf(idWorker.nextId());
         UserEntity userEntity = new UserEntity();
-        userEntity.setId(idWorker.nextId());
         userEntity.setUsername("username_" + randomUsername);
         userEntity.setFullname("fullname_" + randomUsername);
         userEntity.setNickname("nickname_" + randomUsername);

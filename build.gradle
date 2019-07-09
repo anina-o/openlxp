@@ -24,10 +24,10 @@ allprojects {
     }
 
     ext {
+        // 3rd party
         guavaVersion = "28.0-jre"
         nimbusJoseJwtVersion = "7.3"
-
-        // Apache Commons
+        // apache commons
         commonsIoVersion = '2.6'
         commonsLangVersion = '3.9'
         commonsTextVersion = '1.6'
@@ -69,6 +69,9 @@ project("webapp") {
         runtimeClasspath {
             extendsFrom developmentOnly
         }
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
     }
 
     dependencies {
@@ -81,10 +84,9 @@ project("webapp") {
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation 'org.springframework.boot:spring-boot-starter-security'
         // lombok
-        implementation 'org.projectlombok:lombok'
+        compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
-        testImplementation 'org.projectlombok:lombok'
-        testAnnotationProcessor 'org.projectlombok:lombok'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
         // commons
         implementation group: 'org.apache.commons', name: 'commons-text', version: commonsTextVersion
         implementation group: 'org.apache.commons', name: 'commons-lang3', version: commonsLangVersion

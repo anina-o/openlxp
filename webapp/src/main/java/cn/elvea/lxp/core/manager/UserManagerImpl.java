@@ -1,7 +1,10 @@
 package cn.elvea.lxp.core.manager;
 
+import cn.elvea.lxp.common.Context;
 import cn.elvea.lxp.core.entity.UserEntity;
 import cn.elvea.lxp.core.repository.UserRepository;
+import cn.elvea.lxp.core.type.UserStatusType;
+import cn.elvea.lxp.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -17,10 +20,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserManagerImpl implements UserManager {
 
-    private final static String CACHE_NAME = "lxp-user";
+    private final static String CACHE_NAME = "USER";
 
-    @Autowired
-    UserRepository userRepository;
+    private Context context;
+
+    private UserRepository userRepository;
 
     /**
      * 保存用户
@@ -45,7 +49,7 @@ public class UserManagerImpl implements UserManager {
     @Override
     @Cacheable(value = CACHE_NAME, key = "#id")
     public UserEntity findById(Long id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id).orElse(null);
     }
 
     /**
@@ -71,7 +75,21 @@ public class UserManagerImpl implements UserManager {
             @CacheEvict(value = CACHE_NAME, key = "#entity.username")
     })
     public void delete(UserEntity entity) {
-        userRepository.delete(entity);
+        entity.setStatus(UserStatusType.DELETED.getValue());
+        entity.setActive(false);
+        entity.setDeletedAt(context.getDate());
+        entity.setDeletedBy(SecurityUtils.getCurrentUserId());
+        userRepository.save(entity);
+    }
+
+    @Autowired
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
 }

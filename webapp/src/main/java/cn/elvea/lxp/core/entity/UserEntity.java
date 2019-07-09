@@ -8,11 +8,12 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 用户
@@ -24,6 +25,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "sys_user")
+@EntityListeners(AuditingEntityListener.class)
 public class UserEntity extends BaseEntity {
     /**
      * 用户名
@@ -92,4 +94,12 @@ public class UserEntity extends BaseEntity {
      */
     @Column(name = "deleted_by")
     private Long deletedBy;
+    /**
+     *
+     */
+    @ManyToMany(cascade = CascadeType.DETACH)
+    @JoinTable(name = "sys_user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<RoleEntity> roles = new HashSet<>();
 }

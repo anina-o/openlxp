@@ -48,6 +48,7 @@ ALTER TABLE `sys_user_group` COMMENT '用户组表';
 CREATE TABLE `sys_user_session` (
     `id`                   BIGINT UNSIGNED COMMENT 'ID'   NOT NULL,
     `user_id`              BIGINT UNSIGNED COMMENT '用户ID' NOT NULL,
+    `token`                VARCHAR(255) COMMENT 'Token',
     `session_id`           VARCHAR(150) COMMENT '会话ID',
     `username`             VARCHAR(150) COMMENT '用户名',
     `host`                 VARCHAR(255) COMMENT '登录主机',
@@ -71,24 +72,6 @@ CREATE INDEX `ix_sys_user_session_user_id` ON `sys_user_session`(`user_id`);
 CREATE INDEX `ix_sys_user_session_session_id` ON `sys_user_session`(`session_id`);
 
 CREATE INDEX `ix_sys_user_session_start_id` ON `sys_user_session`(`start_year`, `start_month`, `start_day`, `start_hour`, `start_minute`);
-
-/* 用户会话凭证表 */
-CREATE TABLE `sys_user_token` (
-    `id`            BIGINT UNSIGNED COMMENT 'ID'   NOT NULL,
-    `user_id`       BIGINT UNSIGNED COMMENT '用户ID' NOT NULL,
-    `session_id`    VARCHAR(150) COMMENT '会话ID',
-    `username`      VARCHAR(150) COMMENT '用户名',
-    `token`         VARCHAR(255) COMMENT 'Token',
-    `refresh_token` VARCHAR(255) COMMENT 'Refresh Token',
-    `created_at`    DATETIME COMMENT '创建时间',
-    `created_by`    BIGINT COMMENT '创建人',
-    CONSTRAINT `pk_sys_user_token_id` PRIMARY KEY (`id`)
-);
-ALTER TABLE `sys_user_token` COMMENT '用户会话凭证表';
-
-CREATE INDEX `ix_sys_user_token_user_id` ON `sys_user_token`(`user_id`);
-
-CREATE INDEX `ix_sys_user_token_session_id` ON `sys_user_token`(`session_id`);
 
 /* 权限表 */
 CREATE TABLE `sys_role` (

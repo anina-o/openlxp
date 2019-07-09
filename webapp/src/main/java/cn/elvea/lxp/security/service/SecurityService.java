@@ -1,11 +1,13 @@
 package cn.elvea.lxp.security.service;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 /**
  * SecurityService
  *
  * @author elvea
  */
-public interface SecurityService {
+public interface SecurityService extends UserDetailsService {
 
     /**
      * 密码加密

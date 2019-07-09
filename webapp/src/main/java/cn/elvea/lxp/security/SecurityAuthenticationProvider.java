@@ -1,14 +1,15 @@
 package cn.elvea.lxp.security;
 
+import cn.elvea.lxp.security.service.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 /**
  * SecurityAuthenticationProvider
@@ -16,39 +17,32 @@ import org.springframework.util.Assert;
  * @author sunlearning
  */
 @Service("authenticationProvider")
-public class SecurityAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
+public class SecurityAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    private SecurityUserDetailsService securityUserDetailsService;
-
-    public SecurityAuthenticationProvider() {
-    }
+    private SecurityService securityService;
 
     @Override
-    protected void doAfterPropertiesSet() {
-        Assert.notNull(this.securityUserDetailsService, "A UserDetailsService must be set");
-    }
-
-    @Override
-    protected void additionalAuthenticationChecks(UserDetails userDetails,
-                                                  UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-    }
-
-    @Override
-    protected final UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication)
-            throws AuthenticationException {
-        UserDetails loadedUser;
-        try {
-            loadedUser = securityUserDetailsService.loadUserByUsername(username);
-        } catch (UsernameNotFoundException notFound) {
-            throw notFound;
-        } catch (Exception repositoryProblem) {
-            throw new InternalAuthenticationServiceException(repositoryProblem.getMessage(), repositoryProblem);
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        // 获取认证的用户名和密码
+        String username = authentication.getName();
+        String password = authentication.getCredentials().toString();
+        // 认证逻辑
+        UserDetails userDetails = securityService.loadUserByUsername(username);
+        if (null != userDetails) {
+            if (securityService.isPasswordMatch(password, userDetails.getPassword())) {
+                return new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+            } else {
+                throw new BadCredentialsException("密码错误");
+            }
+        } else {
+            throw new UsernameNotFoundException("用户不存在");
         }
-        if (loadedUser == null) {
-            throw new InternalAuthenticationServiceException("UserDetailsService returned null, which is an interface contract violation");
-        }
-        return loadedUser;
+    }
+
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
     }
 
 }
