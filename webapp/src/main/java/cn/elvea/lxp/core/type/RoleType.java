@@ -12,15 +12,19 @@ public enum RoleType {
     /**
      * 系统管理员
      */
-    SYSTEM_ADMINISTRATOR("SYSTEM_ADMINISTRATOR", "role_system_administrator"),
+    SYSTEM_ADMINISTRATOR("SYSTEM_ADMINISTRATOR", "role_type_system_administrator"),
     /**
      * 管理员
      */
-    ADMINISTRATOR("ADMINISTRATOR", "role_administrator"),
+    ADMINISTRATOR("ADMINISTRATOR", "role_type_administrator"),
     /**
-     * 用户
+     * 讲师
      */
-    USER("USER", "role_user");
+    TRAINER("TRAINER", "role_type_trainer"),
+    /**
+     * 学员
+     */
+    LEARNER("LEARNER", "role_type_learner");
 
     /**
      * 编号

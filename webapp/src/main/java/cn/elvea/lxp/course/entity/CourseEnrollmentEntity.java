@@ -1,4 +1,4 @@
-package cn.elvea.lxp.core.entity;
+package cn.elvea.lxp.course.entity;
 
 import cn.elvea.lxp.common.model.BaseEntity;
 import lombok.Data;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * 用户组
+ * 课程报名实体
  *
  * @author elvea
  */
@@ -25,20 +25,68 @@ import java.util.Date;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Table(name = "sys_user_group")
+@Table(name = "sys_course_enrollment")
 @EntityListeners(AuditingEntityListener.class)
-public class UserGroupEntity extends BaseEntity {
+public class CourseEnrollmentEntity extends BaseEntity {
     /**
-     * 编号
+     * 用户ID
      */
-    private String code;
+    @Column(name = "user_id")
+    private Long userId;
     /**
-     * 标题
+     * 课程ID
      */
-    private String title;
+    @Column(name = "course_id")
+    private Long courseId;
+    /**
+     * 报名日期
+     */
+    @Column(name = "enroll_datetime")
+    private Date enrollDatetime;
+    /**
+     * 报名状态
+     */
+    @Column(name = "enroll_status")
+    private String enrollStatus;
+    /**
+     * 首次访问时间
+     */
+    @Column(name = "commence_datetime")
+    private Date commenceDatetime;
+    /**
+     * 最近访问时间
+     */
+    @Column(name = "last_access_datetime")
+    private Date lastAccessDatetime;
+    /**
+     * 尝试总次数
+     */
+    @Column(name = "total_attempt")
+    private Long totalAttempt;
+    /**
+     * 学习总时长
+     */
+    @Column(name = "total_time")
+    private Long totalTime;
+    /**
+     * 完成时间
+     */
+    @Column(name = "complete_datetime")
+    private Date completeDatetime;
+    /**
+     * 完成状态
+     */
+    @Column(name = "complete_status")
+    private String completeStatus;
+    /**
+     * 分数
+     */
+    @Column
+    private Float score;
     /**
      * 启用状态
      */
+    @Column
     private Boolean active;
     /**
      * 创建时间

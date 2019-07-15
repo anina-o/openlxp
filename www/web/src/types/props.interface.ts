@@ -5,7 +5,7 @@ import GlobalStore from "../stores/GlobalStore";
 
 // BaseProps
 export interface BaseProps {
-    store?: GlobalStore
+    store: GlobalStore
 }
 
 // RouteProps

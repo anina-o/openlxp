@@ -1,0 +1,63 @@
+@import '~antd/lib/style/themes/default.less';
+
+.page-layout {
+    .page-header {
+        width: 100%;
+        background: #fff;
+        box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+        position: fixed;
+
+        .logo {
+            width: 200px;
+            height: 32px;
+            background: rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            margin: 16px 24px 16px 0;
+            float: left;
+        }
+
+        .page-nav {
+            display: inline-block;
+        }
+
+        .page-user-nav {
+            display: inline-block;
+            float: right;
+
+            .action {
+                cursor: pointer;
+                padding: 0 12px;
+                display: inline-block;
+                transition: all 0.3s;
+                height: 100%;
+
+                > i {
+                    font-size: 16px;
+                    vertical-align: middle;
+                    color: @text-color;
+                }
+
+                &:hover,
+                &:global(.ant-popover-open) {
+                    background: @primary-1;
+                }
+            }
+
+            .account {
+                .avatar {
+                    margin: 20px 8px 20px 0;
+                    color: @primary-color;
+                    vertical-align: middle;
+                }
+
+                .name {
+                    color: @primary-color;
+                }
+            }
+        }
+    }
+
+    .page-footer {
+        text-align: center;
+    }
+}

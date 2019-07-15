@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.net.URISyntaxException;
 
 /**
- * Activity State Resource
+ * Activity State ResourceEntity
  *
  * @author elvea
  */

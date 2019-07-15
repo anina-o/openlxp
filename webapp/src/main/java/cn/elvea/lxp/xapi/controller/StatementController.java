@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Statement Resource
+ * Statement ResourceEntity
  *
  * @author elvea
  */

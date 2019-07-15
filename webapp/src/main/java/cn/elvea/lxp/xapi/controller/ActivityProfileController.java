@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 /**
- * Activity Profile Resource
+ * Activity Profile ResourceEntity
  *
  * @author elvea
  */

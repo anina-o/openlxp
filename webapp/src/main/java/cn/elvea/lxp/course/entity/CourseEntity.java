@@ -1,4 +1,4 @@
-package cn.elvea.lxp.core.entity;
+package cn.elvea.lxp.course.entity;
 
 import cn.elvea.lxp.common.model.BaseEntity;
 import lombok.Data;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * 用户组
+ * 课程实体
  *
  * @author elvea
  */
@@ -25,20 +25,55 @@ import java.util.Date;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Table(name = "sys_user_group")
+@Table(name = "sys_course")
 @EntityListeners(AuditingEntityListener.class)
-public class UserGroupEntity extends BaseEntity {
+public class CourseEntity extends BaseEntity {
     /**
-     * 编号
+     * 电子邮箱
      */
     private String code;
     /**
-     * 标题
+     * 手机号码
      */
     private String title;
     /**
+     * 发布开始日期
+     */
+    @Column(name = "publish_start_datetime")
+    private String publishStartDatetime;
+    /**
+     * 发布结束日期
+     */
+    @Column(name = "publish_end_datetime")
+    private String publishEndDatetime;
+    /**
+     * 报名开始日期
+     */
+    @Column(name = "enroll_start_datetime")
+    private String enrollStartDatetime;
+    /**
+     * 报名结束日期
+     */
+    @Column(name = "enroll_end_datetime")
+    private String enrollEndDatetime;
+    /**
+     * 学习开始日期
+     */
+    @Column(name = "start_datetime")
+    private String startDatetime;
+    /**
+     * 学习结束日期
+     */
+    @Column(name = "end_datetime")
+    private String endDatetime;
+    /**
+     * 用户状态
+     */
+    private Integer status;
+    /**
      * 启用状态
      */
+    @Column
     private Boolean active;
     /**
      * 创建时间

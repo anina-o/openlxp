@@ -134,26 +134,32 @@ ALTER TABLE `sys_attachment_relation` COMMENT '附件关联表';
 
 /* 课程表 */
 CREATE TABLE `sys_course` (
-    `id`         BIGINT COMMENT 'ID'                NOT NULL,
-    `code`       VARCHAR(150) COMMENT '编号'          NOT NULL,
-    `title`      VARCHAR(150) COMMENT '昵称'          NOT NULL,
-    `status`     TINYINT(1) UNSIGNED COMMENT '发布状态' NOT NULL DEFAULT 0,
-    `active`     TINYINT(1) UNSIGNED COMMENT '启用状态' NOT NULL DEFAULT 0,
-    `created_at` DATETIME COMMENT '创建时间',
-    `created_by` BIGINT UNSIGNED COMMENT '创建人',
-    `updated_at` DATETIME COMMENT '修改时间',
-    `updated_by` BIGINT UNSIGNED COMMENT '修改人',
-    `deleted_at` DATETIME COMMENT '删除时间',
-    `deleted_by` BIGINT UNSIGNED COMMENT '删除人',
+    `id`                     BIGINT COMMENT 'ID'                NOT NULL,
+    `code`                   VARCHAR(150) COMMENT '编号'          NOT NULL,
+    `title`                  VARCHAR(150) COMMENT '昵称'          NOT NULL,
+    `publish_start_datetime` DATETIME COMMENT '发布开始日期',
+    `publish_end_datetime`   DATETIME COMMENT '发布结束日期',
+    `enroll_start_datetime`  DATETIME COMMENT '报名开始日期',
+    `enroll_end_datetime`    DATETIME COMMENT '报名结束日期',
+    `start_datetime`         DATETIME COMMENT '学习开始日期',
+    `end_datetime`           DATETIME COMMENT '学习结束日期',
+    `status`                 TINYINT(1) UNSIGNED COMMENT '发布状态' NOT NULL DEFAULT 0,
+    `active`                 TINYINT(1) UNSIGNED COMMENT '启用状态' NOT NULL DEFAULT 0,
+    `created_at`             DATETIME COMMENT '创建时间',
+    `created_by`             BIGINT UNSIGNED COMMENT '创建人',
+    `updated_at`             DATETIME COMMENT '修改时间',
+    `updated_by`             BIGINT UNSIGNED COMMENT '修改人',
+    `deleted_at`             DATETIME COMMENT '删除时间',
+    `deleted_by`             BIGINT UNSIGNED COMMENT '删除人',
     CONSTRAINT `pk_sys_course_id` PRIMARY KEY (`id`)
 );
 ALTER TABLE `sys_course` COMMENT '课程表';
 
 /* 课程报名记录表 */
 CREATE TABLE `sys_course_enrollment` (
-    `id`                   BIGINT UNSIGNED COMMENT 'ID'   NOT NULL,
-    `user_id`              BIGINT UNSIGNED COMMENT '用户ID' NOT NULL,
-    `course_id`            BIGINT UNSIGNED COMMENT '课程ID' NOT NULL,
+    `id`                   BIGINT UNSIGNED COMMENT 'ID'       NOT NULL,
+    `user_id`              BIGINT UNSIGNED COMMENT '用户ID'     NOT NULL,
+    `course_id`            BIGINT UNSIGNED COMMENT '课程ID'     NOT NULL,
     `enroll_datetime`      DATETIME COMMENT '报名日期',
     `enroll_status`        TINYINT(1) UNSIGNED COMMENT '报名状态',
     `commence_datetime`    DATETIME COMMENT '首次访问时间',
@@ -163,7 +169,7 @@ CREATE TABLE `sys_course_enrollment` (
     `complete_datetime`    DATETIME COMMENT '完成时间',
     `complete_status`      TINYINT(1) UNSIGNED COMMENT '完成状态',
     `score`                FLOAT(10, 2) COMMENT '分数',
-    `final_score`          FLOAT(10, 2) COMMENT '最终分数',
+    `active`               TINYINT(1) UNSIGNED COMMENT '启用状态' NOT NULL DEFAULT 0,
     `created_at`           DATETIME COMMENT '创建时间',
     `created_by`           BIGINT UNSIGNED COMMENT '创建人',
     `updated_at`           DATETIME COMMENT '修改时间',
@@ -177,27 +183,26 @@ ALTER TABLE `sys_course_enrollment` COMMENT '课程报名记录表';
 /* 资源表 */
 CREATE TABLE `sys_resource` (
     `id`                        BIGINT UNSIGNED COMMENT 'ID'       NOT NULL,
-    `type`                      VARCHAR(100) COMMENT '类型'          NOT NULL,
-    `code`                      VARCHAR(150) COMMENT '编号'          NOT NULL,
-    `title`                     VARCHAR(255) COMMENT '标题'          NOT NULL,
+    `type`                      VARCHAR(100) COMMENT '类型',
+    `code`                      VARCHAR(150) COMMENT '编号',
+    `title`                     VARCHAR(255) COMMENT '标题',
     `description`               VARCHAR(255) COMMENT '描述',
-    `start_datetime`            DATETIME COMMENT '开始时间',
-    `end_datetime`              DATETIME COMMENT '结束时间',
+    `publish_start_datetime`    DATETIME COMMENT '发布开始日期',
+    `publish_end_datetime`      DATETIME COMMENT '发布结束日期',
+    `start_datetime`            DATETIME COMMENT '学习开始日期',
+    `end_datetime`              DATETIME COMMENT '学习结束日期',
     `url`                       VARCHAR(255) COMMENT 'URL',
     `content`                   TEXT COMMENT '内容',
     `score`                     FLOAT(10, 2) UNSIGNED COMMENT '满分分数',
-    `pass_percentage`           FLOAT(10, 2) UNSIGNED COMMENT '及格分数',
+    `pass_score`                FLOAT(10, 2) UNSIGNED COMMENT '及格分数',
     `attempt_limit`             INT UNSIGNED COMMENT '最多允许尝试次数',
     `attempt_policy`            VARCHAR(50) COMMENT '尝试次数计算策略',
     `time_limit`                INT UNSIGNED COMMENT '最多允许尝试时长',
     `paper_generate_mode`       VARCHAR(50) COMMENT '试卷生成策略',
     `paper_allow_pause_ind`     TINYINT UNSIGNED COMMENT '是否允许暂停',
-    `paper_display_mode`        VARCHAR(50) COMMENT '试卷答题形式',
     `paper_display_answer_mode` VARCHAR(50) COMMENT '答案显示形式',
     `paper_score_mode`          VARCHAR(50) COMMENT '试卷计分方式',
     `paper_score_policy`        VARCHAR(50) COMMENT '试卷计分策略',
-    `convert_status`            TINYINT(1) UNSIGNED COMMENT '转换状态',
-    `convert_attempt`           TINYINT(1) UNSIGNED COMMENT '转换尝试次数',
     `status`                    TINYINT(1) UNSIGNED COMMENT '发布状态' NOT NULL DEFAULT 0,
     `active`                    TINYINT(1) UNSIGNED COMMENT '启用状态' NOT NULL DEFAULT 0,
     `created_at`                DATETIME COMMENT '创建时间',
@@ -256,13 +261,16 @@ ALTER TABLE `sys_resource_attendance_history` COMMENT '资源学习历史记录�
 
 /* 系统角色 */
 INSERT INTO `sys_role` (`id`, `code`, `label`, `active`, `created_at`, `modified_at`)
-VALUES (1, 'sysadmin', 'role_system_administrator', 1, now(), now());
+VALUES (1, 'sysadmin', 'label_role_type_system_administrator', 1, now(), now());
 
 INSERT INTO `sys_role` (`id`, `code`, `label`, `active`, `created_at`, `modified_at`)
-VALUES (2, 'admin', 'role_administrator', 1, now(), now());
+VALUES (2, 'admin', 'label_role_type_administrator', 1, now(), now());
 
 INSERT INTO `sys_role` (`id`, `code`, `label`, `active`, `created_at`, `modified_at`)
-VALUES (3, 'user', 'role_user', 1, now(), now());
+VALUES (3, 'trainer', 'label_role_type_trainer', 1, now(), now());
+
+INSERT INTO `sys_role` (`id`, `code`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (4, 'learner', 'label_role_type_learner', 1, now(), now());
 
 /* 系统管理员 */
 INSERT INTO `sys_user` (`id`, `username`, `nickname`, `status`, `active`, `password`, `created_at`, `created_by`, `modified_at`, `modified_by`)

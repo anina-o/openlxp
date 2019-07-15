@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * OAuth Resource
+ * OAuth ResourceEntity
  *
  * @author elvea
  */
@@ -29,7 +29,7 @@ public class OAuthController {
     }
 
     /**
-     * Resource Owner Authorization
+     * ResourceEntity Owner Authorization
      */
     @RequestMapping("authorize")
     @ResponseBody

@@ -1,0 +1,21 @@
+{
+    "extends" : "tslint:recommended",
+    "rules" : {
+        "member-access" : false,
+        "promise-function-async" : false,
+        "no-floating-promises" : false,
+        "await-promise" : false,
+        "no-console" : false,
+        "trailing-comma" : false,
+        "ordered-imports" : false,
+        "no-string-literal" : false,
+        "object-literal-sort-keys" : false,
+        "semicolon" : false,
+        "variable-name" : false,
+        "no-empty-interface" : false,
+        "interface-name" : false,
+        "quotemark" : false,
+        "typedef-whitespace" : false,
+        "object-literal-shorthand" : false
+    }
+}
