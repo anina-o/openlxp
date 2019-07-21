@@ -12,15 +12,15 @@ public enum PlatformType {
     /**
      * 未知
      */
-    UNKNOW("UNKNOW", "platform_type_unknow"),
+    UNKNOW("UNKNOW", "label_platform_type_unknow"),
     /**
      * PC端
      */
-    PC("PC", "platform_type_pc"),
+    PC("PC", "label_platform_type_pc"),
     /**
      * 移动端
      */
-    MOBILE("MOBILE", "platform_type_mobile");
+    MOBILE("MOBILE", "label_platform_type_mobile");
 
     /**
      * 编号

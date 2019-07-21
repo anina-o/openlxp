@@ -83,11 +83,11 @@ export default class GlobalStore {
             return true;
         }
         // 获取账号权限信息
-        let authorities = (this.principal && this.principal.authorities) ? this.principal.authorities : [];
+        const authorities = (this.principal && this.principal.authorities) ? this.principal.authorities : [];
         // 权限信息是数组
         if (isArray(authority)) {
             let result = false;
-            authority.forEach(function (a: any) {
+            authority.forEach((a: any) => {
                 if (authorities.indexOf(a) >= 0) {
                     result = true;
                 }
@@ -136,11 +136,9 @@ export default class GlobalStore {
     @action clear = async () => {
         // 退出后清空存储信息
         await storageService.clear();
-
         // 清空用户相关信息
         this.token = null;
         this.principal = null;
-
         // 重置用户喜好
         this.preference = defaultPreference;
     };

@@ -176,4 +176,5 @@ export default {
     "site_product_detail_page_title": "Product Detail",
     "site_product_catalog_page_title": "Product Catalog",
     "site_product_catalog_detail_page_title": "Product Catalog Detail",
+    "validation-required": "Product Catalog Detail",
 }

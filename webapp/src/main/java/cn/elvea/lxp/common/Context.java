@@ -11,6 +11,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Locale;
 
@@ -177,13 +178,13 @@ public class Context implements InitializingBean {
 
     @Lazy
     @Autowired
-    public void setEnv(Environment env) {
+    public void setEnv(@NotNull Environment env) {
         this.env = env;
     }
 
     @Lazy
     @Autowired
-    public void setMessageSource(MessageSource messageSource) {
+    public void setMessageSource(@NotNull MessageSource messageSource) {
         this.messages = new MessageSourceAccessor(messageSource);
     }
 

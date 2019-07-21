@@ -1,5 +1,6 @@
 package cn.elvea.lxp.common.web;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,14 +20,16 @@ public class WebResponse<E> implements Serializable {
     /**
      * 状态编码
      */
-    private int code;
+    private int status;
     /**
      * 信息
      */
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String message;
     /**
      * 数据
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private E data;
 
     public static WebResponse success() {
@@ -45,8 +48,8 @@ public class WebResponse<E> implements Serializable {
         return result;
     }
 
-    private WebResponse(int code) {
-        this.code = code;
+    public WebResponse(int status) {
+        this.status = status;
     }
 
 }

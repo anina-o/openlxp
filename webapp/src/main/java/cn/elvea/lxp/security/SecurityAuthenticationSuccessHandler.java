@@ -24,6 +24,9 @@ import java.io.IOException;
 @Service
 public class SecurityAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
+    /**
+     * @see SimpleUrlAuthenticationSuccessHandler#handle(HttpServletRequest, HttpServletResponse, Authentication)
+     */
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // 生成唯一会话ID

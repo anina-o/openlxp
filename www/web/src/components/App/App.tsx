@@ -8,9 +8,15 @@ import Helmet from "react-helmet";
 import zhCnProvider from 'antd/lib/locale-provider/zh_CN';
 //
 import {applicationLocales, defaultApplicationLocale} from "@common/constants";
+import {setupAxios} from "@common/utils/request";
 import store from '@/stores';
 //
 import HomePage from "@/pages/Home";
+import LoginPage from "@/pages/Login";
+import RegisterPage from "@/pages/Register";
+
+//
+setupAxios().then();
 
 class App extends React.Component<any> {
     state = {
@@ -41,6 +47,8 @@ class App extends React.Component<any> {
                         <Router>
                             <Switch>
                                 <Route exact path="/" component={HomePage}/>
+                                <Route exact path="/login" component={LoginPage}/>
+                                <Route exact path="/register" component={RegisterPage}/>
                                 <Route exact path="/courses" component={HomePage}/>
                             </Switch>
                         </Router>

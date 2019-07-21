@@ -5,6 +5,7 @@ import * as intl from 'react-intl-universal';
 //
 import './DefaultLayout.less';
 import {BaseProps, FormProps, RouteProps} from "@/types/props.interface";
+import {Link} from "react-router-dom";
 //
 const {Content, Header, Footer} = Layout;
 
@@ -93,8 +94,8 @@ export default class DefaultLayout extends React.Component<DefaultLayoutProps, a
                             </Dropdown>
                         ) : (
                             <div>
-                                <a className="action">注册</a>
-                                <a className="action">登录</a>
+                                <Link className="action" to="login">登录</Link>
+                                <Link className="action" to="register">注册</Link>
                             </div>
                         )}
                     </div>
