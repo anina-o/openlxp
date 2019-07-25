@@ -1,5 +1,6 @@
 package cn.elvea.lxp.security;
 
+import cn.elvea.lxp.common.exception.ServiceException;
 import cn.elvea.lxp.common.utils.UUIDUtils;
 import cn.elvea.lxp.common.utils.WebUtils;
 import cn.elvea.lxp.common.web.WebResponse;
@@ -14,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * 处理登录成功
@@ -32,15 +34,21 @@ public class SecurityAuthenticationSuccessHandler extends SimpleUrlAuthenticatio
         // 生成唯一会话ID
         String uuid = UUIDUtils.randomUUID();
         SecurityUser user = SecurityUtils.getCurrentUser();
-        // 生成Token
-        try {
-            SecurityUtils.sign(uuid, user);
-        } catch (JOSEException e) {
-            log.error("token sign failed.", e);
+        if (user == null) {
+            log.error("Principal cannot be null.");
+            throw new ServiceException("Principal cannot be null.");
         }
-        //
+
+        Map<String, Object> resultMap = Maps.newHashMap();
+        try {
+            resultMap.put("token", SecurityUtils.sign(uuid, user));
+        } catch (JOSEException e) {
+            log.error("Token generate failed.");
+            throw new ServiceException("Token generate failed.");
+        }
+
         if (WebUtils.isAjaxRequest(request) || SecurityUtils.isApiRequest(request)) {
-            WebUtils.renderJson(response, WebResponse.success(Maps.newHashMap()));
+            WebUtils.renderJson(response, WebResponse.success(resultMap));
         } else {
             super.onAuthenticationSuccess(request, response, authentication);
         }

@@ -64,7 +64,7 @@ class LoginPage extends React.Component<any, any> {
                                 {
                                     getFieldDecorator('username', {
                                         rules: [{
-                                            message: intl.get("validation-required"),
+                                            message: intl.get("user_validation_username_not_empty"),
                                             required: true,
                                         }],
                                     })(
@@ -76,7 +76,7 @@ class LoginPage extends React.Component<any, any> {
                             <Form.Item>
                                 {getFieldDecorator('password', {
                                     rules: [{
-                                        message: intl.get("validation-required"),
+                                        message: intl.get("user_validation_password_not_empty"),
                                         required: true,
                                     }],
                                 })(
