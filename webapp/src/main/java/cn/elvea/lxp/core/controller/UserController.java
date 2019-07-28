@@ -2,13 +2,12 @@ package cn.elvea.lxp.core.controller;
 
 import cn.elvea.lxp.common.web.WebResponse;
 import cn.elvea.lxp.core.form.Register;
+import cn.elvea.lxp.core.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import static cn.elvea.lxp.common.utils.ValidationUtils.handleEntityValidationException;
 
@@ -20,15 +19,19 @@ import static cn.elvea.lxp.common.utils.ValidationUtils.handleEntityValidationEx
 @Controller
 @RequestMapping("/api/user")
 public class UserController {
+
+    private UserService userService;
+
     /**
      * 用户注册
      */
     @PostMapping("register")
     @ResponseBody
-    public WebResponse register(@Validated Register register, BindingResult result) {
+    public WebResponse register(@RequestBody @Validated Register register, BindingResult result) {
         if (result.hasFieldErrors()) {
             return handleEntityValidationException(result);
         }
+        this.userService.register(register);
         return WebResponse.success(register);
     }
 
@@ -57,6 +60,11 @@ public class UserController {
     @ResponseBody
     public WebResponse changePassword() {
         return WebResponse.success();
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
 }

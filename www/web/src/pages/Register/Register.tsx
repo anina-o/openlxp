@@ -64,7 +64,7 @@ class RegisterPage extends React.Component<any, any> {
                                 {
                                     getFieldDecorator('username', {
                                         rules: [{
-                                            message: intl.get("validation-required"),
+                                            message: intl.get("validation_required"),
                                             required: true,
                                         }],
                                     })(
@@ -76,7 +76,7 @@ class RegisterPage extends React.Component<any, any> {
                             <Form.Item>
                                 {getFieldDecorator('password', {
                                     rules: [{
-                                        message: intl.get("validation-required"),
+                                        message: intl.get("validation_required"),
                                         required: true,
                                     }],
                                 })(

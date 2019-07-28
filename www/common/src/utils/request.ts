@@ -33,9 +33,11 @@ const postJsonHeaders: AxiosRequestConfig = {
 const postHeaders: AxiosRequestConfig = {
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     transformRequest: (data: {}) => {
+        console.log(data);
         return stringify(data);
     },
     paramsSerializer: (data: {}) => {
+        console.log(data);
         return stringify(data);
     },
 };

@@ -1,4 +1,4 @@
-import {post} from '@common/utils/request'
+import {post, postJson} from '@common/utils/request'
 
 /**
  * 用户服务
@@ -17,7 +17,7 @@ class UserService {
      * 用户注册
      */
     register = (params = {}) => {
-        return post('/api/user/register', params)
+        return postJson('/api/user/register', params)
     };
     /**
      * 获取用户列表

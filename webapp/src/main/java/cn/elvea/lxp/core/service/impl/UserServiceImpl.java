@@ -3,9 +3,13 @@ package cn.elvea.lxp.core.service.impl;
 import cn.elvea.lxp.common.utils.ConvertUtils;
 import cn.elvea.lxp.core.dto.UserDto;
 import cn.elvea.lxp.core.entity.UserEntity;
-import cn.elvea.lxp.core.manager.UserManager;
+import cn.elvea.lxp.core.form.Register;
+import cn.elvea.lxp.core.repository.UserRepository;
 import cn.elvea.lxp.core.service.RoleService;
 import cn.elvea.lxp.core.service.UserService;
+import cn.elvea.lxp.core.type.UserStatusType;
+import cn.elvea.lxp.security.service.SecurityService;
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,17 +20,21 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl implements UserService {
+    @Autowired
+    UserRepository userRepository;
 
-    private UserManager userManager;
+    @Autowired
+    RoleService roleService;
 
-    private RoleService roleService;
+    @Autowired
+    SecurityService securityService;
 
     /**
      * @see UserService#findByUsername(String)
      */
     @Override
     public UserDto findByUsername(String username) {
-        UserEntity userEntity = this.userManager.findByUsername(username);
+        UserEntity userEntity = this.userRepository.findByUsername(username);
 
         UserDto userDto = null;
         if (userEntity != null) {
@@ -42,18 +50,27 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserDto findById(Long id) {
-        UserEntity userEntity = this.userManager.findById(id);
+        UserEntity userEntity = this.userRepository.findById(id).get();
         return ConvertUtils.sourceToTarget(userEntity, UserDto.class);
     }
 
-    @Autowired
-    public void setUserManager(UserManager userManager) {
-        this.userManager = userManager;
-    }
+    /**
+     * @see UserService#register(Register)
+     */
+    @Override
+    public void register(Register register) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(register.getUsername());
+        userEntity.setNickname(userEntity.getUsername());
+        userEntity.setFullname(userEntity.getUsername());
+        userEntity.setPassword(this.securityService.encryptPassword(register.getPassword()));
+        userEntity.setStatus(UserStatusType.OK.getValue());
+        userEntity.setActive(Boolean.TRUE);
+        this.userRepository.save(userEntity);
 
-    @Autowired
-    public void setRoleService(RoleService roleService) {
-        this.roleService = roleService;
+        Long roleId = this.roleService.getDefaultRole().getId();
+        this.roleService.assignRoles(userEntity.getId(), Lists.newArrayList(roleId));
+        System.out.println(register);
     }
 
 }

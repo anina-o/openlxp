@@ -15,6 +15,11 @@ import java.io.Serializable;
 public class RoleDto implements Serializable {
 
     /**
+     * ID
+     */
+    private Long id;
+
+    /**
      * 编号
      */
     private String code;
