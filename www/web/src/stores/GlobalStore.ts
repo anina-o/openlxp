@@ -126,6 +126,9 @@ export default class GlobalStore {
         this.preference = await storageService.getItem(STORAGE_PREFERENCE_KEY) as Preference;
         this.token = await storageService.getToken() as string;
         this.principal = parseJwtToken(this.token);
+        console.log(this.token);
+        console.log(this.principal);
+        console.log(this.preference);
         return true;
     };
 

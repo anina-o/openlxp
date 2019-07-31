@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {Button, Card, Col, Form, Icon, Input, Row} from 'antd';
 import * as intl from 'react-intl-universal';
+import {Button, Card, Col, Form, Icon, Input, Row} from 'antd';
 import {inject, observer} from 'mobx-react';
 //
 import "./Login.less";

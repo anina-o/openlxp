@@ -8,6 +8,7 @@ import {JwtPayload} from "@common/types/jwt-payload";
 export const parseJwtToken = (token: string): Principal | null => {
     if (token) {
         let payload: JwtPayload = decode(token) as JwtPayload;
+        console.log(payload);
         if (payload) {
             return payload.principal;
         }

@@ -1,6 +1,7 @@
 package cn.elvea.lxp.security;
 
 import cn.elvea.lxp.core.type.LangType;
+import com.google.common.collect.Maps;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
@@ -18,6 +19,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -192,15 +194,18 @@ public class SecurityUtils {
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS256);
         // JWSSigner
         JWSSigner jwsSigner = new MACSigner(SECRET);
+        //
+        Map<String, Object> principal = Maps.newHashMap();
+        principal.put("id", user.getUsername());
+        principal.put("username", user.getUsername());
+        principal.put("nickname", user.getNickname());
+        principal.put("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
+        principal.put("authorities", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
         // JWTClaimsSet
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                 .jwtID(uuid)
                 .subject(user.getUsername())
-                .claim("id", user.getId())
-                .claim("email", user.getEmail())
-                .claim("mobile", user.getMobile())
-                .claim("nickname", user.getNickname())
-                .claim("authorities", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                .claim("principal", principal)
                 .build();
         //
         SignedJWT signedJWT = new SignedJWT(jwsHeader, claimsSet);

@@ -1,11 +1,12 @@
 import * as React from 'react';
+import * as intl from 'react-intl-universal';
+import {Link, withRouter} from "react-router-dom";
 import {Avatar, Dropdown, Icon, Layout, Menu} from "antd";
 import {inject, observer} from "mobx-react";
-import * as intl from 'react-intl-universal';
 //
 import './DefaultLayout.less';
 import {BaseProps, FormProps, RouteProps} from "@/types/props.interface";
-import {Link} from "react-router-dom";
+
 //
 const {Content, Header, Footer} = Layout;
 
@@ -18,7 +19,7 @@ export interface DefaultLayoutProps extends FormProps, RouteProps, BaseProps {
  */
 @inject('store')
 @observer
-export default class DefaultLayout extends React.Component<DefaultLayoutProps, any> {
+class DefaultLayout extends React.Component<DefaultLayoutProps, any> {
     state = {
         selectedKeys: ['1']
     };
@@ -30,7 +31,7 @@ export default class DefaultLayout extends React.Component<DefaultLayoutProps, a
     onMenuClick = async (item: any) => {
         if (item.key === 'logout') {
             await this.props.store.clear();
-            this.props.history.push('/login');
+            this.props.history.replace('/');
         }
         if (item.key === 'change-password') {
             // this.showModal();
@@ -82,7 +83,9 @@ export default class DefaultLayout extends React.Component<DefaultLayoutProps, a
                           defaultSelectedKeys={['1']}
                           selectedKeys={selectedKeys}>
                         <Menu.Item key="1">Home</Menu.Item>
-                        <Menu.Item key="2">My Course</Menu.Item>
+                        {store.authenticated ? (
+                            <Menu.Item key="2">My Course</Menu.Item>
+                        ) : ([])}
                     </Menu>
 
                     <div className="page-user-nav">
@@ -112,3 +115,5 @@ export default class DefaultLayout extends React.Component<DefaultLayoutProps, a
         );
     }
 }
+
+export default withRouter(DefaultLayout);
