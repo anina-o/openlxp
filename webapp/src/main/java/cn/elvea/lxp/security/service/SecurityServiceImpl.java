@@ -37,8 +37,8 @@ public class SecurityServiceImpl implements SecurityService {
             // 找不到用户
             throw new UsernameNotFoundException("");
         }
-        List<SimpleGrantedAuthority> authorities = userDto.getRoles().stream()
-                .map(roleDto -> new SimpleGrantedAuthority(roleDto.getCode())).collect(Collectors.toList());
+        List<SimpleGrantedAuthority> authorities = userDto.getRoleList()
+                .stream().map(role -> new SimpleGrantedAuthority(role.getCode())).collect(Collectors.toList());
         SecurityUser securityUser = new SecurityUser(userDto.getUsername(), userDto.getPassword(), true, authorities);
         securityUser.setId(userDto.getId());
         securityUser.setNickname(userDto.getNickname());

@@ -19,9 +19,11 @@ public class UserServiceTests extends BaseTests {
     UserService userService;
 
     @Test
-    void findByUsernameTest() {
-        UserDto userDto = this.userService.findByUsername("admin");
-        Assertions.assertNotNull(userDto);
+    void findTest() {
+        UserDto userDtoByUsername = this.userService.findByUsername("admin");
+        Assertions.assertNotNull(userDtoByUsername);
+        UserDto userDtoById = this.userService.findById(1L);
+        Assertions.assertNotNull(userDtoById);
     }
 
     @Test

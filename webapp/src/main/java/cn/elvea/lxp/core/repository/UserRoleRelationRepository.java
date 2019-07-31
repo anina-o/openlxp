@@ -2,7 +2,9 @@ package cn.elvea.lxp.core.repository;
 
 import cn.elvea.lxp.core.entity.UserRoleRelationEntity;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -20,15 +22,18 @@ import static cn.elvea.lxp.core.CoreConstants.CACHE_USER_ROLE_KEY;
 public interface UserRoleRelationRepository extends CrudRepository<UserRoleRelationEntity, Long> {
 
     /**
-     * 查找用户所有角色关联
+     * 查询用户所有权限的ID集合
      */
-    @CachePut(value = CACHE_USER_ROLE_KEY, key = "#userId")
-    List<UserRoleRelationEntity> findByUserId(@Param("userId") Long userId);
+    @Cacheable(value = CACHE_USER_ROLE_KEY, key = "#p0")
+    @Query("select e.roleId from UserRoleRelationEntity e where e.userId = :userId")
+    List<Long> findByUserId(@Param("userId") Long userId);
 
     /**
      * 删除用户所有角色关联
      */
-    @CacheEvict(value = CACHE_USER_ROLE_KEY, key = "#userId", beforeInvocation = true)
+    @Modifying
+    @Query("delete from UserRoleRelationEntity e where e.userId = :userId")
+    @CacheEvict(value = CACHE_USER_ROLE_KEY, key = "#p0", beforeInvocation = true)
     void deleteByUserId(@Param("userId") Long userId);
 
 }

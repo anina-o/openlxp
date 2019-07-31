@@ -11,6 +11,7 @@ public class CoreConstants {
 
     //
     public final static String CACHE_USER_KEY = "USER";
-    public final static String CACHE_ROLE_KEY = "USER";
+    public final static String CACHE_ROLE_KEY = "ROLE";
     public final static String CACHE_USER_ROLE_KEY = "USER_ROLE";
+
 }

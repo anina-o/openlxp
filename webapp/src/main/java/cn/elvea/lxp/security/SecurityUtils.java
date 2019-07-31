@@ -9,6 +9,7 @@ import com.nimbusds.jwt.SignedJWT;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -17,6 +18,7 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 /**
  * SecurityUtils
@@ -198,7 +200,7 @@ public class SecurityUtils {
                 .claim("email", user.getEmail())
                 .claim("mobile", user.getMobile())
                 .claim("nickname", user.getNickname())
-                .claim("authorities", user.getAuthorities())
+                .claim("authorities", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .build();
         //
         SignedJWT signedJWT = new SignedJWT(jwsHeader, claimsSet);

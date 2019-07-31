@@ -48,4 +48,10 @@ public class UserRoleRelationEntity extends BaseEntity {
     @CreatedBy
     @Column(name = "created_by")
     private Long createdBy;
+
+    public UserRoleRelationEntity(Long userId, Long roleId) {
+        this.userId = userId;
+        this.roleId = roleId;
+    }
+
 }

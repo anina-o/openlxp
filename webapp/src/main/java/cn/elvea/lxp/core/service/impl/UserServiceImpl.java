@@ -10,8 +10,12 @@ import cn.elvea.lxp.core.service.UserService;
 import cn.elvea.lxp.core.type.UserStatusType;
 import cn.elvea.lxp.security.service.SecurityService;
 import com.google.common.collect.Lists;
+import org.apache.commons.collections4.CollectionUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * UserServiceImpl
@@ -20,6 +24,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
     @Autowired
     UserRepository userRepository;
 
@@ -34,15 +39,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserDto findByUsername(String username) {
-        UserEntity userEntity = this.userRepository.findByUsername(username);
-
-        UserDto userDto = null;
-        if (userEntity != null) {
-            userDto = ConvertUtils.sourceToTarget(userEntity, UserDto.class);
-            //
-            userDto.setRoles(this.roleService.findByUserId(userDto.getId()));
-        }
-        return userDto;
+        Optional<UserEntity> userEntity = this.userRepository.findByUsername(username);
+        return userEntity.map(this::getUserDto).orElse(null);
     }
 
     /**
@@ -50,8 +48,20 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserDto findById(Long id) {
-        UserEntity userEntity = this.userRepository.findById(id).get();
-        return ConvertUtils.sourceToTarget(userEntity, UserDto.class);
+        Optional<UserEntity> userEntity = this.userRepository.findById(id);
+        return userEntity.map(this::getUserDto).orElse(null);
+    }
+
+    /**
+     * 获取用户信息
+     * 包含附件关联的信息
+     */
+    private UserDto getUserDto(@NotNull UserEntity userEntity) {
+        UserDto userDto = ConvertUtils.sourceToTarget(userEntity, UserDto.class);
+        //
+        userDto.setRoleList(this.roleService.findByUserId(userDto.getId()));
+        //
+        return userDto;
     }
 
     /**
@@ -71,6 +81,19 @@ public class UserServiceImpl implements UserService {
         Long roleId = this.roleService.getDefaultRole().getId();
         this.roleService.assignRoles(userEntity.getId(), Lists.newArrayList(roleId));
         System.out.println(register);
+    }
+
+    /**
+     * @see UserService#save(UserDto)
+     */
+    @Override
+    public UserDto save(UserDto userDto) {
+        UserEntity userEntity = ConvertUtils.sourceToTarget(userDto, UserEntity.class);
+        this.userRepository.save(userEntity);
+        if (CollectionUtils.isNotEmpty(userDto.getRoleIdList())) {
+            this.roleService.assignRoles(userEntity.getId(), userDto.getRoleIdList());
+        }
+        return userDto;
     }
 
 }

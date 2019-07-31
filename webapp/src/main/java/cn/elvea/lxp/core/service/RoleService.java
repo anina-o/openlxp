@@ -12,9 +12,9 @@ import java.util.List;
 public interface RoleService {
 
     /**
-     * 获取用户角色
+     * 根据用户ID查询用户
      */
-    List<RoleDto> findByUserId(Long userId);
+    RoleDto findById(Long id);
 
     /**
      * 获取默认用户角色
@@ -22,13 +22,13 @@ public interface RoleService {
     RoleDto getDefaultRole();
 
     /**
-     * 给用户分配角色
+     * 获取用户角色
      */
-    void assignRoles(Long userId, List<Long> roleIdList);
+    List<RoleDto> findByUserId(Long userId);
 
     /**
-     * 查询用户拥有的角色ID
+     * 给用户分配角色
      */
-    List<Long> findRoleIdListByUserId(Long userId);
+    List<RoleDto> assignRoles(Long userId, List<Long> roleIdList);
 
 }

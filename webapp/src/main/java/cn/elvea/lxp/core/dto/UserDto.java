@@ -76,7 +76,8 @@ public class UserDto implements Serializable {
      */
     private Long deletedBy;
     /**
-     * 角色
+     * 用户角色
      */
-    private List<RoleDto> roles;
+    private List<RoleDto> roleList;
+    private List<Long> roleIdList;
 }

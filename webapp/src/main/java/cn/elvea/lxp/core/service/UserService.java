@@ -25,4 +25,9 @@ public interface UserService {
      */
     void register(Register register);
 
+    /**
+     * 保存用户
+     */
+    UserDto save(UserDto userDto);
+
 }
