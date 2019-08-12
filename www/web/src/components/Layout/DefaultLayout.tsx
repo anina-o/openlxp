@@ -5,21 +5,15 @@ import {Avatar, Dropdown, Icon, Layout, Menu} from "antd";
 import {inject, observer} from "mobx-react";
 //
 import './DefaultLayout.less';
-import {BaseProps, FormProps, RouteProps} from "@/types/props.interface";
-
 //
 const {Content, Header, Footer} = Layout;
-
-//
-export interface DefaultLayoutProps extends FormProps, RouteProps, BaseProps {
-}
 
 /**
  * 站点布局
  */
 @inject('store')
 @observer
-class DefaultLayout extends React.Component<DefaultLayoutProps, any> {
+class DefaultLayout extends React.Component<any, any> {
     state = {
         selectedKeys: ['1']
     };
@@ -32,9 +26,10 @@ class DefaultLayout extends React.Component<DefaultLayoutProps, any> {
         if (item.key === 'logout') {
             await this.props.store.clear();
             this.props.history.replace('/');
-        }
-        if (item.key === 'change-password') {
-            // this.showModal();
+        } else if (item.key === 'account') {
+            this.props.history.replace('/account');
+        } else if (item.key === 'change-password') {
+            this.props.history.replace('/change-password');
         }
     };
 
@@ -56,12 +51,6 @@ class DefaultLayout extends React.Component<DefaultLayoutProps, any> {
                     {intl.get('user_label_change_password')}
                     </span>
                 </Menu.Item>
-                <Menu.Item className="user-drowdown-menu-item" key="preferences">
-                    <Icon type="setting"/>
-                    <span className="user-drowdown-menu-label">
-                    {intl.get('user_label_preferences')}
-                    </span>
-                </Menu.Item>
                 <Menu.Divider/>
                 <Menu.Item className="user-drowdown-menu-item" key="logout">
                     <Icon type="logout"/>
@@ -77,15 +66,21 @@ class DefaultLayout extends React.Component<DefaultLayoutProps, any> {
                 <Header className="page-header">
                     <div className="logo"/>
 
-                    <Menu className="page-nav"
-                          mode="horizontal"
+                    <Menu className="page-nav" mode="horizontal"
                           style={{lineHeight: '64px'}}
                           defaultSelectedKeys={['1']}
                           selectedKeys={selectedKeys}>
-                        <Menu.Item key="1">Home</Menu.Item>
+                        <Menu.Item key="1">
+                            <Link to='/'>Home</Link>
+                        </Menu.Item>
                         {store.authenticated ? (
-                            <Menu.Item key="2">My Course</Menu.Item>
+                            <Menu.Item key="2">
+                                <Link to='/my-course'>My Course</Link>
+                            </Menu.Item>
                         ) : ([])}
+                        <Menu.Item key="1">
+                            <Link to='/admin/dashboard'>Admin</Link>
+                        </Menu.Item>
                     </Menu>
 
                     <div className="page-user-nav">
@@ -104,12 +99,14 @@ class DefaultLayout extends React.Component<DefaultLayoutProps, any> {
                     </div>
                 </Header>
 
-                <Content style={{padding: '0 50px'}}>
-                    {children}
+                <Content className="page-content">
+                    <div className="page-content-container">
+                        {children}
+                    </div>
                 </Content>
 
                 <Footer className="page-footer">
-                    LXP©2019
+                    Copyright&copy;2019
                 </Footer>
             </Layout>
         );

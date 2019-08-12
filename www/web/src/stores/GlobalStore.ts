@@ -1,7 +1,6 @@
-// 路由状态
+import {action, computed, observable} from "mobx";
 import {RouterStore, syncHistoryWithStore} from "mobx-react-router";
 import {createBrowserHistory} from "history";
-import {action, computed, observable} from "mobx";
 import {indexOf, isArray} from "lodash";
 //
 import storageService from "@common/services/StorageService";
@@ -109,11 +108,9 @@ export default class GlobalStore {
     @action loginSuccess = async (token: string) => {
         // 登录成功后清空本地已保存的登录信息
         await this.clear();
-
         // 保存登录用户信息
         this.token = token;
         this.principal = parseJwtToken(token);
-
         // 更新本地存储的用户信息
         await storageService.setToken(token);
     };

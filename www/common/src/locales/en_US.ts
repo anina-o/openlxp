@@ -171,6 +171,8 @@ export default {
     "catalog_field_code": "Code",
     "catalog_field_title": "Title",
     "catalog_field_parent": "Parent",
+    "activity_created_by_me": "Created by me",
+    "activity_participated_in": "I participated in",
     "site_about_us_page_title": "About Us",
     "site_contact_us_page_title": "Contact Us",
     "site_announcement_page_title": "Announcement",

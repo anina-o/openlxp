@@ -10,7 +10,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.6.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.7.RELEASE")
     }
 }
 
@@ -26,15 +26,15 @@ allprojects {
     ext {
         // 3rd party
         asmVersion = "7.1"
-        okIoVersion = "2.2.2"
+        okIoVersion = "2.3.0"
         okhttpVersion = "4.0.1"
         guavaVersion = "28.0-jre"
-        nimbusJoseJwtVersion = "7.4"
+        nimbusJoseJwtVersion = "7.7"
         // apache commons
         commonsIoVersion = '2.6'
         commonsLangVersion = '3.9'
         commonsTextVersion = '1.7'
-        commonsCodecVersion = '1.12'
+        commonsCodecVersion = '1.13'
         commonsFileuploadVersion = '1.4'
         commonsBeanutilsVersion = '1.9.3'
         commonsCollectionsVersion = '4.4'
@@ -95,6 +95,8 @@ project("webapp") {
         implementation group: 'org.apache.commons', name: 'commons-text', version: commonsTextVersion
         implementation group: 'org.apache.commons', name: 'commons-lang3', version: commonsLangVersion
         implementation group: 'org.apache.commons', name: 'commons-collections4', version: commonsCollectionsVersion
+        implementation group: 'org.apache.commons', name: 'commons-compress', version: commonsCompressVersion
+        implementation group: 'commons-codec', name: 'commons-codec', version: commonsCodecVersion
         // 3rd party
         implementation 'joda-time:joda-time'
         implementation 'mysql:mysql-connector-java'
@@ -111,4 +113,5 @@ project("webapp") {
         testImplementation 'org.junit.jupiter:junit-jupiter-api'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     }
+
 }
