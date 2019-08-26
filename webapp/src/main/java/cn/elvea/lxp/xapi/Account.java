@@ -2,6 +2,7 @@ package cn.elvea.lxp.xapi;
 
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import cn.elvea.lxp.xapi.json.JsonObject;
+import cn.elvea.lxp.xapi.utils.XApiVersion;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Data;
@@ -17,7 +18,7 @@ import org.apache.logging.log4j.util.Strings;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-public class Account implements XApiJsonObject {
+public class Account implements AbstractJsonObject {
     /**
      * 用户主页
      */

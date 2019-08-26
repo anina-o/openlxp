@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_GROUP;
+import static cn.elvea.lxp.xapi.utils.XApiConstants.OBJECT_TYPE_GROUP;
 
 /**
  * GroupEntity

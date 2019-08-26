@@ -2,6 +2,7 @@ package cn.elvea.lxp.xapi;
 
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import cn.elvea.lxp.xapi.json.JsonObject;
+import cn.elvea.lxp.xapi.utils.XApiVersion;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Data;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.net.URISyntaxException;
 
-import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_ACTIVITY;
+import static cn.elvea.lxp.xapi.utils.XApiConstants.OBJECT_TYPE_ACTIVITY;
 
 /**
  * Activity
@@ -20,7 +21,7 @@ import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_ACTIVITY;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-public class Activity implements XApiObject {
+public class Activity implements AbstractObject {
     /**
      *
      */

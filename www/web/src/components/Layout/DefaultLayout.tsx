@@ -15,7 +15,7 @@ const {Content, Header, Footer} = Layout;
 @observer
 class DefaultLayout extends React.Component<any, any> {
     state = {
-        selectedKeys: ['1']
+        selectedKeys: ['menu-key-home']
     };
 
     constructor(props: any) {
@@ -70,15 +70,15 @@ class DefaultLayout extends React.Component<any, any> {
                           style={{lineHeight: '64px'}}
                           defaultSelectedKeys={['1']}
                           selectedKeys={selectedKeys}>
-                        <Menu.Item key="1">
+                        <Menu.Item key="menu-key-home">
                             <Link to='/'>Home</Link>
                         </Menu.Item>
                         {store.authenticated ? (
-                            <Menu.Item key="2">
+                            <Menu.Item key="menu-key-my-course">
                                 <Link to='/my-course'>My Course</Link>
                             </Menu.Item>
                         ) : ([])}
-                        <Menu.Item key="1">
+                        <Menu.Item key="menu-key-admin">
                             <Link to='/admin/dashboard'>Admin</Link>
                         </Menu.Item>
                     </Menu>

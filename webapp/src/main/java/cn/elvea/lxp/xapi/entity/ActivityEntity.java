@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_ACTIVITY;
+import static cn.elvea.lxp.xapi.utils.XApiConstants.OBJECT_TYPE_ACTIVITY;
 
 /**
  * ActivityEntity
@@ -14,7 +14,7 @@ import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_ACTIVITY;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Document
+@Document(collection = "openlxp_activity")
 public class ActivityEntity extends BaseEntity {
     /**
      * Object Type

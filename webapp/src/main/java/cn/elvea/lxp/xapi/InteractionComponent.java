@@ -2,6 +2,7 @@ package cn.elvea.lxp.xapi;
 
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import cn.elvea.lxp.xapi.json.JsonObject;
+import cn.elvea.lxp.xapi.utils.XApiVersion;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Data;
@@ -18,7 +19,7 @@ import java.net.URISyntaxException;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-public class InteractionComponent implements XApiJsonObject {
+public class InteractionComponent implements AbstractJsonObject {
     /**
      *
      */

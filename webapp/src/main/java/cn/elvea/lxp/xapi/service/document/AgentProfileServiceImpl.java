@@ -1,7 +1,7 @@
 package cn.elvea.lxp.xapi.service.document;
 
 import cn.elvea.lxp.xapi.Agent;
-import cn.elvea.lxp.xapi.XApiUtils;
+import cn.elvea.lxp.xapi.utils.XApiUtils;
 import cn.elvea.lxp.xapi.exception.XAPIException;
 import cn.elvea.lxp.xapi.repository.AgentRepository;
 import lombok.extern.slf4j.Slf4j;

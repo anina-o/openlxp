@@ -2,6 +2,7 @@ package cn.elvea.lxp.xapi;
 
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import cn.elvea.lxp.xapi.json.JsonObject;
+import cn.elvea.lxp.xapi.utils.XApiVersion;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Data;
@@ -18,7 +19,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-public class Person implements XApiJsonObject {
+public class Person implements AbstractJsonObject {
     /**
      *
      */

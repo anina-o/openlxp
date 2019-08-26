@@ -1,9 +1,6 @@
 package cn.elvea.lxp.xapi.controller;
 
 import cn.elvea.lxp.xapi.http.XAPIResponse;
-import cn.elvea.lxp.xapi.service.document.AgentProfileService;
-import cn.elvea.lxp.xapi.service.XAPIService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +11,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/xAPI/agents/profile")
-public class AgentProfileController {
-
-    @Autowired
-    XAPIService xapiService;
-
-    @Autowired
-    AgentProfileService agentProfileService;
+public class AgentProfileController extends AbstractController {
 
     /**
      * Get

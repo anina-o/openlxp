@@ -1,4 +1,4 @@
-package cn.elvea.lxp.xapi;
+package cn.elvea.lxp.xapi.utils;
 
 /**
  * XApiConstants
@@ -6,6 +6,18 @@ package cn.elvea.lxp.xapi;
  * @author elvea
  */
 public class XApiConstants {
+    /**
+     *
+     */
+    public static final String XAPI_CONTENT_TYPE = "application/json;charset=utf-8";
+    /**
+     *
+     */
+    public static final String XAPI_ACTIVITIES_PREFIX = "http://adlnet.gov/expapi/activities/";
+    /**
+     *
+     */
+    public static final String XAPI_VERSION_HEADER = "X-Experience-API-Version";
     /**
      *
      */

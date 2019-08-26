@@ -2,6 +2,7 @@ package cn.elvea.lxp.xapi;
 
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import cn.elvea.lxp.xapi.json.JsonObject;
+import cn.elvea.lxp.xapi.utils.XApiVersion;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Data;
@@ -9,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 import java.util.UUID;
 
-import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_STATEMENT_REF;
+import static cn.elvea.lxp.xapi.utils.XApiConstants.OBJECT_TYPE_STATEMENT_REF;
 
 /**
  * Statement References
@@ -18,7 +19,7 @@ import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_STATEMENT_REF;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class StatementRef implements XApiObject {
+public class StatementRef implements AbstractObject {
     /**
      * objectType
      */

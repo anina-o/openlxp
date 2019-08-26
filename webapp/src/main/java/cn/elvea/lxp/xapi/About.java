@@ -2,6 +2,7 @@ package cn.elvea.lxp.xapi;
 
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import cn.elvea.lxp.xapi.json.JsonObject;
+import cn.elvea.lxp.xapi.utils.XApiVersion;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -15,8 +16,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import static cn.elvea.lxp.xapi.XApiUtils.extensionsToJsonNode;
-import static cn.elvea.lxp.xapi.XApiUtils.jsonNodeToExtensions;
+import static cn.elvea.lxp.xapi.utils.XApiUtils.extensionsToJsonNode;
+import static cn.elvea.lxp.xapi.utils.XApiUtils.jsonNodeToExtensions;
 
 /**
  * About
@@ -26,7 +27,7 @@ import static cn.elvea.lxp.xapi.XApiUtils.jsonNodeToExtensions;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class About implements XApiJsonObject {
+public class About implements AbstractJsonObject {
     /**
      *
      */

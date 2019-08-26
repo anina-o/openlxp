@@ -2,17 +2,19 @@ package cn.elvea.lxp.xapi;
 
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import cn.elvea.lxp.xapi.json.JsonObject;
+import cn.elvea.lxp.xapi.utils.XApiVersion;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_AGENT;
-import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_GROUP;
+import static cn.elvea.lxp.xapi.utils.XApiConstants.OBJECT_TYPE_AGENT;
+import static cn.elvea.lxp.xapi.utils.XApiConstants.OBJECT_TYPE_GROUP;
 
 /**
  * XApiObject
@@ -22,7 +24,7 @@ import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_GROUP;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-public abstract class Actor implements XApiObject {
+public abstract class Actor implements AbstractObject {
     /**
      *
      */
@@ -43,19 +45,6 @@ public abstract class Actor implements XApiObject {
      *
      */
     private Account account;
-
-    public static Actor fromJson(String json) throws IOException {
-        return fromJsonNode(JsonMapper.toJsonNode(json));
-    }
-
-    public static Actor fromJsonNode(JsonNode jsonNode) {
-        String objectType = OBJECT_TYPE_AGENT;
-        JsonNode objectTypeNode = jsonNode.path("objectType");
-        if (!objectTypeNode.isMissingNode()) {
-            objectType = objectTypeNode.textValue();
-        }
-        return OBJECT_TYPE_GROUP.equals(objectType) ? new Group(jsonNode) : new Agent(jsonNode);
-    }
 
     public Actor(JsonNode jsonNode) {
         JsonNode nameNode = jsonNode.path("name");
@@ -107,6 +96,19 @@ public abstract class Actor implements XApiObject {
             node.set("account", this.getAccount().toJsonNode(version));
         }
         return node;
+    }
+
+    public static Actor fromJson(@NotNull String json) throws IOException {
+        return fromJsonNode(JsonMapper.toJsonNode(json));
+    }
+
+    public static Actor fromJsonNode(@NotNull JsonNode jsonNode) {
+        String objectType = OBJECT_TYPE_AGENT;
+        JsonNode objectTypeNode = jsonNode.path("objectType");
+        if (!objectTypeNode.isMissingNode()) {
+            objectType = objectTypeNode.textValue();
+        }
+        return OBJECT_TYPE_GROUP.equals(objectType) ? new Group(jsonNode) : new Agent(jsonNode);
     }
 
 }

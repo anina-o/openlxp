@@ -5,7 +5,7 @@ package cn.elvea.lxp.xapi;
  *
  * @author elvea
  */
-public interface XApiObject extends XApiJsonObject {
+public interface AbstractObject extends AbstractJsonObject {
 
     /**
      * 获取对象类型

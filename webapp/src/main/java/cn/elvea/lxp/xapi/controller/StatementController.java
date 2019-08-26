@@ -1,10 +1,17 @@
 package cn.elvea.lxp.xapi.controller;
 
+import cn.elvea.lxp.xapi.Statement;
+import cn.elvea.lxp.xapi.StatementsResult;
 import cn.elvea.lxp.xapi.http.XAPIResponse;
-import cn.elvea.lxp.xapi.service.XAPIService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.NoSuchAlgorithmException;
+
+import static cn.elvea.lxp.xapi.utils.XApiConstants.XAPI_CONTENT_TYPE;
 
 /**
  * Statement ResourceEntity
@@ -13,18 +20,24 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/xAPI/statements")
-public class StatementController {
-
-    @Autowired
-    XAPIService xapiService;
+public class StatementController extends AbstractController {
 
     /**
      * Get
      */
-    @GetMapping
+    @GetMapping(produces = XAPI_CONTENT_TYPE)
     @ResponseBody
-    public XAPIResponse getStatement() {
-        return XAPIResponse.success(this.xapiService.about());
+    public XAPIResponse getStatement(@RequestParam(value = "statementId", required = false) String statementId,
+                                     @RequestParam(value = "page", required = false, defaultValue = "0") String page,
+                                     @RequestParam(value = "limit", required = false, defaultValue = "1000") String limit) {
+        if (StringUtils.isEmpty(statementId)) {
+            Statement statement = new Statement();
+            return XAPIResponse.success(statement);
+        } else {
+            StatementsResult statementsResult = new StatementsResult();
+            return XAPIResponse.success(statementsResult);
+        }
+
     }
 
     /**
@@ -32,8 +45,10 @@ public class StatementController {
      */
     @PutMapping
     @ResponseBody
-    public XAPIResponse putStatement() {
-        return XAPIResponse.success(this.xapiService.about());
+    public XAPIResponse putStatement(@RequestBody String json) throws Exception {
+        Statement statement = new Statement(json);
+        this.statementService.saveStatement(statement);
+        return XAPIResponse.success();
     }
 
     /**
@@ -41,8 +56,8 @@ public class StatementController {
      */
     @PostMapping
     @ResponseBody
-    public XAPIResponse postStatement() {
-        return XAPIResponse.success(this.xapiService.about());
+    public XAPIResponse postStatement(@RequestBody String json) throws NoSuchAlgorithmException, IOException, URISyntaxException {
+        return XAPIResponse.success(this.statementService.saveStatements(Statement.fromJson(json)));
     }
 
     /**
@@ -53,4 +68,5 @@ public class StatementController {
     public XAPIResponse deleteStatement() {
         return XAPIResponse.success(this.xapiService.about());
     }
+
 }

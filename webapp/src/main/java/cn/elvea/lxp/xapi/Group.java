@@ -2,6 +2,7 @@ package cn.elvea.lxp.xapi;
 
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import cn.elvea.lxp.xapi.json.JsonObject;
+import cn.elvea.lxp.xapi.utils.XApiVersion;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -13,7 +14,7 @@ import lombok.NoArgsConstructor;
 import java.util.Iterator;
 import java.util.List;
 
-import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_GROUP;
+import static cn.elvea.lxp.xapi.utils.XApiConstants.OBJECT_TYPE_GROUP;
 
 /**
  * Group
@@ -24,13 +25,9 @@ import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_GROUP;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class Group extends Actor {
-    /**
-     *
-     */
+
     private final String objectType = OBJECT_TYPE_GROUP;
-    /**
-     *
-     */
+
     private List<Agent> members = Lists.newArrayList();
 
     public Group(JsonNode jsonNode) {

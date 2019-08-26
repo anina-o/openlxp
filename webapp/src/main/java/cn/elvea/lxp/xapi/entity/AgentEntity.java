@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_AGENT;
+import static cn.elvea.lxp.xapi.utils.XApiConstants.OBJECT_TYPE_AGENT;
 
 /**
  * AgentEntity

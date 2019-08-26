@@ -1,5 +1,6 @@
-package cn.elvea.lxp.xapi;
+package cn.elvea.lxp.xapi.utils;
 
+import cn.elvea.lxp.xapi.Agent;
 import cn.elvea.lxp.xapi.exception.XAPIException;
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -15,7 +16,6 @@ import java.util.Map;
  * XApiUtils
  */
 public class XApiUtils {
-
     /**
      * 获取Agent的唯一标识标记
      *

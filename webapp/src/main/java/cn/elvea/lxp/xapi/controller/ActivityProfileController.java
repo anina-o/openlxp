@@ -1,9 +1,6 @@
 package cn.elvea.lxp.xapi.controller;
 
 import cn.elvea.lxp.xapi.http.XAPIResponse;
-import cn.elvea.lxp.xapi.service.document.ActivityProfileService;
-import cn.elvea.lxp.xapi.service.XAPIService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,13 +13,7 @@ import java.io.IOException;
  */
 @Controller
 @RequestMapping("/xAPI/activites/profile")
-public class ActivityProfileController {
-
-    @Autowired
-    XAPIService xapiService;
-
-    @Autowired
-    ActivityProfileService activityProfileService;
+public class ActivityProfileController extends AbstractController {
 
     /**
      * Get

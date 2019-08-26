@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_AGENT;
+import static cn.elvea.lxp.xapi.utils.XApiConstants.OBJECT_TYPE_AGENT;
 
 /**
  * Agent
@@ -16,9 +16,7 @@ import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_AGENT;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 public class Agent extends Actor {
-    /**
-     *
-     */
+
     private final String objectType = OBJECT_TYPE_AGENT;
 
     public Agent(JsonNode jsonNode) {

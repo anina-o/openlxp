@@ -1,6 +1,7 @@
 package cn.elvea.lxp.xapi;
 
 import cn.elvea.lxp.xapi.json.JsonMapper;
+import cn.elvea.lxp.xapi.utils.XApiVersion;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -12,7 +13,7 @@ import java.io.Serializable;
  *
  * @author elvea
  */
-public interface XApiJsonObject extends Serializable {
+public interface AbstractJsonObject extends Serializable {
 
     ObjectNode toJsonNode(XApiVersion version);
 
@@ -31,7 +32,7 @@ public interface XApiJsonObject extends Serializable {
     }
 
     default String toJson(XApiVersion version) {
-        return this.toJson(version, false);
+        return this.toJson(version, true);
     }
 
     default String toJson(Boolean pretty) {
@@ -39,7 +40,7 @@ public interface XApiJsonObject extends Serializable {
     }
 
     default String toJson() {
-        return this.toJson(XApiVersion.latest(), false);
+        return this.toJson(XApiVersion.latest(), true);
     }
 
 }

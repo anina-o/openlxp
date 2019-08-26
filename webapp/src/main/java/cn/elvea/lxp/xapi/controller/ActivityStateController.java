@@ -1,9 +1,6 @@
 package cn.elvea.lxp.xapi.controller;
 
 import cn.elvea.lxp.xapi.http.XAPIResponse;
-import cn.elvea.lxp.xapi.service.document.ActivityStateService;
-import cn.elvea.lxp.xapi.service.XAPIService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +11,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/xAPI/activites/state")
-public class ActivityStateController {
-
-    @Autowired
-    XAPIService xapiService;
-
-    @Autowired
-    ActivityStateService activityStateService;
+public class ActivityStateController extends AbstractController {
 
     /**
      * Get

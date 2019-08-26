@@ -2,6 +2,7 @@ package cn.elvea.lxp.xapi;
 
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import cn.elvea.lxp.xapi.json.JsonObject;
+import cn.elvea.lxp.xapi.utils.XApiVersion;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -9,6 +10,7 @@ import com.google.common.collect.Lists;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
@@ -19,7 +21,7 @@ import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
-import static cn.elvea.lxp.xapi.XApiConstants.*;
+import static cn.elvea.lxp.xapi.utils.XApiConstants.*;
 
 /**
  * XApiStatement
@@ -29,41 +31,41 @@ import static cn.elvea.lxp.xapi.XApiConstants.*;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-public abstract class XApiStatement implements XApiJsonObject {
+public abstract class AbstractStatement implements AbstractJsonObject {
     /**
      *
      */
-    private Actor actor;
+    protected Actor actor;
     /**
      *
      */
-    private Verb verb;
+    protected Verb verb;
     /**
      *
      */
-    private XApiObject object;
+    protected AbstractObject object;
     /**
      *
      */
-    private Result result;
+    protected Result result;
     /**
      *
      */
-    private Context context;
+    protected Context context;
     /**
      *
      */
-    private DateTime timestamp;
+    protected DateTime timestamp;
     /**
      *
      */
-    private List<Attachment> attachments;
+    protected List<Attachment> attachments;
 
-    public XApiStatement(String json) throws IOException, URISyntaxException, NoSuchAlgorithmException {
+    public AbstractStatement(@NotNull String json) throws IOException, URISyntaxException, NoSuchAlgorithmException {
         this(JsonMapper.toJsonNode(json));
     }
 
-    public XApiStatement(JsonNode jsonNode) throws URISyntaxException, MalformedURLException, IOException, NoSuchAlgorithmException {
+    public AbstractStatement(@NotNull JsonNode jsonNode) throws URISyntaxException, MalformedURLException, IOException, NoSuchAlgorithmException {
         this();
 
         JsonNode actorNode = jsonNode.path("actor");
@@ -115,7 +117,7 @@ public abstract class XApiStatement implements XApiJsonObject {
 
     }
 
-    public XApiStatement(Agent actor, Verb verb, XApiObject object, Result result, Context context) {
+    public AbstractStatement(Agent actor, Verb verb, AbstractObject object, Result result, Context context) {
         this();
 
         this.setActor(actor);
@@ -125,7 +127,7 @@ public abstract class XApiStatement implements XApiJsonObject {
         this.setContext(context);
     }
 
-    public XApiStatement(Agent actor, Verb verb, XApiObject object) {
+    public AbstractStatement(Agent actor, Verb verb, AbstractObject object) {
         this(actor, verb, object, null, null);
     }
 

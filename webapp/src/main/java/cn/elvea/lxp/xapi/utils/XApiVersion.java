@@ -1,4 +1,4 @@
-package cn.elvea.lxp.xapi;
+package cn.elvea.lxp.xapi.utils;
 
 import lombok.Getter;
 

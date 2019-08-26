@@ -2,6 +2,7 @@ package cn.elvea.lxp.xapi;
 
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import cn.elvea.lxp.xapi.json.JsonObject;
+import cn.elvea.lxp.xapi.utils.XApiVersion;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Data;
@@ -13,7 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 
-import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_SUBSTATEMENT;
+import static cn.elvea.lxp.xapi.utils.XApiConstants.OBJECT_TYPE_SUBSTATEMENT;
 
 /**
  * SubStatement
@@ -23,7 +24,7 @@ import static cn.elvea.lxp.xapi.XApiConstants.OBJECT_TYPE_SUBSTATEMENT;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
-public class SubStatement extends XApiStatement implements XApiObject {
+public class SubStatement extends AbstractStatement implements AbstractObject {
 
     /**
      *

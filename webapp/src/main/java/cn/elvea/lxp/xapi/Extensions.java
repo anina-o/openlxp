@@ -2,6 +2,7 @@ package cn.elvea.lxp.xapi;
 
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import cn.elvea.lxp.xapi.json.JsonObject;
+import cn.elvea.lxp.xapi.utils.XApiVersion;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.Maps;
@@ -17,7 +18,7 @@ import java.util.Map;
  *
  * @author elvea
  */
-public class Extensions implements XApiJsonObject {
+public class Extensions implements AbstractJsonObject {
 
     private final HashMap<URI, JsonNode> _map = Maps.newHashMap();
 
