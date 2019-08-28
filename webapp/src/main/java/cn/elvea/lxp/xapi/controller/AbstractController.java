@@ -4,9 +4,9 @@ import cn.elvea.lxp.xapi.service.ActivityService;
 import cn.elvea.lxp.xapi.service.AgentService;
 import cn.elvea.lxp.xapi.service.StatementService;
 import cn.elvea.lxp.xapi.service.XAPIService;
-import cn.elvea.lxp.xapi.service.document.ActivityProfileService;
-import cn.elvea.lxp.xapi.service.document.ActivityStateService;
-import cn.elvea.lxp.xapi.service.document.AgentProfileService;
+import cn.elvea.lxp.xapi.service.ActivityProfileService;
+import cn.elvea.lxp.xapi.service.ActivityStateService;
+import cn.elvea.lxp.xapi.service.AgentProfileService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 

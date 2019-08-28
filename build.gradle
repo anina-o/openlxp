@@ -26,10 +26,10 @@ allprojects {
     ext {
         // 3rd party
         asmVersion = "7.1"
-        okIoVersion = "2.3.0"
-        okhttpVersion = "4.0.1"
+        okIoVersion = "2.4.0"
+        okhttpVersion = "4.1.0"
         guavaVersion = "28.0-jre"
-        nimbusJoseJwtVersion = "7.7"
+        nimbusJoseJwtVersion = "7.8"
         // apache commons
         commonsIoVersion = '2.6'
         commonsLangVersion = '3.9'
@@ -49,69 +49,4 @@ allprojects {
             mavenBom SpringBootPlugin.BOM_COORDINATES
         }
     }
-}
-
-project("webapp") {
-    apply plugin: 'idea'
-    apply plugin: 'java'
-    apply plugin: 'org.springframework.boot'
-
-    group = 'cn.elvea.lxp'
-    version = '1.0.0'
-    sourceCompatibility = '11'
-
-    repositories {
-        mavenCentral()
-    }
-
-    configurations {
-        compile.exclude module: 'spring-boot-starter-logging'
-        compile.exclude group: 'junit'
-
-        developmentOnly
-        runtimeClasspath {
-            extendsFrom developmentOnly
-        }
-        compileOnly {
-            extendsFrom annotationProcessor
-        }
-    }
-
-    dependencies {
-        implementation 'org.springframework.boot:spring-boot-starter-web'
-        implementation 'org.springframework.boot:spring-boot-starter-amqp'
-        implementation 'org.springframework.boot:spring-boot-starter-cache'
-        implementation 'org.springframework.boot:spring-boot-starter-log4j2'
-        implementation 'org.springframework.boot:spring-boot-starter-security'
-        implementation 'org.springframework.boot:spring-boot-starter-validation'
-        implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-        implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-        // lombok
-        compileOnly 'org.projectlombok:lombok'
-        annotationProcessor 'org.projectlombok:lombok'
-        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-        // commons
-        implementation group: 'org.apache.commons', name: 'commons-text', version: commonsTextVersion
-        implementation group: 'org.apache.commons', name: 'commons-lang3', version: commonsLangVersion
-        implementation group: 'org.apache.commons', name: 'commons-collections4', version: commonsCollectionsVersion
-        implementation group: 'org.apache.commons', name: 'commons-compress', version: commonsCompressVersion
-        implementation group: 'commons-codec', name: 'commons-codec', version: commonsCodecVersion
-        // 3rd party
-        implementation 'joda-time:joda-time'
-        implementation 'mysql:mysql-connector-java'
-        implementation group: 'org.ow2.asm', name: 'asm', version: asmVersion
-        implementation group: 'com.squareup.okio', name: 'okio', version: okIoVersion
-        implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttpVersion
-        implementation group: 'com.google.guava', name: 'guava', version: guavaVersion
-        implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: nimbusJoseJwtVersion
-        // development 
-        developmentOnly("org.springframework.boot:spring-boot-devtools")
-        // test
-        testImplementation 'org.springframework.boot:spring-boot-starter-test'
-        testImplementation 'org.springframework.security:spring-security-test'
-        testImplementation 'org.junit.jupiter:junit-jupiter-api'
-        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-    }
-
 }

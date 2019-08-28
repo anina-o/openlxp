@@ -1,6 +1,5 @@
 package cn.elvea.lxp.xapi;
 
-import cn.elvea.lxp.xapi.json.JsonObject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -27,5 +26,5 @@ public class ActivityProfile implements Serializable {
     /**
      *
      */
-    private JsonObject profile;
+    private String content;
 }

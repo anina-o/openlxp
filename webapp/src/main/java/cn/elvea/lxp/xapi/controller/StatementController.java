@@ -1,7 +1,6 @@
 package cn.elvea.lxp.xapi.controller;
 
 import cn.elvea.lxp.xapi.Statement;
-import cn.elvea.lxp.xapi.StatementsResult;
 import cn.elvea.lxp.xapi.http.XAPIResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -28,16 +27,25 @@ public class StatementController extends AbstractController {
     @GetMapping(produces = XAPI_CONTENT_TYPE)
     @ResponseBody
     public XAPIResponse getStatement(@RequestParam(value = "statementId", required = false) String statementId,
+                                     @RequestParam(value = "voidedStatementId ", required = false) String voidedStatementId,
+                                     @RequestParam(value = "agent", required = false, defaultValue = "") String agentJson,
+                                     @RequestParam(value = "verb", required = false, defaultValue = "") String verb,
+                                     @RequestParam(value = "activity", required = false, defaultValue = "") String activity,
+                                     @RequestParam(value = "registration", required = false, defaultValue = "") String registration,
+                                     @RequestParam(value = "related_activities", required = false, defaultValue = "false") Boolean relatedActivities,
+                                     @RequestParam(value = "related_agents", required = false, defaultValue = "false") Boolean relatedAgents,
+                                     @RequestParam(value = "since", required = false, defaultValue = "") String since,
+                                     @RequestParam(value = "until", required = false, defaultValue = "") String until,
+                                     @RequestParam(value = "format", required = false, defaultValue = "exact") String format,
+                                     @RequestParam(value = "attachments", required = false, defaultValue = "false") Boolean attachments,
+                                     @RequestParam(value = "ascending", required = false, defaultValue = "false") Boolean ascending,
                                      @RequestParam(value = "page", required = false, defaultValue = "0") String page,
-                                     @RequestParam(value = "limit", required = false, defaultValue = "1000") String limit) {
-        if (StringUtils.isEmpty(statementId)) {
-            Statement statement = new Statement();
-            return XAPIResponse.success(statement);
+                                     @RequestParam(value = "limit", required = false, defaultValue = "0") String limit) {
+        if (!StringUtils.isEmpty(statementId) || !StringUtils.isEmpty(voidedStatementId)) {
+            return XAPIResponse.success(this.statementService.getStatement(statementId));
         } else {
-            StatementsResult statementsResult = new StatementsResult();
-            return XAPIResponse.success(statementsResult);
+            return XAPIResponse.success(this.statementService.getStatements());
         }
-
     }
 
     /**

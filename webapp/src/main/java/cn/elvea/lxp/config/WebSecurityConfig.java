@@ -21,6 +21,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static cn.elvea.lxp.security.SecurityConstants.XAPI_REQUEST_URL;
+
 /**
  * WebSecurityConfig
  *
@@ -106,15 +108,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static class XApiSecurityConfigAdapter extends WebSecurityBaseConfig {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.antMatcher(SecurityConstants.XAPI_REQUEST_URL)
+            http.antMatcher(XAPI_REQUEST_URL)
                     .csrf().disable()
                     .cors()
                     .and()
                     .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                     .and()
                     .authorizeRequests()
-                    .antMatchers("/xAPI/*").permitAll()
-                    .anyRequest().authenticated();
+                    .antMatchers(XAPI_REQUEST_URL).permitAll()
+                    .anyRequest().permitAll();
         }
     }
 

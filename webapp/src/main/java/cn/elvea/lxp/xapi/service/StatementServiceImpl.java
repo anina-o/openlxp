@@ -2,6 +2,7 @@ package cn.elvea.lxp.xapi.service;
 
 import cn.elvea.lxp.common.utils.ConvertUtils;
 import cn.elvea.lxp.xapi.Statement;
+import cn.elvea.lxp.xapi.StatementsResult;
 import cn.elvea.lxp.xapi.entity.StatementEntity;
 import cn.elvea.lxp.xapi.repository.StatementRepository;
 import com.google.common.collect.Lists;
@@ -28,6 +29,19 @@ public class StatementServiceImpl implements StatementService {
         StatementEntity entity = new StatementEntity();
         ConvertUtils.copyProperties(statement, entity);
         this.statementRepository.save(entity);
+    }
+
+    @Override
+    public Statement getStatement(String statementId) {
+        StatementEntity entity = this.statementRepository.findById(statementId).orElse(null);
+        Statement statement = new Statement();
+        ConvertUtils.copyProperties(entity, statement);
+        return statement;
+    }
+
+    @Override
+    public StatementsResult getStatements() {
+        return null;
     }
 
     @Override

@@ -1,6 +1,6 @@
-package cn.elvea.lxp.xapi.repository.document;
+package cn.elvea.lxp.xapi.repository;
 
-import cn.elvea.lxp.xapi.entity.document.ActivityStateEntity;
+import cn.elvea.lxp.xapi.entity.ActivityStateEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 /**

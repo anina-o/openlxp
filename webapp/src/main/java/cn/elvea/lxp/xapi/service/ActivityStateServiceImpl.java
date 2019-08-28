@@ -1,4 +1,4 @@
-package cn.elvea.lxp.xapi.service.document;
+package cn.elvea.lxp.xapi.service;
 
 import org.springframework.stereotype.Service;
 

@@ -19,11 +19,11 @@ public class ActivityStateController extends AbstractController {
     @GetMapping
     @ResponseBody
     public XAPIResponse getActivityState(@RequestParam(name = "activityId") String activityId,
-                                         @RequestParam(name = "agent") String agent,
+                                         @RequestParam(name = "agent") String agentJson,
                                          @RequestParam(name = "registration", required = false) String registration,
                                          @RequestParam(name = "stateId") String stateId,
                                          @RequestParam(name = "since", required = false) String since) {
-        this.activityStateService.getActivityState(activityId, agent, registration, stateId, since);
+        this.activityStateService.getActivityState(activityId, agentJson, registration, stateId, since);
         return XAPIResponse.success();
     }
 
@@ -32,7 +32,10 @@ public class ActivityStateController extends AbstractController {
      */
     @PutMapping
     @ResponseBody
-    public XAPIResponse putActivityState() {
+    public XAPIResponse putActivityState(@RequestParam(name = "activityId") String activityId,
+                                         @RequestParam(name = "agent") String agentJson,
+                                         @RequestParam(name = "registration", required = false) String registration,
+                                         @RequestParam(name = "stateId") String stateId) {
         return XAPIResponse.success(this.xapiService.about());
     }
 
@@ -41,7 +44,10 @@ public class ActivityStateController extends AbstractController {
      */
     @PostMapping
     @ResponseBody
-    public XAPIResponse postActivityState() {
+    public XAPIResponse postActivityState(@RequestParam(name = "activityId") String activityId,
+                                          @RequestParam(name = "agent") String agentJson,
+                                          @RequestParam(name = "registration", required = false) String registration,
+                                          @RequestParam(name = "stateId") String stateId) {
         return XAPIResponse.success(this.xapiService.about());
     }
 
@@ -50,7 +56,11 @@ public class ActivityStateController extends AbstractController {
      */
     @DeleteMapping
     @ResponseBody
-    public XAPIResponse deleteActivityState() {
+    public XAPIResponse deleteActivityState(
+            @RequestParam(name = "activityId") String activityId,
+            @RequestParam(name = "agent") String agentJson,
+            @RequestParam(name = "registration", required = false) String registration
+    ) {
         return XAPIResponse.success(this.xapiService.about());
     }
 

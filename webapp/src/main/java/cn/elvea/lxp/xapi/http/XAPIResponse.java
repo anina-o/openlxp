@@ -1,5 +1,6 @@
 package cn.elvea.lxp.xapi.http;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,10 +24,12 @@ public class XAPIResponse<E> implements Serializable {
     /**
      * 信息
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String message;
     /**
      * 数据
      */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private E data;
 
     public static XAPIResponse success() {

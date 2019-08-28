@@ -1,4 +1,4 @@
-package cn.elvea.lxp.xapi.entity.document;
+package cn.elvea.lxp.xapi.entity;
 
 import java.io.Serializable;
 

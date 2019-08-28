@@ -1,4 +1,4 @@
-package cn.elvea.lxp.xapi.entity.document;
+package cn.elvea.lxp.xapi.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,6 +11,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Document
-public class ActivityStateEntity extends BaseDocumentEntity {
+@Document(collection = "openlxp_activity_state")
+public class ActivityStateEntity {
 }

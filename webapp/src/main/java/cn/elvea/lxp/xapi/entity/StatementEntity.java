@@ -4,9 +4,10 @@ import cn.elvea.lxp.xapi.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.joda.time.DateTime;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -17,11 +18,11 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Document(collection = "openlxp_statement")
-public class StatementEntity extends BaseEntity {
+public class StatementEntity implements Serializable {
     /**
      * ID
      */
-    @Field("id")
+    @Id
     private String id;
     /**
      * Stored

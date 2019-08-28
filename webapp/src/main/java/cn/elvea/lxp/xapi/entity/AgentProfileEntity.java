@@ -1,7 +1,6 @@
-package cn.elvea.lxp.xapi.entity.document;
+package cn.elvea.lxp.xapi.entity;
 
 import cn.elvea.lxp.xapi.Account;
-import cn.elvea.lxp.xapi.entity.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -15,7 +14,7 @@ import static cn.elvea.lxp.xapi.utils.XApiConstants.OBJECT_TYPE_AGENT;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Document
+@Document(collection = "openlxp_agent_profile")
 public class AgentProfileEntity extends BaseEntity {
     /**
      * Object Type
