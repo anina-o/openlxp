@@ -1,10 +1,7 @@
 package cn.elvea.lxp.xapi.service;
 
-import cn.elvea.lxp.xapi.Activity;
+import cn.elvea.lxp.xapi.http.XAPIResponse;
 import org.springframework.stereotype.Service;
-
-import java.net.URISyntaxException;
-import java.util.UUID;
 
 /**
  * ActivityServiceImpl
@@ -18,8 +15,8 @@ public class ActivityServiceImpl implements ActivityService {
      * @see ActivityService#getActivities(String)
      */
     @Override
-    public Activity getActivities(String activityId) throws URISyntaxException {
-        return new Activity(UUID.randomUUID().toString());
+    public XAPIResponse<?> getActivities(String activityId) {
+        return XAPIResponse.success();
     }
 
 }

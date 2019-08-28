@@ -1,8 +1,6 @@
 package cn.elvea.lxp.xapi.service;
 
-import cn.elvea.lxp.xapi.Activity;
-
-import java.net.URISyntaxException;
+import cn.elvea.lxp.xapi.http.XAPIResponse;
 
 /**
  * ActivityService
@@ -12,11 +10,8 @@ import java.net.URISyntaxException;
 public interface ActivityService {
 
     /**
-     * getActivities
-     *
-     * @param activityId ID
-     * @return {@link Activity}
+     * Get
      */
-    Activity getActivities(String activityId) throws URISyntaxException;
+    XAPIResponse<?> getActivities(String activityId);
 
 }

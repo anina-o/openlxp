@@ -28,6 +28,11 @@ public class Account implements AbstractJsonObject {
      */
     private String name;
 
+    public Account(String homePage, String name) {
+        this.homePage = homePage;
+        this.name = name;
+    }
+
     public Account(JsonNode jsonNode) {
         JsonNode homePageNode = jsonNode.path("homePage");
         if (!homePageNode.isMissingNode()) {

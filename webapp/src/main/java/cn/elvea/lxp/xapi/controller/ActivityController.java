@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.net.URISyntaxException;
-
 /**
  * Activity State ResourceEntity
  *
@@ -19,12 +17,12 @@ import java.net.URISyntaxException;
 public class ActivityController extends AbstractController {
 
     /**
-     * getActivities
+     * Get
      */
     @GetMapping
     @ResponseBody
-    public XAPIResponse getActivities(@RequestParam("activityId") String activityId) throws URISyntaxException {
-        return XAPIResponse.success(this.activityService.getActivities(activityId));
+    public XAPIResponse getActivities(@RequestParam("activityId") String activityId) {
+        return this.activityService.getActivities(activityId);
     }
 
 }

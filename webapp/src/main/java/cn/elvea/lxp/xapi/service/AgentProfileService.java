@@ -1,6 +1,8 @@
 package cn.elvea.lxp.xapi.service;
 
-import java.util.List;
+import cn.elvea.lxp.xapi.http.XAPIResponse;
+
+import java.io.IOException;
 
 /**
  * AgentProfileService
@@ -10,51 +12,18 @@ import java.util.List;
 public interface AgentProfileService {
 
     /**
-     * getAgentProfile
-     *
-     * @param activityId String
-     * @param profileId  String
+     * 查询
      */
-    String getAgentProfile(String activityId, String profileId);
+    XAPIResponse<?> getAgentProfile(String activityId, String agentJson, String profileId);
 
     /**
-     * getAgentProfile
-     *
-     * @param activityId String
-     * @param profileId  String
+     * 保存或者更新
      */
-    List<String> getAgentProfileIdList(String activityId, String profileId);
+    XAPIResponse<?> saveAgentProfile(String activityId, String profileId, String content) throws IOException;
 
     /**
-     * getAgentProfile
-     *
-     * @param activityId String
-     * @param profileId  String
+     * 删除
      */
-    void putAgentProfile(String activityId, String profileId, String document);
-
-    /**
-     * getAgentProfile
-     *
-     * @param activityId String
-     * @param profileId  String
-     */
-    void postAgentProfile(String activityId, String profileId, String document);
-
-    /**
-     * getAgentProfile
-     *
-     * @param activityId String
-     * @param profileId  String
-     */
-    void deleteAgentProfile(String activityId, String profileId);
-
-    /**
-     * getAgentProfile
-     *
-     * @param activityId String
-     * @param since      String
-     */
-    void deleteAgentProfiles(String activityId, String since);
+    XAPIResponse<?> deleteAgentProfile(String agentJson, String profileId, String since);
 
 }

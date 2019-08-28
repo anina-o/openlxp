@@ -1,6 +1,7 @@
 package cn.elvea.lxp.xapi.service;
 
 import cn.elvea.lxp.xapi.Person;
+import cn.elvea.lxp.xapi.http.XAPIResponse;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,8 +16,8 @@ public class AgentServiceImpl implements AgentService {
      * @see AgentService#getAgents(String)
      */
     @Override
-    public Person getAgents(String json) {
-        return new Person();
+    public XAPIResponse<?> getAgents(String json) {
+        return XAPIResponse.success(new Person());
     }
 
 }

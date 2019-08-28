@@ -1,10 +1,12 @@
 package cn.elvea.lxp.xapi.service;
 
-import cn.elvea.lxp.common.utils.UUIDUtils;
 import cn.elvea.lxp.xapi.entity.ActivityProfileEntity;
+import cn.elvea.lxp.xapi.http.XAPIResponse;
 import cn.elvea.lxp.xapi.repository.ActivityProfileRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -18,48 +20,44 @@ import java.util.stream.Collectors;
  */
 @Service
 public class ActivityProfileServiceImpl implements ActivityProfileService {
+
     /**
      * @see ActivityProfileRepository
      */
     private ActivityProfileRepository activityProfileRepository;
 
     /**
-     * @see ActivityProfileService#getActivityProfile(String, String)
+     * MongoTemplate
+     */
+    private MongoTemplate mongoTemplate;
+
+    /**
+     * @see ActivityProfileService#getActivityProfile(String, String, String)
      */
     @Override
-    public String getActivityProfile(String activityId, String profileId) {
-        ActivityProfileEntity condition = new ActivityProfileEntity();
-        condition.setActivityId(activityId);
-        condition.setProfileId(profileId);
-        Example<ActivityProfileEntity> example = Example.of(condition);
-
-        ActivityProfileEntity entity = this.activityProfileRepository.findOne(example).orElse(null);
-        if (entity != null) {
-            return entity.getContent();
+    public XAPIResponse<?> getActivityProfile(String activityId, String profileId, String since) {
+        if (StringUtils.isNotEmpty(profileId)) {
+            ActivityProfileEntity condition = new ActivityProfileEntity();
+            condition.setActivityId(activityId);
+            condition.setProfileId(profileId);
+            Example<ActivityProfileEntity> example = Example.of(condition);
+            ActivityProfileEntity entity = this.activityProfileRepository.findOne(example).orElse(null);
+            return XAPIResponse.success(entity != null ? entity.getContent() : "");
         } else {
-            return "";
+            ActivityProfileEntity entity = new ActivityProfileEntity();
+            entity.setActivityId(activityId);
+            Example<ActivityProfileEntity> example = Example.of(entity);
+            List<ActivityProfileEntity> entityList = this.activityProfileRepository.findAll(example);
+            return XAPIResponse.success(entityList.stream().map(ActivityProfileEntity::getProfileId).collect(Collectors.toList()));
         }
     }
 
     /**
-     * @see ActivityProfileService#getActivityProfileIdList(String, String)
+     * @see ActivityProfileService#saveActivityProfile(String, String, String)
      */
     @Override
-    public List<String> getActivityProfileIdList(String activityId, String since) {
+    public XAPIResponse<?> saveActivityProfile(String activityId, String profileId, String content) {
         ActivityProfileEntity entity = new ActivityProfileEntity();
-        entity.setActivityId(activityId);
-        Example<ActivityProfileEntity> example = Example.of(entity);
-        List<ActivityProfileEntity> entityList = this.activityProfileRepository.findAll(example);
-        return entityList.stream().map(ActivityProfileEntity::getId).collect(Collectors.toList());
-    }
-
-    /**
-     * @see ActivityProfileService#putActivityProfile(String, String, String)
-     */
-    @Override
-    public void putActivityProfile(String activityId, String profileId, String content) {
-        ActivityProfileEntity entity = new ActivityProfileEntity();
-        entity.setId(UUIDUtils.randomUUID());
         entity.setActivityId(activityId);
         entity.setProfileId(profileId);
         entity.setContent(content);
@@ -67,27 +65,15 @@ public class ActivityProfileServiceImpl implements ActivityProfileService {
         entity.setUpdatedAt(new Date());
         entity.setActive(Boolean.TRUE);
         this.activityProfileRepository.save(entity);
+        return XAPIResponse.success();
     }
 
     /**
-     * @see ActivityProfileService#postActivityProfile(String, String, String)
+     * @see ActivityProfileService#deleteActivityProfile(String, String, String)
      */
     @Override
-    public void postActivityProfile(String activityId, String profileId, String content) {
-    }
-
-    /**
-     * @see ActivityProfileService#postActivityProfile(String, String, String)
-     */
-    @Override
-    public void deleteActivityProfile(String activityId, String profileId) {
-    }
-
-    /**
-     * @see ActivityProfileService#postActivityProfile(String, String, String)
-     */
-    @Override
-    public void deleteActivityProfiles(String activityId, String since) {
+    public XAPIResponse<?> deleteActivityProfile(String activityId, String profileId, String since) {
+        return XAPIResponse.success();
     }
 
     @Autowired

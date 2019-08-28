@@ -1,9 +1,14 @@
 package cn.elvea.lxp.xapi.service;
 
+import cn.elvea.lxp.xapi.Actor;
+import cn.elvea.lxp.xapi.Agent;
+import cn.elvea.lxp.xapi.entity.AgentProfileEntity;
+import cn.elvea.lxp.xapi.http.XAPIResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.io.IOException;
+import java.util.Date;
 
 /**
  * AgentProfileServiceImpl
@@ -12,35 +17,28 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class AgentProfileServiceImpl implements AgentProfileService {
+public class AgentProfileServiceImpl extends AbstractService implements AgentProfileService {
 
     @Override
-    public String getAgentProfile(String activityId, String profileId) {
+    public XAPIResponse<?> getAgentProfile(String activityId, String agentJson, String profileId) {
         return null;
     }
 
     @Override
-    public List<String> getAgentProfileIdList(String activityId, String profileId) {
+    public XAPIResponse<?> saveAgentProfile(String agentJson, String profileId, String content) throws IOException {
+        AgentProfileEntity entity = new AgentProfileEntity();
+        entity.setAgent((Agent) Actor.fromJson(agentJson));
+        entity.setProfileId(profileId);
+        entity.setContent(content);
+        entity.setCreatedAt(new Date());
+        entity.setUpdatedAt(new Date());
+        entity.setActive(Boolean.TRUE);
+        this.agentProfileRepository.save(entity);
+        return XAPIResponse.success();
+    }
+
+    @Override
+    public XAPIResponse<?> deleteAgentProfile(String agentJson, String profileId, String since) {
         return null;
-    }
-
-    @Override
-    public void putAgentProfile(String activityId, String profileId, String document) {
-
-    }
-
-    @Override
-    public void postAgentProfile(String activityId, String profileId, String document) {
-
-    }
-
-    @Override
-    public void deleteAgentProfile(String activityId, String profileId) {
-
-    }
-
-    @Override
-    public void deleteAgentProfiles(String activityId, String since) {
-
     }
 }

@@ -22,7 +22,7 @@ public class AgentController extends AbstractController {
     @GetMapping
     @ResponseBody
     public XAPIResponse getAgents(@RequestParam("agent") String agentJson) {
-        return XAPIResponse.success(this.agentService.getAgents(agentJson));
+        return this.agentService.getAgents(agentJson);
     }
 
 }

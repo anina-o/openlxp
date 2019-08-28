@@ -6,10 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.security.NoSuchAlgorithmException;
-
 import static cn.elvea.lxp.xapi.utils.XApiConstants.XAPI_CONTENT_TYPE;
 
 /**
@@ -49,23 +45,15 @@ public class StatementController extends AbstractController {
     }
 
     /**
-     * Put
+     * Put or Post
      */
     @PutMapping
+    @PostMapping
     @ResponseBody
     public XAPIResponse putStatement(@RequestBody String json) throws Exception {
         Statement statement = new Statement(json);
         this.statementService.saveStatement(statement);
         return XAPIResponse.success();
-    }
-
-    /**
-     * Post
-     */
-    @PostMapping
-    @ResponseBody
-    public XAPIResponse postStatement(@RequestBody String json) throws NoSuchAlgorithmException, IOException, URISyntaxException {
-        return XAPIResponse.success(this.statementService.saveStatements(Statement.fromJson(json)));
     }
 
     /**

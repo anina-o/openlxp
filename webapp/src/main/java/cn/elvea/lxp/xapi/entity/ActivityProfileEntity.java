@@ -2,10 +2,8 @@ package cn.elvea.lxp.xapi.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -16,12 +14,7 @@ import java.util.Date;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Document(collection = "openlxp_activity_profile")
-public class ActivityProfileEntity implements Serializable {
-    /**
-     * ID
-     */
-    @Id
-    private String id;
+public class ActivityProfileEntity extends BaseEntity {
     /**
      *
      */

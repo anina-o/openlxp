@@ -1,11 +1,11 @@
 package cn.elvea.lxp.xapi.entity;
 
-import cn.elvea.lxp.xapi.Account;
+import cn.elvea.lxp.xapi.Agent;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import static cn.elvea.lxp.xapi.utils.XApiConstants.OBJECT_TYPE_AGENT;
+import java.util.Date;
 
 /**
  * AgentEntity
@@ -17,27 +17,43 @@ import static cn.elvea.lxp.xapi.utils.XApiConstants.OBJECT_TYPE_AGENT;
 @Document(collection = "openlxp_agent_profile")
 public class AgentProfileEntity extends BaseEntity {
     /**
-     * Object Type
+     *
      */
-    private String objectType = OBJECT_TYPE_AGENT;
+    private String profileId;
     /**
      *
      */
-    private String name;
+    private Agent agent;
     /**
      *
      */
-    private String mbox;
+    private String content;
     /**
-     *
+     * 是否启用
      */
-    private String mboxSHA1Sum;
+    private Boolean active;
     /**
-     *
+     * 创建人
      */
-    private String openID;
+    private Date createdBy;
     /**
-     *
+     * 创建日期
      */
-    private Account account;
+    private Date createdAt;
+    /**
+     * 更新人
+     */
+    private Date updatedBy;
+    /**
+     * 更新日期
+     */
+    private Date updatedAt;
+    /**
+     * 删除人
+     */
+    private Date deleteBy;
+    /**
+     * 删除日期
+     */
+    private Date deleteAt;
 }

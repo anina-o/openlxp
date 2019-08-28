@@ -1,6 +1,6 @@
 package cn.elvea.lxp.xapi.service;
 
-import java.util.List;
+import cn.elvea.lxp.xapi.http.XAPIResponse;
 
 /**
  * ActivityProfileService
@@ -10,51 +10,18 @@ import java.util.List;
 public interface ActivityProfileService {
 
     /**
-     * getActivityProfile
-     *
-     * @param activityId String
-     * @param profileId  String
+     * 查询
      */
-    String getActivityProfile(String activityId, String profileId);
+    XAPIResponse<?> getActivityProfile(String activityId, String profileId, String since);
 
     /**
-     * getActivityProfile
-     *
-     * @param activityId String
-     * @param since      String
+     * 新增或者更新
      */
-    List<String> getActivityProfileIdList(String activityId, String since);
+    XAPIResponse<?> saveActivityProfile(String activityId, String profileId, String content);
 
     /**
-     * getActivityProfile
-     *
-     * @param activityId String
-     * @param profileId  String
+     * 删除
      */
-    void putActivityProfile(String activityId, String profileId, String document);
-
-    /**
-     * getActivityProfile
-     *
-     * @param activityId String
-     * @param profileId  String
-     */
-    void postActivityProfile(String activityId, String profileId, String document);
-
-    /**
-     * getActivityProfile
-     *
-     * @param activityId String
-     * @param profileId  String
-     */
-    void deleteActivityProfile(String activityId, String profileId);
-
-    /**
-     * getActivityProfile
-     *
-     * @param activityId String
-     * @param since      String
-     */
-    void deleteActivityProfiles(String activityId, String since);
+    XAPIResponse<?> deleteActivityProfile(String activityId, String profileId, String since);
 
 }
