@@ -1,6 +1,6 @@
 package cn.elvea.lxp.xapi.json;
 
-import cn.elvea.lxp.xapi.utils.XApiVersion;
+import cn.elvea.lxp.xapi.enums.VersionEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -17,24 +17,18 @@ import java.io.Serializable;
 public abstract class AbstractJsonObject implements JsonObject, Serializable {
 
     /**
-     * @see JsonObject#toJsonNode(XApiVersion)
-     */
-    @Override
-    public abstract ObjectNode toJsonNode(XApiVersion version);
-
-    /**
      * @see JsonObject#toJsonNode()
      */
     @Override
     public ObjectNode toJsonNode() {
-        return this.toJsonNode(XApiVersion.latest());
+        return this.toJsonNode(VersionEnum.latest());
     }
 
     /**
-     * @see JsonObject#toJson(XApiVersion, Boolean)
+     * @see JsonObject#toJson(VersionEnum, Boolean)
      */
     @Override
-    public String toJson(XApiVersion version, Boolean pretty) {
+    public String toJson(VersionEnum version, Boolean pretty) {
         ObjectWriter writer = JsonMapper.getWriter(pretty);
         try {
             return writer.writeValueAsString(this.toJsonNode(version));
@@ -45,10 +39,10 @@ public abstract class AbstractJsonObject implements JsonObject, Serializable {
     }
 
     /**
-     * @see JsonObject#toJson(XApiVersion)
+     * @see AbstractJsonObject#toJson(VersionEnum)
      */
     @Override
-    public String toJson(XApiVersion version) {
+    public String toJson(VersionEnum version) {
         return this.toJson(version, false);
     }
 
@@ -57,7 +51,7 @@ public abstract class AbstractJsonObject implements JsonObject, Serializable {
      */
     @Override
     public String toJson(Boolean pretty) {
-        return this.toJson(XApiVersion.latest(), pretty);
+        return this.toJson(VersionEnum.latest(), pretty);
     }
 
     /**
@@ -65,7 +59,7 @@ public abstract class AbstractJsonObject implements JsonObject, Serializable {
      */
     @Override
     public String toJson() {
-        return this.toJson(XApiVersion.latest(), false);
+        return this.toJson(VersionEnum.latest(), false);
     }
 
 }

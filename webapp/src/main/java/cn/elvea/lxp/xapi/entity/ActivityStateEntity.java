@@ -1,10 +1,12 @@
 package cn.elvea.lxp.xapi.entity;
 
-import cn.elvea.lxp.xapi.Agent;
+import cn.elvea.lxp.xapi.model.Agent;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,8 +16,13 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Document(collection = "openlxp_activity_state")
-public class ActivityStateEntity extends BaseEntity {
+@Document(collection = "olxp_activity_state")
+public class ActivityStateEntity implements Serializable {
+    /**
+     * ID
+     */
+    @Id
+    private String id;
     /**
      *
      */

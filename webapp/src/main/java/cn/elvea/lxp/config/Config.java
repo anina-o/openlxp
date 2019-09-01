@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.mongodb.config.EnableMongoAuditing;
 
 /**
  * Config
@@ -17,6 +18,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @Configuration
 @ComponentScan("cn.elvea.lxp")
 @EnableJpaAuditing(auditorAwareRef = "userAuditor")
+@EnableMongoAuditing(auditorAwareRef = "userAuditor")
 @EnableCaching
 public class Config {
 

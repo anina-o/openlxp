@@ -1,6 +1,7 @@
 package cn.elvea.lxp.xapi.controller;
 
 import cn.elvea.lxp.xapi.http.XAPIResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,25 +20,29 @@ public class ActivityStateController extends AbstractController {
     @GetMapping
     @ResponseBody
     public XAPIResponse getActivityState(@RequestParam(name = "activityId") String activityId,
-                                         @RequestParam(name = "agent") String agentJson,
-                                         @RequestParam(name = "registration", required = false) String registration,
+                                         @RequestParam(name = "agent") String agent,
                                          @RequestParam(name = "stateId", required = false) String stateId,
+                                         @RequestParam(name = "registration", required = false) String registration,
                                          @RequestParam(name = "since", required = false) String since) {
-        return this.activityStateService.getActivityState(activityId, agentJson, registration, stateId, since);
+        if (StringUtils.isNotEmpty(stateId)) {
+            return XAPIResponse.success(this.activityStateService.getActivityState(activityId, agent, registration, stateId, since));
+        } else {
+            return XAPIResponse.success(this.activityStateService.getActivityStateList(activityId, agent, registration, since));
+        }
     }
 
     /**
      * Put or Post
      */
-    @PutMapping
-    @PostMapping
     @ResponseBody
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT})
     public XAPIResponse putActivityState(@RequestParam(name = "activityId") String activityId,
                                          @RequestParam(name = "agent") String agentJson,
                                          @RequestParam(name = "registration", required = false) String registration,
                                          @RequestParam(name = "stateId") String stateId,
                                          @RequestBody String bodyJson) throws Exception {
-        return this.activityStateService.saveActivityState(activityId, agentJson, registration, stateId, bodyJson);
+        this.activityStateService.saveActivityState(activityId, agentJson, registration, stateId, bodyJson);
+        return XAPIResponse.success();
     }
 
     /**
@@ -50,7 +55,12 @@ public class ActivityStateController extends AbstractController {
                                             @RequestParam(name = "stateId", required = false) String stateId,
                                             @RequestParam(name = "registration", required = false) String registration,
                                             @RequestParam(name = "since", required = false) String since) {
-        return activityStateService.deleteActivityState(activityId, agentJson, stateId, registration, since);
+        if (StringUtils.isNotEmpty(stateId)) {
+            this.activityStateService.deleteActivityState(activityId, agentJson, registration, since);
+        } else {
+            this.activityStateService.deleteActivityStateList(activityId, agentJson, registration);
+        }
+        return XAPIResponse.success();
     }
 
 }

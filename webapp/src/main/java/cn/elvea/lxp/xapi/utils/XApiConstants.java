@@ -7,6 +7,10 @@ package cn.elvea.lxp.xapi.utils;
  */
 public class XApiConstants {
     /**
+     * 系统默认编码
+     */
+    public final static String ENCODING = "UTF-8";
+    /**
      *
      */
     public static final String XAPI_CONTENT_TYPE = "application/json;charset=utf-8";

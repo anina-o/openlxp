@@ -1,7 +1,7 @@
 package cn.elvea.lxp.xapi.service;
 
-import cn.elvea.lxp.xapi.Statement;
-import cn.elvea.lxp.xapi.StatementsResult;
+import cn.elvea.lxp.xapi.model.Statement;
+import cn.elvea.lxp.xapi.model.StatementsResult;
 
 import java.util.List;
 
@@ -15,7 +15,12 @@ public interface StatementService {
     /**
      *
      */
-    void saveStatement(Statement statement);
+    void saveStatement(String statementId, Statement statement);
+
+    /**
+     *
+     */
+    List<String> saveStatements(List<Statement> statements);
 
     /**
      *
@@ -26,10 +31,5 @@ public interface StatementService {
      *
      */
     StatementsResult getStatements();
-
-    /**
-     *
-     */
-    List<String> saveStatements(List<Statement> statements);
 
 }

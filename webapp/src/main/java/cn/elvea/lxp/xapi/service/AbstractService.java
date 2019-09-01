@@ -3,6 +3,7 @@ package cn.elvea.lxp.xapi.service;
 import cn.elvea.lxp.xapi.repository.ActivityProfileRepository;
 import cn.elvea.lxp.xapi.repository.ActivityStateRepository;
 import cn.elvea.lxp.xapi.repository.AgentProfileRepository;
+import cn.elvea.lxp.xapi.repository.StatementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
@@ -29,6 +30,12 @@ public abstract class AbstractService {
      */
     @Autowired
     protected ActivityProfileRepository activityProfileRepository;
+
+    /**
+     * StatementRepository
+     */
+    @Autowired
+    protected StatementRepository statementRepository;
 
     /**
      * MongoTemplate

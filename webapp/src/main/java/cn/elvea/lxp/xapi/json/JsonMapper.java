@@ -1,9 +1,9 @@
 package cn.elvea.lxp.xapi.json;
 
+import cn.elvea.lxp.xapi.exception.XAPIException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import org.apache.logging.log4j.util.Strings;
 
 import java.io.IOException;
 
@@ -33,11 +33,12 @@ public class JsonMapper {
         return writer;
     }
 
-    public static JsonNode toJsonNode(String json) throws IOException {
-        if (Strings.isEmpty(json)) {
-            return null;
+    public static JsonNode toJsonNode(String json) throws XAPIException {
+        try {
+            return JsonMapper.getInstance().readValue(json, JsonNode.class);
+        } catch (IOException e) {
+            throw new XAPIException("");
         }
-        return JsonMapper.getInstance().readValue(json, JsonNode.class);
     }
 
 }

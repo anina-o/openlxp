@@ -1,13 +1,13 @@
 package cn.elvea.lxp.xapi.service;
 
 import cn.elvea.lxp.common.utils.ConvertUtils;
-import cn.elvea.lxp.xapi.Statement;
-import cn.elvea.lxp.xapi.StatementsResult;
 import cn.elvea.lxp.xapi.entity.StatementEntity;
-import cn.elvea.lxp.xapi.repository.StatementRepository;
+import cn.elvea.lxp.xapi.model.Statement;
+import cn.elvea.lxp.xapi.model.StatementsResult;
+import cn.elvea.lxp.xapi.utils.XApiUtils;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,17 +18,35 @@ import java.util.List;
  * @author elvea
  */
 @Service
-public class StatementServiceImpl implements StatementService {
-    /**
-     *
-     */
-    StatementRepository statementRepository;
+public class StatementServiceImpl extends AbstractService implements StatementService {
 
     @Override
-    public void saveStatement(Statement statement) {
+    public void saveStatement(String statementId, Statement statement) {
         StatementEntity entity = new StatementEntity();
         ConvertUtils.copyProperties(statement, entity);
+        entity.setId(statementId);
         this.statementRepository.save(entity);
+    }
+
+    @Override
+    public List<String> saveStatements(List<Statement> statements) {
+        List<String> ids = Lists.newArrayList();
+        if (CollectionUtils.isNotEmpty(statements)) {
+            List<StatementEntity> statementEntities = Lists.newArrayList();
+            for (Statement statement : statements) {
+                StatementEntity entity = new StatementEntity();
+                ConvertUtils.copyProperties(statement, entity);
+                if (StringUtils.isEmpty(entity.getId())) {
+                    entity.setId(XApiUtils.randomUUID());
+                }
+                statementEntities.add(entity);
+            }
+            this.statementRepository.saveAll(statementEntities);
+            for (StatementEntity entity : statementEntities) {
+                ids.add(entity.getId());
+            }
+        }
+        return ids;
     }
 
     @Override
@@ -44,27 +62,4 @@ public class StatementServiceImpl implements StatementService {
         return null;
     }
 
-    @Override
-    public List<String> saveStatements(List<Statement> statements) {
-        List<String> ids = Lists.newArrayList();
-        if (CollectionUtils.isNotEmpty(statements)) {
-            List<StatementEntity> statementEntities = Lists.newArrayList();
-            for (Statement statement : statements) {
-                StatementEntity entity = new StatementEntity();
-                ConvertUtils.copyProperties(statement, entity);
-                statementEntities.add(entity);
-            }
-            this.statementRepository.saveAll(statementEntities);
-
-            for (StatementEntity entity : statementEntities) {
-                ids.add(entity.getId());
-            }
-        }
-        return ids;
-    }
-
-    @Autowired
-    public void setStatementRepository(StatementRepository statementRepository) {
-        this.statementRepository = statementRepository;
-    }
 }

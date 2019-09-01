@@ -1,6 +1,6 @@
 package cn.elvea.lxp.xapi.service;
 
-import cn.elvea.lxp.xapi.http.XAPIResponse;
+import cn.elvea.lxp.xapi.model.Person;
 
 /**
  * AgentService
@@ -12,6 +12,6 @@ public interface AgentService {
     /**
      * Get
      */
-    XAPIResponse<?> getAgents(String json);
+    Person getAgents(String json);
 
 }

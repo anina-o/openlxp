@@ -18,7 +18,7 @@ public abstract class AbstractController {
     /**
      * XAPIService
      */
-    XAPIService xapiService;
+    AboutService xapiService;
 
     /**
      * AgentService
@@ -51,7 +51,7 @@ public abstract class AbstractController {
     StatementService statementService;
 
     @Autowired
-    public void setXapiService(XAPIService xapiService) {
+    public void setXapiService(AboutService xapiService) {
         this.xapiService = xapiService;
     }
 

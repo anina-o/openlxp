@@ -1,10 +1,12 @@
 package cn.elvea.lxp.xapi.controller;
 
-import cn.elvea.lxp.xapi.Statement;
 import cn.elvea.lxp.xapi.http.XAPIResponse;
+import cn.elvea.lxp.xapi.model.Statement;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static cn.elvea.lxp.xapi.utils.XApiConstants.XAPI_CONTENT_TYPE;
 
@@ -18,7 +20,7 @@ import static cn.elvea.lxp.xapi.utils.XApiConstants.XAPI_CONTENT_TYPE;
 public class StatementController extends AbstractController {
 
     /**
-     * Get
+     * GET Statements
      */
     @GetMapping(produces = XAPI_CONTENT_TYPE)
     @ResponseBody
@@ -37,7 +39,7 @@ public class StatementController extends AbstractController {
                                      @RequestParam(value = "ascending", required = false, defaultValue = "false") Boolean ascending,
                                      @RequestParam(value = "page", required = false, defaultValue = "0") String page,
                                      @RequestParam(value = "limit", required = false, defaultValue = "0") String limit) {
-        if (!StringUtils.isEmpty(statementId) || !StringUtils.isEmpty(voidedStatementId)) {
+        if (StringUtils.isEmpty(statementId)) {
             return XAPIResponse.success(this.statementService.getStatement(statementId));
         } else {
             return XAPIResponse.success(this.statementService.getStatements());
@@ -45,24 +47,25 @@ public class StatementController extends AbstractController {
     }
 
     /**
-     * Put or Post
+     * PUT Statements
      */
-    @PutMapping
-    @PostMapping
     @ResponseBody
-    public XAPIResponse putStatement(@RequestBody String json) throws Exception {
+    @PutMapping
+    public XAPIResponse putStatement(@RequestParam(value = "statementId", required = false) String statementId,
+                                     @RequestBody String json) throws Exception {
         Statement statement = new Statement(json);
-        this.statementService.saveStatement(statement);
+        this.statementService.saveStatement(statementId, statement);
         return XAPIResponse.success();
     }
 
     /**
-     * Delete
+     * POST Statements
      */
-    @DeleteMapping
     @ResponseBody
-    public XAPIResponse deleteStatement() {
-        return XAPIResponse.success(this.xapiService.about());
+    @PostMapping
+    public XAPIResponse postStatement(@RequestBody String json) throws Exception {
+        List<Statement> statementList = Statement.fromJson(json);
+        return XAPIResponse.success(this.statementService.saveStatements(statementList));
     }
 
 }

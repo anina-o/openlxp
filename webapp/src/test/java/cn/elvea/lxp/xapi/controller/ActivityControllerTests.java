@@ -1,9 +1,10 @@
 package cn.elvea.lxp.xapi.controller;
 
-import cn.elvea.lxp.BaseWebTests;
+import cn.elvea.lxp.xapi.BaseXapiTests;
 import org.junit.jupiter.api.Test;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -11,12 +12,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author elvea
  */
-public class ActivityControllerTests extends BaseWebTests {
+public class ActivityControllerTests extends BaseXapiTests {
 
     @Test
     public void testGetActivites() throws Exception {
         mockMvc.perform(get("/xAPI/activites")
-                .param("activityId", "1"))
+                .param("activityId", defaultActivityId))
+                .andDo(print())
                 .andExpect(status().isOk())
         ;
     }

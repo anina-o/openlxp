@@ -1,6 +1,6 @@
 package cn.elvea.lxp.xapi.json;
 
-import cn.elvea.lxp.xapi.utils.XApiVersion;
+import cn.elvea.lxp.xapi.enums.VersionEnum;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
@@ -13,10 +13,10 @@ public interface JsonObject {
     /**
      * toJsonNode
      *
-     * @param version {@link XApiVersion}
+     * @param version {@link VersionEnum}
      * @return {@link ObjectNode}
      */
-    ObjectNode toJsonNode(XApiVersion version);
+    ObjectNode toJsonNode(VersionEnum version);
 
     /**
      * toJsonNode
@@ -28,19 +28,19 @@ public interface JsonObject {
     /**
      * toJson
      *
-     * @param version {@link XApiVersion}
+     * @param version {@link VersionEnum}
      * @param pretty  是否格式化
      * @return json
      */
-    String toJson(XApiVersion version, Boolean pretty);
+    String toJson(VersionEnum version, Boolean pretty);
 
     /**
      * toJson
      *
-     * @param version {@link XApiVersion}
+     * @param version {@link VersionEnum}
      * @return json
      */
-    String toJson(XApiVersion version);
+    String toJson(VersionEnum version);
 
     /**
      * toJson

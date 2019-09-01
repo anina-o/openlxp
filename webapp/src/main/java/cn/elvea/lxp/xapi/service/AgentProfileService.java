@@ -1,8 +1,6 @@
 package cn.elvea.lxp.xapi.service;
 
-import cn.elvea.lxp.xapi.http.XAPIResponse;
-
-import java.io.IOException;
+import java.util.List;
 
 /**
  * AgentProfileService
@@ -12,18 +10,23 @@ import java.io.IOException;
 public interface AgentProfileService {
 
     /**
-     * 查询
+     * Get a single agent document
      */
-    XAPIResponse<?> getAgentProfile(String activityId, String agentJson, String profileId);
+    String getSingleAgentProfile(String agent, String profileId);
 
     /**
-     * 保存或者更新
+     * Get multiple agent document and return the available ids
      */
-    XAPIResponse<?> saveAgentProfile(String activityId, String profileId, String content) throws IOException;
+    List<String> getAgentProfileIdList(String agent, String since);
 
     /**
-     * 删除
+     * Put or Post
      */
-    XAPIResponse<?> deleteAgentProfile(String agentJson, String profileId, String since);
+    void saveAgentProfile(String agent, String profileId, String content);
+
+    /**
+     * Delete agent profile
+     */
+    void deleteAgentProfile(String agent, String profileId);
 
 }

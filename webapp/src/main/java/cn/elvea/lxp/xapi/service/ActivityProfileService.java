@@ -1,6 +1,6 @@
 package cn.elvea.lxp.xapi.service;
 
-import cn.elvea.lxp.xapi.http.XAPIResponse;
+import java.util.List;
 
 /**
  * ActivityProfileService
@@ -10,18 +10,23 @@ import cn.elvea.lxp.xapi.http.XAPIResponse;
 public interface ActivityProfileService {
 
     /**
-     * 查询
+     * Get a single activity document
      */
-    XAPIResponse<?> getActivityProfile(String activityId, String profileId, String since);
+    String getSingleActivityProfile(String activityId, String profileId);
 
     /**
-     * 新增或者更新
+     * Get multiple activity document and return the available ids
      */
-    XAPIResponse<?> saveActivityProfile(String activityId, String profileId, String content);
+    List<String> getActivityProfileIdList(String activityId, String since);
 
     /**
-     * 删除
+     * Put or Post
      */
-    XAPIResponse<?> deleteActivityProfile(String activityId, String profileId, String since);
+    void saveActivityProfile(String activityId, String profileId, String content);
+
+    /**
+     * Delete single state
+     */
+    void deleteActivityProfile(String activityId, String profileId);
 
 }

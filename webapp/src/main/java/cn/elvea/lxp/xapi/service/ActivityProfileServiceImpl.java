@@ -1,12 +1,11 @@
 package cn.elvea.lxp.xapi.service;
 
 import cn.elvea.lxp.xapi.entity.ActivityProfileEntity;
-import cn.elvea.lxp.xapi.http.XAPIResponse;
-import cn.elvea.lxp.xapi.repository.ActivityProfileRepository;
+import cn.elvea.lxp.xapi.utils.XApiUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -18,67 +17,78 @@ import java.util.stream.Collectors;
  *
  * @author elvea
  */
+@Slf4j
 @Service
-public class ActivityProfileServiceImpl implements ActivityProfileService {
+public class ActivityProfileServiceImpl extends AbstractService implements ActivityProfileService {
 
     /**
-     * @see ActivityProfileRepository
-     */
-    private ActivityProfileRepository activityProfileRepository;
-
-    /**
-     * MongoTemplate
-     */
-    private MongoTemplate mongoTemplate;
-
-    /**
-     * @see ActivityProfileService#getActivityProfile(String, String, String)
+     * @see ActivityProfileService#getSingleActivityProfile(String, String)
      */
     @Override
-    public XAPIResponse<?> getActivityProfile(String activityId, String profileId, String since) {
-        if (StringUtils.isNotEmpty(profileId)) {
-            ActivityProfileEntity condition = new ActivityProfileEntity();
-            condition.setActivityId(activityId);
-            condition.setProfileId(profileId);
-            Example<ActivityProfileEntity> example = Example.of(condition);
-            ActivityProfileEntity entity = this.activityProfileRepository.findOne(example).orElse(null);
-            return XAPIResponse.success(entity != null ? entity.getContent() : "");
-        } else {
-            ActivityProfileEntity entity = new ActivityProfileEntity();
-            entity.setActivityId(activityId);
-            Example<ActivityProfileEntity> example = Example.of(entity);
-            List<ActivityProfileEntity> entityList = this.activityProfileRepository.findAll(example);
-            return XAPIResponse.success(entityList.stream().map(ActivityProfileEntity::getProfileId).collect(Collectors.toList()));
+    public String getSingleActivityProfile(String activityId, String profileId) {
+        Criteria criteria = Criteria.where("activityId").is(activityId).and("profileId").is(profileId);
+        Query query = new Query(criteria);
+        ActivityProfileEntity entity = this.mongoTemplate.findOne(query, ActivityProfileEntity.class);
+        return entity != null ? entity.getContent() : "";
+    }
+
+    /**
+     * @see ActivityProfileService#getActivityProfileIdList(String, String)
+     */
+    @Override
+    public List<String> getActivityProfileIdList(String activityId, String since) {
+        //
+        Criteria criteria = Criteria.where("activityId").is(activityId);
+        if (StringUtils.isNotEmpty(since)) {
+            Date sinceDateObject = XApiUtils.parseTimestamp(since);
+            if (sinceDateObject != null) {
+                criteria.and("createdAt").gt(sinceDateObject);
+            }
         }
+        //
+        Query query = new Query(criteria);
+        List<ActivityProfileEntity> entityList = this.mongoTemplate.find(query, ActivityProfileEntity.class);
+        return entityList.stream().map(ActivityProfileEntity::getProfileId).collect(Collectors.toList());
     }
 
     /**
      * @see ActivityProfileService#saveActivityProfile(String, String, String)
      */
     @Override
-    public XAPIResponse<?> saveActivityProfile(String activityId, String profileId, String content) {
-        ActivityProfileEntity entity = new ActivityProfileEntity();
-        entity.setActivityId(activityId);
-        entity.setProfileId(profileId);
-        entity.setContent(content);
-        entity.setCreatedAt(new Date());
-        entity.setUpdatedAt(new Date());
-        entity.setActive(Boolean.TRUE);
+    public void saveActivityProfile(String activityId, String profileId, String content) {
+        Criteria criteria = new Criteria();
+        criteria.and("activityId").is(activityId);
+        criteria.and("profileId").is(profileId);
+        Query query = new Query();
+        query.addCriteria(criteria);
+        ActivityProfileEntity entity = this.mongoTemplate.findOne(query, ActivityProfileEntity.class);
+        if (entity != null) {
+            entity.setContent(content);
+            entity.setUpdatedAt(new Date());
+            entity.setActive(Boolean.TRUE);
+        } else {
+            entity = new ActivityProfileEntity();
+            entity.setActivityId(activityId);
+            entity.setProfileId(profileId);
+            entity.setContent(content);
+            entity.setCreatedAt(new Date());
+            entity.setUpdatedAt(new Date());
+            entity.setActive(Boolean.TRUE);
+        }
         this.activityProfileRepository.save(entity);
-        return XAPIResponse.success();
     }
 
     /**
-     * @see ActivityProfileService#deleteActivityProfile(String, String, String)
+     * @see ActivityProfileService#deleteActivityProfile(String, String)
      */
     @Override
-    public XAPIResponse<?> deleteActivityProfile(String activityId, String profileId, String since) {
-        return XAPIResponse.success();
-    }
-
-    @Autowired
-    public void setActivityProfileRepository(ActivityProfileRepository activityProfileRepository) {
-        this.activityProfileRepository = activityProfileRepository;
+    public void deleteActivityProfile(String activityId, String profileId) {
+        Criteria criteria = Criteria.where("activityId").is(activityId).and("profileId").is(profileId);
+        Query query = new Query(criteria);
+        ActivityProfileEntity entity = this.mongoTemplate.findOne(query, ActivityProfileEntity.class);
+        if (entity != null) {
+            this.activityProfileRepository.delete(entity);
+        }
     }
 
 }

@@ -1,6 +1,6 @@
 package cn.elvea.lxp.xapi.json;
 
-import cn.elvea.lxp.xapi.AbstractJsonObject;
+import cn.elvea.lxp.xapi.model.AbstractJsonObject;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;

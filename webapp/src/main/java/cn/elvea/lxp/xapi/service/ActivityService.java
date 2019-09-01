@@ -1,6 +1,6 @@
 package cn.elvea.lxp.xapi.service;
 
-import cn.elvea.lxp.xapi.http.XAPIResponse;
+import cn.elvea.lxp.xapi.model.Activity;
 
 /**
  * ActivityService
@@ -12,6 +12,6 @@ public interface ActivityService {
     /**
      * Get
      */
-    XAPIResponse<?> getActivities(String activityId);
+    Activity getActivities(String activityId);
 
 }

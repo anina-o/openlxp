@@ -1,5 +1,7 @@
 package cn.elvea.lxp.xapi;
 
+import cn.elvea.lxp.xapi.model.Account;
+import cn.elvea.lxp.xapi.model.Agent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +35,18 @@ public abstract class BaseXapiTests {
     /**
      * Default Activity Id
      */
-    protected String activityId = "http://elvea.cn/activities/1";
+    protected String defaultActivityId = "http://elvea.cn/activities/1";
+    protected String testActivityId = "http://elvea.cn/activities/2";
     /**
      * Default State Id
      */
-    protected String stateId = "http://elvea.cn/states/1";
+    protected String defaultStateId = "http://elvea.cn/states/1";
+    protected String testStateId = "http://elvea.cn/states/2";
     /**
      * Default Profile Id
      */
-    protected String profileId = "http://elvea.cn/profiles/1";
+    protected String defaultProfileId = "http://elvea.cn/profiles/1";
+    protected String testProfileId = "http://elvea.cn/profiles/2";
 
     /**
      * Default Agent with account

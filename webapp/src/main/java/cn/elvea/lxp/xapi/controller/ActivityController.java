@@ -8,21 +8,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Activity State ResourceEntity
+ * ActivityController
  *
  * @author elvea
  */
 @Controller
 @RequestMapping("/xAPI/activites")
 public class ActivityController extends AbstractController {
-
-    /**
-     * Get
-     */
     @GetMapping
     @ResponseBody
     public XAPIResponse getActivities(@RequestParam("activityId") String activityId) {
-        return this.activityService.getActivities(activityId);
+        return XAPIResponse.success(this.activityService.getActivities(activityId));
     }
-
 }

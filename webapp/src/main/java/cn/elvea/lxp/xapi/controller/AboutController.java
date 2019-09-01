@@ -14,14 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/xAPI/about")
 public class AboutController extends AbstractController {
-
-    /**
-     * 关于
-     */
     @GetMapping
     @ResponseBody
     public XAPIResponse about() {
         return XAPIResponse.success(this.xapiService.about());
     }
-
 }

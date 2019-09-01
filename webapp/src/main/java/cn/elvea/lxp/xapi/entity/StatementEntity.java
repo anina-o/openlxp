@@ -1,6 +1,6 @@
 package cn.elvea.lxp.xapi.entity;
 
-import cn.elvea.lxp.xapi.*;
+import cn.elvea.lxp.xapi.model.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.joda.time.DateTime;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Document(collection = "openlxp_statement")
+@Document(collection = "olxp_statement")
 public class StatementEntity implements Serializable {
     /**
      * ID

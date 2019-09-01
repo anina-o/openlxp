@@ -1,6 +1,6 @@
 package cn.elvea.lxp.xapi.service;
 
-import cn.elvea.lxp.xapi.http.XAPIResponse;
+import cn.elvea.lxp.xapi.model.Activity;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,8 +15,8 @@ public class ActivityServiceImpl implements ActivityService {
      * @see ActivityService#getActivities(String)
      */
     @Override
-    public XAPIResponse<?> getActivities(String activityId) {
-        return XAPIResponse.success();
+    public Activity getActivities(String activityId) {
+        return new Activity(activityId);
     }
 
 }
