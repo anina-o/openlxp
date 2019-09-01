@@ -1,9 +1,9 @@
 package cn.elvea.lxp.xapi.utils;
 
-import cn.elvea.lxp.xapi.model.Agent;
 import cn.elvea.lxp.xapi.exception.InvalidRequestException;
 import cn.elvea.lxp.xapi.exception.XAPIException;
 import cn.elvea.lxp.xapi.json.JsonMapper;
+import cn.elvea.lxp.xapi.model.Agent;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.google.common.collect.Maps;
@@ -75,6 +75,8 @@ public class XApiUtils {
         try {
             return new Agent(JsonMapper.toJsonNode(json));
         } catch (Exception e) {
+            e.printStackTrace();
+            log.error("failed to extract agent object from json [{}]", json, e);
             throw new XAPIException("Invalid agent param.");
         }
     }

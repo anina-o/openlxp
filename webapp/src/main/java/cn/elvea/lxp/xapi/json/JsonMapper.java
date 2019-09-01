@@ -4,6 +4,7 @@ import cn.elvea.lxp.xapi.exception.XAPIException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 
@@ -12,6 +13,7 @@ import java.io.IOException;
  *
  * @author elvea
  */
+@Slf4j
 public class JsonMapper {
 
     private static final ObjectMapper instance = new ObjectMapper();
@@ -37,7 +39,8 @@ public class JsonMapper {
         try {
             return JsonMapper.getInstance().readValue(json, JsonNode.class);
         } catch (IOException e) {
-            throw new XAPIException("");
+            log.error("failed to covert json to json node.", e);
+            throw new XAPIException("failed to covert json to json node.");
         }
     }
 
