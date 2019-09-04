@@ -94,9 +94,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                     .formLogin().disable()
                     .authorizeRequests()
+                    .antMatchers("/api/*").permitAll()
                     .antMatchers("/api/user/register").permitAll()
                     .antMatchers("/api/admin/**").hasAnyRole(RoleType.SYSTEM_ADMINISTRATOR.getCode(), RoleType.ADMINISTRATOR.getCode())
-                    .anyRequest().authenticated();
+                    .anyRequest().permitAll();
         }
     }
 

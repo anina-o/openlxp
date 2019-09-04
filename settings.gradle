@@ -1,3 +1,4 @@
 rootProject.name = 'openlxp'
 
 include "webapp"
+include "webapp-admin"

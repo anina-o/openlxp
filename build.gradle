@@ -24,6 +24,8 @@ allprojects {
     }
 
     ext {
+        //
+        springBootAdminVersion = "2.1.6"
         // 3rd party
         asmVersion = "7.1"
         okIoVersion = "2.4.0"
