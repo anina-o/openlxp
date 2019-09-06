@@ -56,7 +56,6 @@ dependencies {
     implementation group: 'com.squareup.okio', name: 'okio', version: okIoVersion
     implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttpVersion
     implementation group: 'com.google.guava', name: 'guava', version: guavaVersion
-    implementation group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib', version: kotlinVersion
     implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: nimbusJoseJwtVersion
     // development
     developmentOnly("org.springframework.boot:spring-boot-devtools")
