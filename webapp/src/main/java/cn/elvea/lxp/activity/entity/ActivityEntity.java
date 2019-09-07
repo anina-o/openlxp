@@ -1,4 +1,4 @@
-package cn.elvea.lxp.resource.entity;
+package cn.elvea.lxp.activity.entity;
 
 import cn.elvea.lxp.common.model.BaseEntity;
 import lombok.Data;
@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 /**
- * 课件实体
+ * 课程实体
  *
  * @author elvea
  */
@@ -25,19 +25,15 @@ import java.util.Date;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Table(name = "sys_resource_type")
+@Table(name = "sys_course")
 @EntityListeners(AuditingEntityListener.class)
-public class ResourceEntity extends BaseEntity {
+public class ActivityEntity extends BaseEntity {
     /**
-     * 类型
-     */
-    private String type;
-    /**
-     * 编号
+     * 电子邮箱
      */
     private String code;
     /**
-     * 标题
+     * 手机号码
      */
     private String title;
     /**
@@ -51,6 +47,16 @@ public class ResourceEntity extends BaseEntity {
     @Column(name = "publish_end_datetime")
     private String publishEndDatetime;
     /**
+     * 报名开始日期
+     */
+    @Column(name = "enroll_start_datetime")
+    private String enrollStartDatetime;
+    /**
+     * 报名结束日期
+     */
+    @Column(name = "enroll_end_datetime")
+    private String enrollEndDatetime;
+    /**
      * 学习开始日期
      */
     @Column(name = "start_datetime")
@@ -61,67 +67,9 @@ public class ResourceEntity extends BaseEntity {
     @Column(name = "end_datetime")
     private String endDatetime;
     /**
-     * URL
+     * 用户状态
      */
-    private String url;
-    /**
-     * 内容
-     */
-    private String content;
-    /**
-     * 分数
-     */
-    private String score;
-    /**
-     * 及格分数
-     */
-    @Column(name = "pass_score")
-    private String passScore;
-    /**
-     * 最大允许学习时长
-     */
-    @Column(name = "time_limit")
-    private Integer timeLimit;
-    /**
-     * 最多允许尝试次数
-     */
-    @Column(name = "attempt_limit")
-    private Integer attemptLimit;
-    /**
-     * 尝试次数计算策略
-     */
-    @Column(name = "attempt_policy")
-    private Integer attemptPolicy;
-    /**
-     * 试卷生成策略
-     */
-    @Column(name = "paper_generate_mode")
-    private Integer paper_generate_mode;
-    /**
-     * 是否允许暂停
-     */
-    @Column(name = "paper_allow_pause_ind")
-    private Boolean paperAllowPauseInd;
-    /**
-     * 答案显示形式
-     */
-    @Column(name = "paper_display_answer_mode")
-    private Integer paperDisplayAnswerMode;
-    /**
-     * 试卷计分方式
-     */
-    @Column(name = "paper_score_mode")
-    private Integer paperScoreMode;
-    /**
-     * 试卷计分策略
-     */
-    @Column(name = "paper_score_policy")
-    private Integer paperScorePolicy;
-    /**
-     * 发布状态
-     */
-    @Column
-    private String status;
+    private Integer status;
     /**
      * 启用状态
      */

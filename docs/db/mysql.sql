@@ -243,6 +243,24 @@ ALTER TABLE `sys_activity_enrollment` COMMENT '课程报名记录表';
 CREATE INDEX `ix_sys_activity_enrollment_activity_id` ON `sys_activity_enrollment`(`activity_id`);
 CREATE INDEX `ix_sys_activity_enrollment_user_id` ON `sys_activity_enrollment`(`user_id`);
 
+/* 资源类型表 */
+CREATE TABLE `sys_resource_type` (
+    `id`          BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
+    `type`        VARCHAR(100) COMMENT '类型',
+    `label`       VARCHAR(150) COMMENT '文本',
+    `active`      TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '启用状态',
+    `created_at`  DATETIME COMMENT '创建时间',
+    `created_by`  BIGINT UNSIGNED COMMENT '创建人',
+    `modified_at` DATETIME COMMENT '修改时间',
+    `modified_by` BIGINT UNSIGNED COMMENT '修改人',
+    `deleted_at`  DATETIME COMMENT '删除人',
+    `deleted_by`  BIGINT UNSIGNED COMMENT '删除时间',
+    CONSTRAINT `pk_sys_resource_type_id` PRIMARY KEY (`id`)
+);
+ALTER TABLE `sys_resource_type` COMMENT '资源类型表';
+
+CREATE INDEX `ix_sys_resource_type` ON `sys_resource_type`(`type`);
+
 /* 资源表 */
 CREATE TABLE `sys_resource` (
     `id`                        BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
@@ -551,3 +569,19 @@ INSERT INTO `sys_user_role_relation` (`id`, `user_id`, `role_id`, `created_at`, 
 VALUES (3, 1, 3, now(), 1);
 INSERT INTO `sys_user_role_relation` (`id`, `user_id`, `role_id`, `created_at`, `created_by`)
 VALUES (4, 1, 4, now(), 1);
+
+/* 资源类型 */
+INSERT INTO `sys_resource_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (1, 'STATIC_PAPER', 'label_resource_type_static_paper', 1, now(), now());
+INSERT INTO `sys_resource_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (2, 'DYNAMIC_PAPER', 'label_resource_type_dynamic_paper', 1, now(), now());
+INSERT INTO `sys_resource_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (3, 'OFFICE', 'label_resource_type_office', 1, now(), now());
+INSERT INTO `sys_resource_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (4, 'PDF', 'label_resource_type_pdf', 1, now(), now());
+INSERT INTO `sys_resource_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (5, 'IMAGE', 'label_resource_type_image', 1, now(), now());
+INSERT INTO `sys_resource_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (6, 'VIDEO', 'label_resource_type_video', 1, now(), now());
+INSERT INTO `sys_resource_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (7, 'AUDIO', 'label_resource_type_audio', 1, now(), now());
