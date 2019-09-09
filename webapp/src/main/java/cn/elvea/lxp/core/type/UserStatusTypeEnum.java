@@ -3,20 +3,20 @@ package cn.elvea.lxp.core.type;
 import lombok.Getter;
 
 /**
- * StatusType
+ * 用户状态类型
  *
  * @author elvea
  */
 @Getter
-public enum StatusType {
+public enum UserStatusTypeEnum {
     /**
      * 正常
      */
-    ON(1, "status_on"),
+    OK(1, "user_status_on"),
     /**
      * 已删除
      */
-    OFF(0, "status_deleted");
+    DELETED(0, "user_status_deleted");
 
     /**
      * 值
@@ -27,7 +27,7 @@ public enum StatusType {
      */
     private final String label;
 
-    StatusType(final int value, final String label) {
+    UserStatusTypeEnum(final int value, final String label) {
         this.value = value;
         this.label = label;
     }

@@ -1,6 +1,6 @@
 package cn.elvea.lxp.security;
 
-import cn.elvea.lxp.core.type.LangType;
+import cn.elvea.lxp.core.type.LangTypeEnum;
 import com.google.common.collect.Maps;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
@@ -149,7 +149,7 @@ public class SecurityUtils {
      * @return Locale 国际化区域
      */
     public static Locale getCurrentLocale() {
-        return LangType.getDefaultLangType().getLocale();
+        return LangTypeEnum.getDefaultLangType().getLocale();
     }
 
     /**
@@ -158,7 +158,7 @@ public class SecurityUtils {
      * @return 当前语言
      */
     public static String getCurrentLang() {
-        return LangType.getDefaultLang();
+        return LangTypeEnum.getDefaultLang();
     }
 
     /**

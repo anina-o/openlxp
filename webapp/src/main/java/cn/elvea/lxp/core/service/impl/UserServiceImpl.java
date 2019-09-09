@@ -7,7 +7,7 @@ import cn.elvea.lxp.core.form.Register;
 import cn.elvea.lxp.core.repository.UserRepository;
 import cn.elvea.lxp.core.service.RoleService;
 import cn.elvea.lxp.core.service.UserService;
-import cn.elvea.lxp.core.type.UserStatusType;
+import cn.elvea.lxp.core.type.UserStatusTypeEnum;
 import cn.elvea.lxp.security.service.SecurityService;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setNickname(userEntity.getUsername());
         userEntity.setFullname(userEntity.getUsername());
         userEntity.setPassword(this.securityService.encryptPassword(register.getPassword()));
-        userEntity.setStatus(UserStatusType.OK.getValue());
+        userEntity.setStatus(UserStatusTypeEnum.OK.getValue());
         userEntity.setActive(Boolean.TRUE);
         this.userRepository.save(userEntity);
 

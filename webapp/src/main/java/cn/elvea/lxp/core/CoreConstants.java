@@ -18,4 +18,8 @@ public class CoreConstants {
     public final static String CACHE_RESOURCE_TYPE_KEY = "RESOURCE_TYPE";
     public final static String CACHE_RESOURCE_KEY = "RESOURCE";
 
+    //
+    public final static String CACHE_ACTIVITY_TYPE_KEY = "ACTIVITY_TYPE";
+    public final static String CACHE_ACTIVITY_KEY = "ACTIVITY";
+
 }

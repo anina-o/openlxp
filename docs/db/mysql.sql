@@ -7,6 +7,26 @@ CREATE DATABASE IF NOT EXISTS `lxp` DEFAULT CHARACTER SET `utf8mb4` DEFAULT COLL
 
 USE `lxp`;
 
+/* 租户表 */
+CREATE TABLE `sys_tenant` (
+    `id`             BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
+    `code`           VARCHAR(100)        NOT NULL COMMENT '编号',
+    `title`          VARCHAR(255)        NOT NULL COMMENT '标题',
+    `description`    VARCHAR(255) COMMENT '描述',
+    `user_limit`     INT UNSIGNED COMMENT '用户数限制',
+    `start_datetime` DATETIME COMMENT '有效期开始时间',
+    `end_datetime`   DATETIME COMMENT '有效期结束时间',
+    `active`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '启用状态',
+    `created_at`     DATETIME COMMENT '创建时间',
+    `created_by`     BIGINT UNSIGNED COMMENT '创建人',
+    `modified_at`    DATETIME COMMENT '修改时间',
+    `modified_by`    BIGINT UNSIGNED COMMENT '修改人',
+    `deleted_at`     DATETIME COMMENT '删除人',
+    `deleted_by`     BIGINT UNSIGNED COMMENT '删除时间',
+    CONSTRAINT `pk_sys_tenant_id` PRIMARY KEY (`id`)
+);
+ALTER TABLE `sys_tenant` COMMENT '机构表';
+
 /* 用户表 */
 CREATE TABLE `sys_user` (
     `id`          BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
@@ -160,8 +180,16 @@ CREATE INDEX `ix_sys_attachment_relation_attachment_file_id` ON `sys_attachment_
 
 /* 活动类型表 */
 CREATE TABLE `sys_activity_type` (
-    `id`   BIGINT UNSIGNED NOT NULL COMMENT 'ID',
-    `type` VARCHAR(50)     NOT NULL COMMENT '活动类型',
+    `id`          BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
+    `type`        VARCHAR(100)        NOT NULL COMMENT '活动类型',
+    `label`       VARCHAR(150) COMMENT '文本',
+    `active`      TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '启用状态',
+    `created_at`  DATETIME COMMENT '创建时间',
+    `created_by`  BIGINT UNSIGNED COMMENT '创建人',
+    `modified_at` DATETIME COMMENT '修改时间',
+    `modified_by` BIGINT UNSIGNED COMMENT '修改人',
+    `deleted_at`  DATETIME COMMENT '删除人',
+    `deleted_by`  BIGINT UNSIGNED COMMENT '删除时间',
     CONSTRAINT `pk_sys_activity_type` PRIMARY KEY (`id`)
 );
 ALTER TABLE `sys_activity_type` COMMENT '活动类型表';
@@ -460,6 +488,23 @@ ALTER TABLE `sys_paper_question` COMMENT '试卷试题表';
 CREATE INDEX `ix_sys_paper_question` ON `sys_paper_question`(`resource_id`, `section_id`, `question_id`);
 
 /*
+试卷答题自动保存记录表
+*/
+CREATE TABLE `sys_paper_auto_save_record` (
+    `id`            BIGINT UNSIGNED NOT NULL COMMENT 'ID',
+    `activity_id`   BIGINT UNSIGNED NOT NULL COMMENT '活动ID',
+    `enrollment_id` BIGINT UNSIGNED NOT NULL COMMENT '报名ID',
+    `resource_id`   BIGINT UNSIGNED NOT NULL COMMENT '资源ID',
+    `user_id`       BIGINT UNSIGNED NOT NULL COMMENT '用户ID',
+    `session_id`    VARCHAR(150) COMMENT '会话ID',
+    `data`          TEXT COMMENT '数据',
+    `created_at`    DATETIME COMMENT '创建时间',
+    `created_by`    BIGINT UNSIGNED COMMENT '创建人',
+    CONSTRAINT `pk_sys_paper_auto_save_record_id` PRIMARY KEY (`id`)
+);
+ALTER TABLE `sys_paper_auto_save_record` COMMENT '试卷答题自动保存记录表';
+
+/*
 试卷答题记录
 */
 CREATE TABLE `sys_paper_record` (
@@ -569,6 +614,18 @@ INSERT INTO `sys_user_role_relation` (`id`, `user_id`, `role_id`, `created_at`, 
 VALUES (3, 1, 3, now(), 1);
 INSERT INTO `sys_user_role_relation` (`id`, `user_id`, `role_id`, `created_at`, `created_by`)
 VALUES (4, 1, 4, now(), 1);
+
+/* 顶层租户 */
+INSERT INTO `sys_tenant` (`id`, `code`, `title`, `active`, `created_at`, `start_datetime`, `end_datetime`)
+VALUES (1, 'TOP', 'Top Tenant', 1, now(), '1999-1-1 00:00:00', '9999-12-30 23:59:59');
+
+/* 活动类型 */
+INSERT INTO `sys_activity_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (1, 'ONLINE_TRAINING', 'label_activity_type_online_training', 1, now(), now());
+INSERT INTO `sys_activity_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (2, 'OFFLINE_TRAINING', 'label_activity_type_offline_training', 1, now(), now());
+INSERT INTO `sys_activity_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (3, 'ONLINE_EXAM', 'label_activity_type_online_exam', 1, now(), now());
 
 /* 资源类型 */
 INSERT INTO `sys_resource_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)

@@ -16,9 +16,9 @@ public class UserControllerTests extends BaseWebTests {
     @Test
     public void baseCrudTests() throws Exception {
         mockMvc.perform(post("/api/register")
-                .param("username", "")
-                .param("password", ""))
+                .param("username", "admin")
+                .param("password", "123456"))
                 .andExpect(status().isOk());
     }
-    
+
 }

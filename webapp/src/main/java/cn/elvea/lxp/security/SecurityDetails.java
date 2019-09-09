@@ -1,6 +1,6 @@
 package cn.elvea.lxp.security;
 
-import cn.elvea.lxp.core.type.PlatformType;
+import cn.elvea.lxp.core.type.PlatformTypeEnum;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
@@ -42,7 +42,7 @@ public class SecurityDetails extends WebAuthenticationDetails {
      */
     public String obtainPlatform(HttpServletRequest request) {
         String platform = request.getParameter("platform");
-        return PlatformType.getPlatformType(platform).getCode();
+        return PlatformTypeEnum.getPlatformType(platform).getCode();
     }
 
     /**

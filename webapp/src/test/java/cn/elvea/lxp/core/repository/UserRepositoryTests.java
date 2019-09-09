@@ -3,7 +3,7 @@ package cn.elvea.lxp.core.repository;
 import cn.elvea.lxp.BaseTests;
 import cn.elvea.lxp.common.utils.IdWorker;
 import cn.elvea.lxp.core.entity.UserEntity;
-import cn.elvea.lxp.core.type.UserStatusType;
+import cn.elvea.lxp.core.type.UserStatusTypeEnum;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class UserRepositoryTests extends BaseTests {
         userEntity.setFullname("fullname_" + randomUsername);
         userEntity.setNickname("nickname_" + randomUsername);
         userEntity.setActive(true);
-        userEntity.setStatus(UserStatusType.OK.getValue());
+        userEntity.setStatus(UserStatusTypeEnum.OK.getValue());
 
         UserEntity entitySaved = this.userRepository.save(userEntity);
         Assertions.assertNotNull(userEntity.getId());

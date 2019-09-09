@@ -1,4 +1,6 @@
-package cn.elvea.lxp.activity.service;
+package cn.elvea.lxp.activity.service.impl;
+
+import cn.elvea.lxp.activity.service.ActivityEnrollmentService;
 
 /**
  * ActivityEnrollmentServiceImpl

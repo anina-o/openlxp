@@ -8,7 +8,7 @@ import lombok.Getter;
  * @author elvea
  */
 @Getter
-public enum PlatformType {
+public enum PlatformTypeEnum {
     /**
      * 未知
      */
@@ -31,14 +31,14 @@ public enum PlatformType {
      */
     private final String label;
 
-    PlatformType(final String code, final String label) {
+    PlatformTypeEnum(final String code, final String label) {
         this.code = code;
         this.label = label;
     }
 
-    public static PlatformType getPlatformType(String platform) {
-        PlatformType[] ps = PlatformType.values();
-        for (PlatformType p : ps) {
+    public static PlatformTypeEnum getPlatformType(String platform) {
+        PlatformTypeEnum[] ps = PlatformTypeEnum.values();
+        for (PlatformTypeEnum p : ps) {
             if (p.getCode().equalsIgnoreCase(platform)) {
                 return p;
             }

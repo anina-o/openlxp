@@ -1,6 +1,6 @@
 package cn.elvea.lxp.common;
 
-import cn.elvea.lxp.core.type.LangType;
+import cn.elvea.lxp.core.type.LangTypeEnum;
 
 import java.util.Locale;
 
@@ -24,6 +24,6 @@ public class Constants {
     /**
      * 默认区域
      */
-    public static final Locale DEFAULT_LOCALE = LangType.getDefaultLangType().getLocale();
+    public static final Locale DEFAULT_LOCALE = LangTypeEnum.getDefaultLangType().getLocale();
 
 }

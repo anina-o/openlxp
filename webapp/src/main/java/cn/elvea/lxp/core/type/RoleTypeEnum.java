@@ -3,12 +3,12 @@ package cn.elvea.lxp.core.type;
 import lombok.Getter;
 
 /**
- * RoleType
+ * 角色类型
  *
  * @author elvea
  */
 @Getter
-public enum RoleType {
+public enum RoleTypeEnum {
     /**
      * 系统管理员
      */
@@ -35,7 +35,7 @@ public enum RoleType {
      */
     private final String label;
 
-    RoleType(final String code, final String label) {
+    RoleTypeEnum(final String code, final String label) {
         this.code = code;
         this.label = label;
     }

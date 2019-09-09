@@ -14,7 +14,7 @@ import java.util.Locale;
  * @author elvea
  */
 @Getter
-public enum LangType implements Serializable {
+public enum LangTypeEnum implements Serializable {
     EN_US("en_US", "lang_type_en_us", Locale.US),
     ZH_CN("zh_CN", "lang_type_zh_cn", Locale.SIMPLIFIED_CHINESE),
     ZH_TW("zh_TW", "lang_type_zh_tw", Locale.TRADITIONAL_CHINESE);
@@ -32,16 +32,16 @@ public enum LangType implements Serializable {
      */
     private final Locale locale;
 
-    LangType(final String code, final String label, final Locale locale) {
+    LangTypeEnum(final String code, final String label, final Locale locale) {
         this.code = code;
         this.label = label;
         this.locale = locale;
     }
 
     // 获取语言类型
-    public static LangType getLangType(String code) {
-        LangType[] ts = LangType.values();
-        for (LangType t : ts) {
+    public static LangTypeEnum getLangType(String code) {
+        LangTypeEnum[] ts = LangTypeEnum.values();
+        for (LangTypeEnum t : ts) {
             if (t.getCode().equalsIgnoreCase(code)) {
                 return t;
             }
@@ -52,7 +52,7 @@ public enum LangType implements Serializable {
     /**
      * 获取全站默认语言类型
      */
-    public static LangType getDefaultLangType() {
+    public static LangTypeEnum getDefaultLangType() {
         return ZH_CN;
     }
 
@@ -66,8 +66,8 @@ public enum LangType implements Serializable {
     /**
      * 获取可用的语言类型
      */
-    public static List<LangType> getAvailableLangType() {
-        return Arrays.asList(LangType.values());
+    public static List<LangTypeEnum> getAvailableLangType() {
+        return Arrays.asList(LangTypeEnum.values());
     }
 
     /**
@@ -75,7 +75,7 @@ public enum LangType implements Serializable {
      */
     public static List<String> getAvailableLangs() {
         List<String> list = Lists.newArrayList();
-        for (LangType t : LangType.values()) {
+        for (LangTypeEnum t : LangTypeEnum.values()) {
             list.add(t.getCode());
         }
         return list;
