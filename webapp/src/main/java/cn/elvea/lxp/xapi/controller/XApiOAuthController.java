@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/xAPI/OAuth")
-public class OAuthController extends AbstractController {
+public class XApiOAuthController extends XApiAbstractController {
 
     /**
      * Temporary Credential Request

@@ -1,25 +1,22 @@
 package cn.elvea.lxp.xapi.controller;
 
-import cn.elvea.lxp.xapi.model.Person;
 import cn.elvea.lxp.xapi.http.XAPIResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * AgentController
+ * 关于控制器
  *
  * @author elvea
  */
 @Controller
-@RequestMapping("/xAPI/agents")
-public class AgentController extends AbstractController {
+@RequestMapping("/xAPI/about")
+public class XApiAboutController extends XApiAbstractController {
     @GetMapping
     @ResponseBody
-    public XAPIResponse<Person> getAgents(
-            @RequestParam("agent") String agent) {
-        return XAPIResponse.success(this.agentService.getAgents(agent));
+    public XAPIResponse about() {
+        return XAPIResponse.success(this.xapiService.about());
     }
 }

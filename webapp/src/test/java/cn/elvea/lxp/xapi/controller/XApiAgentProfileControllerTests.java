@@ -11,7 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author elvea
  */
-public class AgentProfileControllerTests extends BaseXapiTests {
+public class XApiAgentProfileControllerTests extends BaseXapiTests {
     @Test
     public void testPut() throws Exception {
         mockMvc.perform(

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/xAPI/activites/state")
-public class ActivityStateController extends AbstractController {
+public class XApiActivityStateController extends XApiAbstractController {
 
     /**
      * Get

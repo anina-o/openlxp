@@ -10,13 +10,15 @@ USE `lxp`;
 /* 租户表 */
 CREATE TABLE `sys_tenant` (
     `id`             BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
-    `code`           VARCHAR(100)        NOT NULL COMMENT '编号',
-    `title`          VARCHAR(255)        NOT NULL COMMENT '标题',
+    `code`           VARCHAR(100) COMMENT '编号',
+    `title`          VARCHAR(255) COMMENT '标题',
     `description`    VARCHAR(255) COMMENT '描述',
-    `user_limit`     INT UNSIGNED COMMENT '用户数限制',
     `start_datetime` DATETIME COMMENT '有效期开始时间',
     `end_datetime`   DATETIME COMMENT '有效期结束时间',
-    `active`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '启用状态',
+    `quota`          INT(6) UNSIGNED     NOT NULL DEFAULT 0 COMMENT '用户数限制',
+    `status`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '租户状态',
+    `root_ind`       TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '是否顶层租户',
+    `active`         TINYINT(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '启用状态',
     `created_at`     DATETIME COMMENT '创建时间',
     `created_by`     BIGINT UNSIGNED COMMENT '创建人',
     `modified_at`    DATETIME COMMENT '修改时间',
@@ -25,11 +27,12 @@ CREATE TABLE `sys_tenant` (
     `deleted_by`     BIGINT UNSIGNED COMMENT '删除时间',
     CONSTRAINT `pk_sys_tenant_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_tenant` COMMENT '机构表';
+ALTER TABLE `sys_tenant` COMMENT '租户表';
 
 /* 用户表 */
 CREATE TABLE `sys_user` (
     `id`          BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
+    `tenant_id`   BIGINT UNSIGNED     NOT NULL DEFAULT 1 COMMENT 'Tenant ID',
     `username`    VARCHAR(150) COMMENT '用户名',
     `nickname`    VARCHAR(150) COMMENT '昵称',
     `fullname`    VARCHAR(150) COMMENT '全名',
@@ -50,10 +53,12 @@ ALTER TABLE `sys_user` COMMENT '用户表';
 
 CREATE INDEX `ix_sys_user_username` ON `sys_user`(`username`);
 CREATE INDEX `ix_sys_user_email` ON `sys_user`(`email`);
+CREATE INDEX `ix_sys_user_tenant_id` ON `sys_user`(`tenant_id`);
 
 /* 用户组表 */
 CREATE TABLE `sys_user_group` (
     `id`          BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
+    `tenant_id`   BIGINT UNSIGNED     NOT NULL DEFAULT 1 COMMENT 'Tenant ID',
     `code`        VARCHAR(150) COMMENT '编号',
     `title`       VARCHAR(150) COMMENT '标题',
     `active`      TINYINT(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '启用状态',
@@ -67,9 +72,12 @@ CREATE TABLE `sys_user_group` (
 );
 ALTER TABLE `sys_user_group` COMMENT '用户组表';
 
+CREATE INDEX `ix_sys_user_group_tenant_id` ON `sys_user_group`(`tenant_id`);
+
 /* 用户组成员表 */
 CREATE TABLE `sys_user_group_member` (
     `id`            BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
+    `tenant_id`     BIGINT UNSIGNED     NOT NULL DEFAULT 1 COMMENT 'Tenant ID',
     `user_group_id` BIGINT UNSIGNED     NOT NULL COMMENT '用户组ID',
     `user_id`       BIGINT UNSIGNED     NOT NULL COMMENT '用户ID',
     `role`          TINYINT(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '角色',
@@ -86,7 +94,8 @@ ALTER TABLE `sys_user_group_member` COMMENT '用户组成员表';
 /* 用户登录会话记录 */
 CREATE TABLE `sys_user_session` (
     `id`                   BIGINT UNSIGNED NOT NULL COMMENT 'ID',
-    `user_id`              BIGINT UNSIGNED NOT NULL COMMENT '用户ID',
+    `tenant_id`            BIGINT UNSIGNED NOT NULL DEFAULT 1 COMMENT 'Tenant ID',
+    `user_id`              BIGINT UNSIGNED NOT NULL COMMENT 'User ID',
     `token`                VARCHAR(255) COMMENT 'Token',
     `session_id`           VARCHAR(150) COMMENT '会话ID',
     `username`             VARCHAR(150) COMMENT '用户名',
@@ -115,9 +124,10 @@ CREATE INDEX `ix_sys_user_session_start_day` ON `sys_user_session`(`start_day`);
 CREATE INDEX `ix_sys_user_session_start_hour` ON `sys_user_session`(`start_hour`);
 CREATE INDEX `ix_sys_user_session_start_minute` ON `sys_user_session`(`start_minute`);
 
-/* 权限表 */
+/* 角色表 */
 CREATE TABLE `sys_role` (
     `id`          BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
+    `tenant_id`   BIGINT UNSIGNED     NOT NULL DEFAULT 1 COMMENT 'Tenant ID',
     `code`        VARCHAR(150) COMMENT '编号',
     `label`       VARCHAR(150) COMMENT '文本',
     `title`       VARCHAR(150) COMMENT '标题',
@@ -131,6 +141,52 @@ CREATE TABLE `sys_role` (
     CONSTRAINT `pk_sys_authority_id` PRIMARY KEY (`id`)
 );
 ALTER TABLE `sys_role` COMMENT '角色表';
+
+/* 权限表 */
+CREATE TABLE `sys_authority` (
+    `id`          BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
+    `parent_id`   BIGINT UNSIGNED     NOT NULL DEFAULT 0 COMMENT 'Parent ID',
+    `code`        VARCHAR(150) COMMENT '编号',
+    `label`       VARCHAR(150) COMMENT '文本',
+    `type`        VARCHAR(150) COMMENT '类型',
+    `created_at`  DATETIME COMMENT '创建时间',
+    `created_by`  BIGINT UNSIGNED COMMENT '创建人',
+    `modified_at` DATETIME COMMENT '修改时间',
+    `modified_by` BIGINT UNSIGNED COMMENT '修改人',
+    `active`      TINYINT(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '启用状态',
+    `deleted_at`  DATETIME COMMENT '删除人',
+    `deleted_by`  BIGINT UNSIGNED COMMENT '删除时间',
+    CONSTRAINT `pk_sys_authority_id` PRIMARY KEY (`id`)
+);
+ALTER TABLE `sys_authority` COMMENT '权限表';
+
+/* 租户权限关联表 */
+CREATE TABLE `sys_tenant_authority_relation` (
+    `id`           BIGINT UNSIGNED COMMENT 'ID'   NOT NULL,
+    `tenant_id`    BIGINT UNSIGNED COMMENT '租户ID' NOT NULL,
+    `authority_id` BIGINT UNSIGNED COMMENT '权限ID' NOT NULL,
+    `created_at`   DATETIME COMMENT '创建时间',
+    `created_by`   BIGINT UNSIGNED COMMENT '创建人',
+    CONSTRAINT `pk_sys_tenant_authority_relation_id` PRIMARY KEY (`id`)
+);
+ALTER TABLE `sys_tenant_authority_relation` COMMENT '租户权限关联表';
+
+CREATE INDEX `ix_sys_tenant_authority_relation_tenant_id` ON `sys_tenant_authority_relation`(`tenant_id`);
+CREATE INDEX `ix_sys_tenant_authority_relation_authority_id` ON `sys_tenant_authority_relation`(`authority_id`);
+
+/* 角色权限关联表 */
+CREATE TABLE `sys_role_authority_relation` (
+    `id`           BIGINT UNSIGNED COMMENT 'ID'   NOT NULL,
+    `role_id`      BIGINT UNSIGNED COMMENT '角色ID' NOT NULL,
+    `authority_id` BIGINT UNSIGNED COMMENT '权限ID' NOT NULL,
+    `created_at`   DATETIME COMMENT '创建时间',
+    `created_by`   BIGINT UNSIGNED COMMENT '创建人',
+    CONSTRAINT `pk_sys_role_authority_relation_id` PRIMARY KEY (`id`)
+);
+ALTER TABLE `sys_role_authority_relation` COMMENT '角色权限关联表';
+
+CREATE INDEX `ix_sys_role_authority_relation_role_id` ON `sys_role_authority_relation`(`role_id`);
+CREATE INDEX `ix_sys_role_authority_relation_authority_id` ON `sys_role_authority_relation`(`authority_id`);
 
 /* 用户权限关联表 */
 CREATE TABLE `sys_user_role_relation` (
@@ -616,16 +672,16 @@ INSERT INTO `sys_user_role_relation` (`id`, `user_id`, `role_id`, `created_at`, 
 VALUES (4, 1, 4, now(), 1);
 
 /* 顶层租户 */
-INSERT INTO `sys_tenant` (`id`, `code`, `title`, `active`, `created_at`, `start_datetime`, `end_datetime`)
-VALUES (1, 'TOP', 'Top Tenant', 1, now(), '1999-1-1 00:00:00', '9999-12-30 23:59:59');
+INSERT INTO `sys_tenant` (`id`, `code`, `title`, `active`, `root_ind`, `created_at`, `start_datetime`, `end_datetime`)
+VALUES (1, 'TOP', 'Top Tenant', 1, 1, now(), '1999-1-1 00:00:00', '9999-12-30 23:59:59');
 
 /* 活动类型 */
 INSERT INTO `sys_activity_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
 VALUES (1, 'ONLINE_TRAINING', 'label_activity_type_online_training', 1, now(), now());
 INSERT INTO `sys_activity_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
-VALUES (2, 'OFFLINE_TRAINING', 'label_activity_type_offline_training', 1, now(), now());
+VALUES (2, 'ONLINE_EXAM', 'label_activity_type_online_exam', 1, now(), now());
 INSERT INTO `sys_activity_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
-VALUES (3, 'ONLINE_EXAM', 'label_activity_type_online_exam', 1, now(), now());
+VALUES (3, 'OFFLINE_TRAINING', 'label_activity_type_offline_training', 1, now(), now());
 
 /* 资源类型 */
 INSERT INTO `sys_resource_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
@@ -633,12 +689,8 @@ VALUES (1, 'STATIC_PAPER', 'label_resource_type_static_paper', 1, now(), now());
 INSERT INTO `sys_resource_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
 VALUES (2, 'DYNAMIC_PAPER', 'label_resource_type_dynamic_paper', 1, now(), now());
 INSERT INTO `sys_resource_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
-VALUES (3, 'OFFICE', 'label_resource_type_office', 1, now(), now());
+VALUES (3, 'IMAGE', 'label_resource_type_image', 1, now(), now());
 INSERT INTO `sys_resource_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
-VALUES (4, 'PDF', 'label_resource_type_pdf', 1, now(), now());
+VALUES (4, 'VIDEO', 'label_resource_type_video', 1, now(), now());
 INSERT INTO `sys_resource_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
-VALUES (5, 'IMAGE', 'label_resource_type_image', 1, now(), now());
-INSERT INTO `sys_resource_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
-VALUES (6, 'VIDEO', 'label_resource_type_video', 1, now(), now());
-INSERT INTO `sys_resource_type` (`id`, `type`, `label`, `active`, `created_at`, `modified_at`)
-VALUES (7, 'AUDIO', 'label_resource_type_audio', 1, now(), now());
+VALUES (5, 'AUDIO', 'label_resource_type_audio', 1, now(), now());

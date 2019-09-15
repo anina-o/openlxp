@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author elvea
  */
-public class ActivityProfileControllerTests extends BaseXapiTests {
+public class XApiActivityProfileControllerTests extends BaseXapiTests {
 
     @Test
     public void testPut() throws Exception {

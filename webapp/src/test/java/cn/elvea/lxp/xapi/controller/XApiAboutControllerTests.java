@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author elvea
  */
-public class AboutControllerTests extends BaseWebTests {
+public class XApiAboutControllerTests extends BaseWebTests {
 
     @Test
     public void aboutTest() throws Exception {

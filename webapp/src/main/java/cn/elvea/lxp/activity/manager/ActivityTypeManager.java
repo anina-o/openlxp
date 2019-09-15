@@ -1,12 +1,16 @@
 package cn.elvea.lxp.activity.manager;
 
-import org.springframework.stereotype.Service;
+import cn.elvea.lxp.activity.entity.ActivityTypeEntity;
 
 /**
  * ActivityTypeManager
  *
  * @author elvea
  */
-@Service
 public interface ActivityTypeManager {
+
+    ActivityTypeEntity findByType(String type);
+
+    ActivityTypeEntity findById(Long id);
+
 }

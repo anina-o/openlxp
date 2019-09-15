@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author elvea
  */
-public abstract class AbstractController {
+public abstract class XApiAbstractController {
     /**
      * ObjectMapper
      */

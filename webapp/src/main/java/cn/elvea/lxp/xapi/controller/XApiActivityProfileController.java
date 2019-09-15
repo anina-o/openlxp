@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/xAPI/activites/profile")
-public class ActivityProfileController extends AbstractController {
+public class XApiActivityProfileController extends XApiAbstractController {
 
     /**
      * Get

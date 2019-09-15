@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author elvea
  */
-public class StatementControllerTests extends BaseXapiTests {
+public class XApiStatementControllerTests extends BaseXapiTests {
     @Test
     public void testPut() throws Exception {
         Resource putResource = new ClassPathResource("/json/statement/statement-example-put.json");
@@ -29,8 +29,4 @@ public class StatementControllerTests extends BaseXapiTests {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    public void testPost() throws Exception {
-
-    }
 }

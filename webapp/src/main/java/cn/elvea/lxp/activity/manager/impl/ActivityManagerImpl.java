@@ -1,4 +1,4 @@
-package cn.elvea.lxp.activity.manager;
+package cn.elvea.lxp.activity.manager.impl;
 
 /**
  * ActivityManager

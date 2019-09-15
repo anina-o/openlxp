@@ -30,10 +30,10 @@ import static cn.elvea.lxp.core.CoreConstants.DEFAULT_USER_ROLE_ID;
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
-    UserRoleRelationRepository userRoleRelationRepository;
+    private UserRoleRelationRepository userRoleRelationRepository;
 
     /**
      * @see RoleService#findById(Long)
