@@ -1,4 +1,4 @@
-package cn.elvea.lxp.xapi.service;
+package cn.elvea.lxp.xapi.service.impl;
 
 import cn.elvea.lxp.xapi.repository.ActivityProfileRepository;
 import cn.elvea.lxp.xapi.repository.ActivityStateRepository;

@@ -5,7 +5,7 @@ import cn.elvea.lxp.security.SecurityAuthenticationFailureHandler;
 import cn.elvea.lxp.security.SecurityAuthenticationProvider;
 import cn.elvea.lxp.security.SecurityAuthenticationSuccessHandler;
 import cn.elvea.lxp.security.filter.SecurityAuthenticationFilter;
-import cn.elvea.lxp.security.service.SecurityService;
+import cn.elvea.lxp.security.service.SecurityUserService;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -35,7 +35,7 @@ import static cn.elvea.lxp.security.SecurityConstants.XAPI_REQUEST_URL;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private SecurityService securityService;
+    private SecurityUserService securityService;
 
     @Autowired
     private SecurityAuthenticationProvider authenticationProvider;
@@ -48,7 +48,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private SecurityAuthenticationSuccessHandler authenticationSuccessHandler;
-
 
     @Override
     protected AuthenticationManager authenticationManager() {

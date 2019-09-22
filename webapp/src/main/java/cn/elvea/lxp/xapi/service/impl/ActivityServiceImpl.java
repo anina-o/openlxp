@@ -1,6 +1,7 @@
-package cn.elvea.lxp.xapi.service;
+package cn.elvea.lxp.xapi.service.impl;
 
 import cn.elvea.lxp.xapi.model.Activity;
+import cn.elvea.lxp.xapi.service.ActivityService;
 import org.springframework.stereotype.Service;
 
 /**

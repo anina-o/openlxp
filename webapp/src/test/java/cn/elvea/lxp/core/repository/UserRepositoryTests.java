@@ -27,6 +27,13 @@ public class UserRepositoryTests extends BaseTests {
     RoleRepository roleRepository;
 
     @Test
+    public void baseTests() {
+        Optional<UserEntity> userEntityFindByUsername = this.userRepository.findByUsername("admin");
+        Optional<UserEntity> userEntityFindById = this.userRepository.findById(1L);
+        System.out.println(1);
+    }
+
+    @Test
     public void baseCrudTests() {
         String randomUsername = String.valueOf(idWorker.nextId());
         String username = "username_" + randomUsername;
@@ -49,7 +56,6 @@ public class UserRepositoryTests extends BaseTests {
 
         this.userRepository.findById(userEntity.getId());
         this.userRepository.findByUsername(username);
-        this.userRepository.clear();
         this.userRepository.findById(userEntity.getId());
         this.userRepository.findByUsername(username);
     }

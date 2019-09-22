@@ -4,18 +4,16 @@ import cn.elvea.lxp.common.utils.ConvertUtils;
 import cn.elvea.lxp.core.dto.UserDto;
 import cn.elvea.lxp.core.entity.UserEntity;
 import cn.elvea.lxp.core.form.Register;
-import cn.elvea.lxp.core.repository.UserRepository;
+import cn.elvea.lxp.core.manager.UserManager;
 import cn.elvea.lxp.core.service.RoleService;
 import cn.elvea.lxp.core.service.UserService;
 import cn.elvea.lxp.core.type.UserStatusTypeEnum;
-import cn.elvea.lxp.security.service.SecurityService;
+import cn.elvea.lxp.security.service.SecurityUserService;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 /**
  * UserServiceImpl
@@ -26,21 +24,21 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    UserRepository userRepository;
+    UserManager userManager;
 
     @Autowired
     RoleService roleService;
 
     @Autowired
-    SecurityService securityService;
+    SecurityUserService securityService;
 
     /**
      * @see UserService#findByUsername(String)
      */
     @Override
     public UserDto findByUsername(String username) {
-        Optional<UserEntity> userEntity = this.userRepository.findByUsername(username);
-        return userEntity.map(this::getUserDto).orElse(null);
+        UserEntity userEntity = this.userManager.findByUsername(username);
+        return this.getUserDto(userEntity);
     }
 
     /**
@@ -48,8 +46,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public UserDto findById(Long id) {
-        Optional<UserEntity> userEntity = this.userRepository.findById(id);
-        return userEntity.map(this::getUserDto).orElse(null);
+        UserEntity userEntity = this.userManager.findById(id);
+        return this.getUserDto(userEntity);
     }
 
     /**
@@ -76,7 +74,7 @@ public class UserServiceImpl implements UserService {
         userEntity.setPassword(this.securityService.encryptPassword(register.getPassword()));
         userEntity.setStatus(UserStatusTypeEnum.OK.getValue());
         userEntity.setActive(Boolean.TRUE);
-        this.userRepository.save(userEntity);
+        this.userManager.save(userEntity);
 
         Long roleId = this.roleService.getDefaultRole().getId();
         this.roleService.assignRoles(userEntity.getId(), Lists.newArrayList(roleId));
@@ -89,7 +87,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto save(UserDto userDto) {
         UserEntity userEntity = ConvertUtils.sourceToTarget(userDto, UserEntity.class);
-        this.userRepository.save(userEntity);
+        this.userManager.save(userEntity);
         if (CollectionUtils.isNotEmpty(userDto.getRoleIdList())) {
             this.roleService.assignRoles(userEntity.getId(), userDto.getRoleIdList());
         }

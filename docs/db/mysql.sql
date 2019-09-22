@@ -8,7 +8,8 @@ CREATE DATABASE IF NOT EXISTS `lxp` DEFAULT CHARACTER SET `utf8mb4` DEFAULT COLL
 USE `lxp`;
 
 /* 租户表 */
-CREATE TABLE `sys_tenant` (
+CREATE TABLE `sys_tenant`
+(
     `id`             BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
     `code`           VARCHAR(100) COMMENT '编号',
     `title`          VARCHAR(255) COMMENT '标题',
@@ -27,10 +28,12 @@ CREATE TABLE `sys_tenant` (
     `deleted_by`     BIGINT UNSIGNED COMMENT '删除时间',
     CONSTRAINT `pk_sys_tenant_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_tenant` COMMENT '租户表';
+ALTER TABLE `sys_tenant`
+    COMMENT '租户表';
 
 /* 用户表 */
-CREATE TABLE `sys_user` (
+CREATE TABLE `sys_user`
+(
     `id`          BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
     `tenant_id`   BIGINT UNSIGNED     NOT NULL DEFAULT 1 COMMENT 'Tenant ID',
     `username`    VARCHAR(150) COMMENT '用户名',
@@ -49,14 +52,16 @@ CREATE TABLE `sys_user` (
     `deleted_by`  BIGINT UNSIGNED COMMENT '删除时间',
     CONSTRAINT `pk_sys_user_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_user` COMMENT '用户表';
+ALTER TABLE `sys_user`
+    COMMENT '用户表';
 
-CREATE INDEX `ix_sys_user_username` ON `sys_user`(`username`);
-CREATE INDEX `ix_sys_user_email` ON `sys_user`(`email`);
-CREATE INDEX `ix_sys_user_tenant_id` ON `sys_user`(`tenant_id`);
+CREATE INDEX `ix_sys_user_username` ON `sys_user` (`username`);
+CREATE INDEX `ix_sys_user_email` ON `sys_user` (`email`);
+CREATE INDEX `ix_sys_user_tenant_id` ON `sys_user` (`tenant_id`);
 
 /* 用户组表 */
-CREATE TABLE `sys_user_group` (
+CREATE TABLE `sys_user_group`
+(
     `id`          BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
     `tenant_id`   BIGINT UNSIGNED     NOT NULL DEFAULT 1 COMMENT 'Tenant ID',
     `code`        VARCHAR(150) COMMENT '编号',
@@ -70,12 +75,14 @@ CREATE TABLE `sys_user_group` (
     `deleted_by`  BIGINT UNSIGNED COMMENT '删除时间',
     CONSTRAINT `pk_sys_user_group_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_user_group` COMMENT '用户组表';
+ALTER TABLE `sys_user_group`
+    COMMENT '用户组表';
 
-CREATE INDEX `ix_sys_user_group_tenant_id` ON `sys_user_group`(`tenant_id`);
+CREATE INDEX `ix_sys_user_group_tenant_id` ON `sys_user_group` (`tenant_id`);
 
 /* 用户组成员表 */
-CREATE TABLE `sys_user_group_member` (
+CREATE TABLE `sys_user_group_member`
+(
     `id`            BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
     `tenant_id`     BIGINT UNSIGNED     NOT NULL DEFAULT 1 COMMENT 'Tenant ID',
     `user_group_id` BIGINT UNSIGNED     NOT NULL COMMENT '用户组ID',
@@ -89,10 +96,12 @@ CREATE TABLE `sys_user_group_member` (
     `deleted_by`    BIGINT UNSIGNED COMMENT '删除时间',
     CONSTRAINT `pk_sys_user_group_member_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_user_group_member` COMMENT '用户组成员表';
+ALTER TABLE `sys_user_group_member`
+    COMMENT '用户组成员表';
 
 /* 用户登录会话记录 */
-CREATE TABLE `sys_user_session` (
+CREATE TABLE `sys_user_session`
+(
     `id`                   BIGINT UNSIGNED NOT NULL COMMENT 'ID',
     `tenant_id`            BIGINT UNSIGNED NOT NULL DEFAULT 1 COMMENT 'Tenant ID',
     `user_id`              BIGINT UNSIGNED NOT NULL COMMENT 'User ID',
@@ -114,18 +123,20 @@ CREATE TABLE `sys_user_session` (
     `start_minute`         INT UNSIGNED COMMENT '会话开始分钟',
     CONSTRAINT `pk_sys_user_session_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_user_session` COMMENT '用户会话表';
+ALTER TABLE `sys_user_session`
+    COMMENT '用户会话表';
 
-CREATE INDEX `ix_sys_user_session_user_id` ON `sys_user_session`(`user_id`);
-CREATE INDEX `ix_sys_user_session_session_id` ON `sys_user_session`(`session_id`);
-CREATE INDEX `ix_sys_user_session_start_year` ON `sys_user_session`(`start_year`);
-CREATE INDEX `ix_sys_user_session_start_month` ON `sys_user_session`(`start_month`);
-CREATE INDEX `ix_sys_user_session_start_day` ON `sys_user_session`(`start_day`);
-CREATE INDEX `ix_sys_user_session_start_hour` ON `sys_user_session`(`start_hour`);
-CREATE INDEX `ix_sys_user_session_start_minute` ON `sys_user_session`(`start_minute`);
+CREATE INDEX `ix_sys_user_session_user_id` ON `sys_user_session` (`user_id`);
+CREATE INDEX `ix_sys_user_session_session_id` ON `sys_user_session` (`session_id`);
+CREATE INDEX `ix_sys_user_session_start_year` ON `sys_user_session` (`start_year`);
+CREATE INDEX `ix_sys_user_session_start_month` ON `sys_user_session` (`start_month`);
+CREATE INDEX `ix_sys_user_session_start_day` ON `sys_user_session` (`start_day`);
+CREATE INDEX `ix_sys_user_session_start_hour` ON `sys_user_session` (`start_hour`);
+CREATE INDEX `ix_sys_user_session_start_minute` ON `sys_user_session` (`start_minute`);
 
 /* 角色表 */
-CREATE TABLE `sys_role` (
+CREATE TABLE `sys_role`
+(
     `id`          BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
     `tenant_id`   BIGINT UNSIGNED     NOT NULL DEFAULT 1 COMMENT 'Tenant ID',
     `code`        VARCHAR(150) COMMENT '编号',
@@ -140,10 +151,12 @@ CREATE TABLE `sys_role` (
     `deleted_by`  BIGINT UNSIGNED COMMENT '删除时间',
     CONSTRAINT `pk_sys_authority_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_role` COMMENT '角色表';
+ALTER TABLE `sys_role`
+    COMMENT '角色表';
 
 /* 权限表 */
-CREATE TABLE `sys_authority` (
+CREATE TABLE `sys_authority`
+(
     `id`          BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
     `parent_id`   BIGINT UNSIGNED     NOT NULL DEFAULT 0 COMMENT 'Parent ID',
     `code`        VARCHAR(150) COMMENT '编号',
@@ -158,10 +171,12 @@ CREATE TABLE `sys_authority` (
     `deleted_by`  BIGINT UNSIGNED COMMENT '删除时间',
     CONSTRAINT `pk_sys_authority_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_authority` COMMENT '权限表';
+ALTER TABLE `sys_authority`
+    COMMENT '权限表';
 
 /* 租户权限关联表 */
-CREATE TABLE `sys_tenant_authority_relation` (
+CREATE TABLE `sys_tenant_authority_relation`
+(
     `id`           BIGINT UNSIGNED COMMENT 'ID'   NOT NULL,
     `tenant_id`    BIGINT UNSIGNED COMMENT '租户ID' NOT NULL,
     `authority_id` BIGINT UNSIGNED COMMENT '权限ID' NOT NULL,
@@ -169,13 +184,15 @@ CREATE TABLE `sys_tenant_authority_relation` (
     `created_by`   BIGINT UNSIGNED COMMENT '创建人',
     CONSTRAINT `pk_sys_tenant_authority_relation_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_tenant_authority_relation` COMMENT '租户权限关联表';
+ALTER TABLE `sys_tenant_authority_relation`
+    COMMENT '租户权限关联表';
 
-CREATE INDEX `ix_sys_tenant_authority_relation_tenant_id` ON `sys_tenant_authority_relation`(`tenant_id`);
-CREATE INDEX `ix_sys_tenant_authority_relation_authority_id` ON `sys_tenant_authority_relation`(`authority_id`);
+CREATE INDEX `ix_sys_tenant_authority_relation_tenant_id` ON `sys_tenant_authority_relation` (`tenant_id`);
+CREATE INDEX `ix_sys_tenant_authority_relation_authority_id` ON `sys_tenant_authority_relation` (`authority_id`);
 
 /* 角色权限关联表 */
-CREATE TABLE `sys_role_authority_relation` (
+CREATE TABLE `sys_role_authority_relation`
+(
     `id`           BIGINT UNSIGNED COMMENT 'ID'   NOT NULL,
     `role_id`      BIGINT UNSIGNED COMMENT '角色ID' NOT NULL,
     `authority_id` BIGINT UNSIGNED COMMENT '权限ID' NOT NULL,
@@ -183,13 +200,15 @@ CREATE TABLE `sys_role_authority_relation` (
     `created_by`   BIGINT UNSIGNED COMMENT '创建人',
     CONSTRAINT `pk_sys_role_authority_relation_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_role_authority_relation` COMMENT '角色权限关联表';
+ALTER TABLE `sys_role_authority_relation`
+    COMMENT '角色权限关联表';
 
-CREATE INDEX `ix_sys_role_authority_relation_role_id` ON `sys_role_authority_relation`(`role_id`);
-CREATE INDEX `ix_sys_role_authority_relation_authority_id` ON `sys_role_authority_relation`(`authority_id`);
+CREATE INDEX `ix_sys_role_authority_relation_role_id` ON `sys_role_authority_relation` (`role_id`);
+CREATE INDEX `ix_sys_role_authority_relation_authority_id` ON `sys_role_authority_relation` (`authority_id`);
 
 /* 用户权限关联表 */
-CREATE TABLE `sys_user_role_relation` (
+CREATE TABLE `sys_user_role_relation`
+(
     `id`         BIGINT UNSIGNED COMMENT 'ID'   NOT NULL,
     `user_id`    BIGINT UNSIGNED COMMENT '用户ID' NOT NULL,
     `role_id`    BIGINT UNSIGNED COMMENT '角色ID' NOT NULL,
@@ -197,10 +216,12 @@ CREATE TABLE `sys_user_role_relation` (
     `created_by` BIGINT UNSIGNED COMMENT '创建人',
     CONSTRAINT `pk_sys_user_role_relation_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_user_role_relation` COMMENT '用户角色关联表';
+ALTER TABLE `sys_user_role_relation`
+    COMMENT '用户角色关联表';
 
 /* 附件文件表 */
-CREATE TABLE `sys_attachment_file` (
+CREATE TABLE `sys_attachment_file`
+(
     `id`                BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
     `type`              VARCHAR(180) COMMENT '附件类型',
     `original_filename` VARCHAR(255) COMMENT '原始文件名',
@@ -216,10 +237,12 @@ CREATE TABLE `sys_attachment_file` (
     `deleted_by`        BIGINT UNSIGNED COMMENT '删除人',
     CONSTRAINT `pk_sys_attachment_file_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_attachment_file` COMMENT '附件文件表';
+ALTER TABLE `sys_attachment_file`
+    COMMENT '附件文件表';
 
 /* 附件关联表 */
-CREATE TABLE `sys_attachment_relation` (
+CREATE TABLE `sys_attachment_relation`
+(
     `id`                 BIGINT UNSIGNED NOT NULL COMMENT 'ID',
     `target_type`        VARCHAR(180)    NOT NULL COMMENT '附件类型',
     `target_id`          BIGINT UNSIGNED NOT NULL COMMENT '目标实体ID',
@@ -228,14 +251,16 @@ CREATE TABLE `sys_attachment_relation` (
     `created_by`         BIGINT UNSIGNED COMMENT '创建人',
     CONSTRAINT `pk_sys_attachment_relation_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_attachment_relation` COMMENT '附件关联表';
+ALTER TABLE `sys_attachment_relation`
+    COMMENT '附件关联表';
 
-CREATE INDEX `ix_sys_attachment_relation_target_type` ON `sys_attachment_relation`(`target_type`);
-CREATE INDEX `ix_sys_attachment_relation_target_id` ON `sys_attachment_relation`(`target_id`);
-CREATE INDEX `ix_sys_attachment_relation_attachment_file_id` ON `sys_attachment_relation`(`attachment_file_id`);
+CREATE INDEX `ix_sys_attachment_relation_target_type` ON `sys_attachment_relation` (`target_type`);
+CREATE INDEX `ix_sys_attachment_relation_target_id` ON `sys_attachment_relation` (`target_id`);
+CREATE INDEX `ix_sys_attachment_relation_attachment_file_id` ON `sys_attachment_relation` (`attachment_file_id`);
 
 /* 活动类型表 */
-CREATE TABLE `sys_activity_type` (
+CREATE TABLE `sys_activity_type`
+(
     `id`          BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
     `type`        VARCHAR(100)        NOT NULL COMMENT '活动类型',
     `label`       VARCHAR(150) COMMENT '文本',
@@ -248,12 +273,14 @@ CREATE TABLE `sys_activity_type` (
     `deleted_by`  BIGINT UNSIGNED COMMENT '删除时间',
     CONSTRAINT `pk_sys_activity_type` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_activity_type` COMMENT '活动类型表';
+ALTER TABLE `sys_activity_type`
+    COMMENT '活动类型表';
 
-CREATE INDEX `ix_sys_activity_type_type` ON `sys_activity_type`(`type`);
+CREATE INDEX `ix_sys_activity_type_type` ON `sys_activity_type` (`type`);
 
 /* 活动表 */
-CREATE TABLE `sys_activity` (
+CREATE TABLE `sys_activity`
+(
     `id`                         BIGINT UNSIGNED      NOT NULL COMMENT 'ID',
     `type`                       VARCHAR(100)         NOT NULL COMMENT '活动类型',
     `code`                       VARCHAR(100)         NOT NULL COMMENT '编号',
@@ -293,12 +320,14 @@ CREATE TABLE `sys_activity` (
     `deleted_by`                 BIGINT UNSIGNED COMMENT '删除人',
     CONSTRAINT `pk_sys_activity_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_activity` COMMENT '课程表';
+ALTER TABLE `sys_activity`
+    COMMENT '课程表';
 
-CREATE INDEX `ix_sys_activity_type` ON `sys_activity`(`type`);
+CREATE INDEX `ix_sys_activity_type` ON `sys_activity` (`type`);
 
 /* 活动报名记录表 */
-CREATE TABLE `sys_activity_enrollment` (
+CREATE TABLE `sys_activity_enrollment`
+(
     `id`                   BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
     `activity_id`          BIGINT UNSIGNED     NOT NULL COMMENT '活动ID',
     `user_id`              BIGINT UNSIGNED     NOT NULL COMMENT '用户ID',
@@ -322,13 +351,15 @@ CREATE TABLE `sys_activity_enrollment` (
     `deleted_by`           BIGINT UNSIGNED COMMENT '删除人',
     CONSTRAINT `pk_sys_course_enrollment_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_activity_enrollment` COMMENT '课程报名记录表';
+ALTER TABLE `sys_activity_enrollment`
+    COMMENT '课程报名记录表';
 
-CREATE INDEX `ix_sys_activity_enrollment_activity_id` ON `sys_activity_enrollment`(`activity_id`);
-CREATE INDEX `ix_sys_activity_enrollment_user_id` ON `sys_activity_enrollment`(`user_id`);
+CREATE INDEX `ix_sys_activity_enrollment_activity_id` ON `sys_activity_enrollment` (`activity_id`);
+CREATE INDEX `ix_sys_activity_enrollment_user_id` ON `sys_activity_enrollment` (`user_id`);
 
 /* 资源类型表 */
-CREATE TABLE `sys_resource_type` (
+CREATE TABLE `sys_resource_type`
+(
     `id`          BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
     `type`        VARCHAR(100) COMMENT '类型',
     `label`       VARCHAR(150) COMMENT '文本',
@@ -341,12 +372,14 @@ CREATE TABLE `sys_resource_type` (
     `deleted_by`  BIGINT UNSIGNED COMMENT '删除时间',
     CONSTRAINT `pk_sys_resource_type_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_resource_type` COMMENT '资源类型表';
+ALTER TABLE `sys_resource_type`
+    COMMENT '资源类型表';
 
-CREATE INDEX `ix_sys_resource_type` ON `sys_resource_type`(`type`);
+CREATE INDEX `ix_sys_resource_type` ON `sys_resource_type` (`type`);
 
 /* 资源表 */
-CREATE TABLE `sys_resource` (
+CREATE TABLE `sys_resource`
+(
     `id`                        BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
     `reference_id`              BIGINT UNSIGNED     NOT NULL DEFAULT 0 COMMENT '原始资源ID',
     `type`                      VARCHAR(100) COMMENT '类型',
@@ -379,12 +412,14 @@ CREATE TABLE `sys_resource` (
     `deleted_by`                BIGINT UNSIGNED COMMENT '删除时间',
     CONSTRAINT `pk_sys_resource_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_resource` COMMENT '资源表';
+ALTER TABLE `sys_resource`
+    COMMENT '资源表';
 
-CREATE INDEX `ix_sys_resource_type` ON `sys_resource`(`type`);
+CREATE INDEX `ix_sys_resource_type` ON `sys_resource` (`type`);
 
 /* 活动和资源关联表 */
-CREATE TABLE `sys_activity_resource` (
+CREATE TABLE `sys_activity_resource`
+(
     `id`          BIGINT  NOT NULL COMMENT 'ID',
     `activity_id` BIGINT  NOT NULL COMMENT '培训ID',
     `resource_id` BIGINT  NOT NULL COMMENT '资源ID',
@@ -393,13 +428,15 @@ CREATE TABLE `sys_activity_resource` (
     `created_by`  BIGINT UNSIGNED COMMENT '创建人',
     CONSTRAINT `pk_sys_activity_resource_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_activity_resource` COMMENT '活动和资源关联表';
+ALTER TABLE `sys_activity_resource`
+    COMMENT '活动和资源关联表';
 
-CREATE INDEX `ix_sys_activity_resource_activity_id` ON `sys_activity_resource`(`activity_id`);
-CREATE INDEX `ix_sys_activity_resource_resource_id` ON `sys_activity_resource`(`resource_id`);
+CREATE INDEX `ix_sys_activity_resource_activity_id` ON `sys_activity_resource` (`activity_id`);
+CREATE INDEX `ix_sys_activity_resource_resource_id` ON `sys_activity_resource` (`resource_id`);
 
 /* 资源学习记录表 */
-CREATE TABLE `sys_resource_attendance` (
+CREATE TABLE `sys_resource_attendance`
+(
     `id`                   BIGINT UNSIGNED NOT NULL COMMENT 'ID',
     `activity_id`          BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '活动ID',
     `enrollment_id`        BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '报名ID',
@@ -426,15 +463,17 @@ CREATE TABLE `sys_resource_attendance` (
     `deleted_by`           BIGINT UNSIGNED COMMENT '删除时间',
     CONSTRAINT `pk_sys_resource_attendance_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_resource_attendance` COMMENT '资源学习记录表';
+ALTER TABLE `sys_resource_attendance`
+    COMMENT '资源学习记录表';
 
-CREATE INDEX `ix_sys_resource_attendance_activity_id` ON `sys_resource_attendance`(`activity_id`);
-CREATE INDEX `ix_sys_resource_attendance_enrollment_id` ON `sys_resource_attendance`(`enrollment_id`);
-CREATE INDEX `ix_sys_resource_attendance_user_id` ON `sys_resource_attendance`(`user_id`);
-CREATE INDEX `ix_sys_resource_attendance_resource_id` ON `sys_resource_attendance`(`resource_id`);
+CREATE INDEX `ix_sys_resource_attendance_activity_id` ON `sys_resource_attendance` (`activity_id`);
+CREATE INDEX `ix_sys_resource_attendance_enrollment_id` ON `sys_resource_attendance` (`enrollment_id`);
+CREATE INDEX `ix_sys_resource_attendance_user_id` ON `sys_resource_attendance` (`user_id`);
+CREATE INDEX `ix_sys_resource_attendance_resource_id` ON `sys_resource_attendance` (`resource_id`);
 
 /* 资源学习历史记录表 */
-CREATE TABLE `sys_resource_attendance_history` (
+CREATE TABLE `sys_resource_attendance_history`
+(
     `id`              BIGINT UNSIGNED NOT NULL COMMENT 'ID',
     `activity_id`     BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '活动ID',
     `enrollment_id`   BIGINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '报名ID',
@@ -449,15 +488,17 @@ CREATE TABLE `sys_resource_attendance_history` (
     `created_by`      BIGINT COMMENT '创建人',
     CONSTRAINT `pk_sys_resource_attendance_history_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_resource_attendance_history` COMMENT '资源学习历史记录表';
+ALTER TABLE `sys_resource_attendance_history`
+    COMMENT '资源学习历史记录表';
 
-CREATE INDEX `ix_sys_resource_attendance_history_activity_id` ON `sys_resource_attendance_history`(`activity_id`);
-CREATE INDEX `ix_sys_resource_attendance_history_enrollment_id` ON `sys_resource_attendance_history`(`enrollment_id`);
-CREATE INDEX `ix_sys_resource_attendance_history_user_id` ON `sys_resource_attendance_history`(`user_id`);
-CREATE INDEX `ix_sys_resource_attendance_history_resource_id` ON `sys_resource_attendance_history`(`resource_id`);
+CREATE INDEX `ix_sys_resource_attendance_history_activity_id` ON `sys_resource_attendance_history` (`activity_id`);
+CREATE INDEX `ix_sys_resource_attendance_history_enrollment_id` ON `sys_resource_attendance_history` (`enrollment_id`);
+CREATE INDEX `ix_sys_resource_attendance_history_user_id` ON `sys_resource_attendance_history` (`user_id`);
+CREATE INDEX `ix_sys_resource_attendance_history_resource_id` ON `sys_resource_attendance_history` (`resource_id`);
 
 /* 试题表 */
-CREATE TABLE `sys_question` (
+CREATE TABLE `sys_question`
+(
     `id`           BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
     `reference_id` BIGINT UNSIGNED     NOT NULL COMMENT '原始题目ID',
     `type`         VARCHAR(50) COMMENT '类型',
@@ -480,14 +521,16 @@ CREATE TABLE `sys_question` (
     `deleted_by`   BIGINT COMMENT '删除人',
     CONSTRAINT `pk_sys_question_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_question` COMMENT '试题表';
+ALTER TABLE `sys_question`
+    COMMENT '试题表';
 
-CREATE INDEX `ix_sys_question_reference_id` ON `sys_question`(`reference_id`);
-CREATE INDEX `ix_sys_question_type` ON `sys_question`(`type`);
-CREATE INDEX `ix_sys_question_native_ind` ON `sys_question`(`native_ind`);
+CREATE INDEX `ix_sys_question_reference_id` ON `sys_question` (`reference_id`);
+CREATE INDEX `ix_sys_question_type` ON `sys_question` (`type`);
+CREATE INDEX `ix_sys_question_native_ind` ON `sys_question` (`native_ind`);
 
 /* 试题选项表 */
-CREATE TABLE `sys_question_option` (
+CREATE TABLE `sys_question_option`
+(
     `id`           BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
     `question_id`  BIGINT UNSIGNED     NOT NULL COMMENT '题目ID',
     `reference_id` BIGINT UNSIGNED     NOT NULL COMMENT '原始选项ID',
@@ -499,15 +542,17 @@ CREATE TABLE `sys_question_option` (
     `case_ind`     TINYINT(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '是否大小写敏感',
     CONSTRAINT `pk_sys_question_options_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_question_option` COMMENT '试题选项表';
+ALTER TABLE `sys_question_option`
+    COMMENT '试题选项表';
 
-CREATE INDEX `ix_sys_question_option_question_id` ON `sys_question_option`(`question_id`);
-CREATE INDEX `ix_sys_question_option_reference_id` ON `sys_question_option`(`reference_id`);
+CREATE INDEX `ix_sys_question_option_question_id` ON `sys_question_option` (`question_id`);
+CREATE INDEX `ix_sys_question_option_reference_id` ON `sys_question_option` (`reference_id`);
 
 /*
 试卷章节(大题)
 */
-CREATE TABLE `sys_paper_section` (
+CREATE TABLE `sys_paper_section`
+(
     `id`          BIGINT UNSIGNED NOT NULL COMMENT 'ID',
     `resource_id` BIGINT UNSIGNED NOT NULL COMMENT '试卷ID',
     `type`        VARCHAR(50) COMMENT '题目类型',
@@ -521,14 +566,16 @@ CREATE TABLE `sys_paper_section` (
     `total_count` INT COMMENT '章节题目总数量',
     CONSTRAINT `pk_sys_paper_condition_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_paper_section` COMMENT '试卷章节表';
+ALTER TABLE `sys_paper_section`
+    COMMENT '试卷章节表';
 
-CREATE INDEX `ix_sys_paper_section` ON `sys_paper_section`(`resource_id`);
+CREATE INDEX `ix_sys_paper_section` ON `sys_paper_section` (`resource_id`);
 
 /*
 试卷试题
 */
-CREATE TABLE `sys_paper_question` (
+CREATE TABLE `sys_paper_question`
+(
     `id`             BIGINT UNSIGNED NOT NULL COMMENT 'ID',
     `resource_id`    BIGINT UNSIGNED NOT NULL COMMENT '试卷ID',
     `section_id`     BIGINT UNSIGNED NOT NULL COMMENT '章节ID',
@@ -539,14 +586,16 @@ CREATE TABLE `sys_paper_question` (
     `created_by`     BIGINT UNSIGNED COMMENT '创建人',
     CONSTRAINT `pk_sys_paper_question_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_paper_question` COMMENT '试卷试题表';
+ALTER TABLE `sys_paper_question`
+    COMMENT '试卷试题表';
 
-CREATE INDEX `ix_sys_paper_question` ON `sys_paper_question`(`resource_id`, `section_id`, `question_id`);
+CREATE INDEX `ix_sys_paper_question` ON `sys_paper_question` (`resource_id`, `section_id`, `question_id`);
 
 /*
 试卷答题自动保存记录表
 */
-CREATE TABLE `sys_paper_auto_save_record` (
+CREATE TABLE `sys_paper_auto_save_record`
+(
     `id`            BIGINT UNSIGNED NOT NULL COMMENT 'ID',
     `activity_id`   BIGINT UNSIGNED NOT NULL COMMENT '活动ID',
     `enrollment_id` BIGINT UNSIGNED NOT NULL COMMENT '报名ID',
@@ -558,12 +607,14 @@ CREATE TABLE `sys_paper_auto_save_record` (
     `created_by`    BIGINT UNSIGNED COMMENT '创建人',
     CONSTRAINT `pk_sys_paper_auto_save_record_id` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_paper_auto_save_record` COMMENT '试卷答题自动保存记录表';
+ALTER TABLE `sys_paper_auto_save_record`
+    COMMENT '试卷答题自动保存记录表';
 
 /*
 试卷答题记录
 */
-CREATE TABLE `sys_paper_record` (
+CREATE TABLE `sys_paper_record`
+(
     `id`                BIGINT UNSIGNED NOT NULL COMMENT 'ID',
     `activity_id`       BIGINT UNSIGNED NOT NULL COMMENT '活动ID',
     `enrollment_id`     BIGINT UNSIGNED NOT NULL COMMENT '报名ID',
@@ -578,15 +629,17 @@ CREATE TABLE `sys_paper_record` (
     `created_by`        BIGINT UNSIGNED COMMENT '创建人',
     CONSTRAINT `pk_sys_paper_record` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_paper_record` COMMENT '试卷答题记录表';
+ALTER TABLE `sys_paper_record`
+    COMMENT '试卷答题记录表';
 
-CREATE INDEX `ix_paper_record_activity_id` ON `sys_paper_record`(`activity_id`);
-CREATE INDEX `ix_paper_record_enrollment_id` ON `sys_paper_record`(`enrollment_id`);
-CREATE INDEX `ix_paper_record_resource_id` ON `sys_paper_record`(`resource_id`);
-CREATE INDEX `ix_paper_record_user_id` ON `sys_paper_record`(`user_id`);
-CREATE INDEX `ix_paper_record_session_id` ON `sys_paper_record`(`session_id`);
+CREATE INDEX `ix_paper_record_activity_id` ON `sys_paper_record` (`activity_id`);
+CREATE INDEX `ix_paper_record_enrollment_id` ON `sys_paper_record` (`enrollment_id`);
+CREATE INDEX `ix_paper_record_resource_id` ON `sys_paper_record` (`resource_id`);
+CREATE INDEX `ix_paper_record_user_id` ON `sys_paper_record` (`user_id`);
+CREATE INDEX `ix_paper_record_session_id` ON `sys_paper_record` (`session_id`);
 
-CREATE TABLE `sys_paper_question_record` (
+CREATE TABLE `sys_paper_question_record`
+(
     `id`              BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
     `activity_id`     BIGINT UNSIGNED     NOT NULL COMMENT '活动ID',
     `enrollment_id`   BIGINT UNSIGNED     NOT NULL COMMENT '报名ID',
@@ -605,16 +658,18 @@ CREATE TABLE `sys_paper_question_record` (
     `created_by`      BIGINT UNSIGNED COMMENT '创建人',
     CONSTRAINT `pk_sys_paper_question_record` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_paper_question_record` COMMENT '题目记录表';
+ALTER TABLE `sys_paper_question_record`
+    COMMENT '题目记录表';
 
-CREATE INDEX `sys_question_record_paper_record_id` ON `sys_paper_question_record`(`paper_record_id`);
-CREATE INDEX `sys_question_record_activity_id` ON `sys_paper_question_record`(`activity_id`);
-CREATE INDEX `sys_question_record_enrollment_id` ON `sys_paper_question_record`(`enrollment_id`);
-CREATE INDEX `sys_question_record_resource_id` ON `sys_paper_question_record`(`resource_id`);
-CREATE INDEX `sys_question_record_user_id` ON `sys_paper_question_record`(`user_id`);
-CREATE INDEX `sys_question_record_session_id` ON `sys_paper_question_record`(`session_id`);
+CREATE INDEX `sys_question_record_paper_record_id` ON `sys_paper_question_record` (`paper_record_id`);
+CREATE INDEX `sys_question_record_activity_id` ON `sys_paper_question_record` (`activity_id`);
+CREATE INDEX `sys_question_record_enrollment_id` ON `sys_paper_question_record` (`enrollment_id`);
+CREATE INDEX `sys_question_record_resource_id` ON `sys_paper_question_record` (`resource_id`);
+CREATE INDEX `sys_question_record_user_id` ON `sys_paper_question_record` (`user_id`);
+CREATE INDEX `sys_question_record_session_id` ON `sys_paper_question_record` (`session_id`);
 
-CREATE TABLE `sys_paper_option_record` (
+CREATE TABLE `sys_paper_option_record`
+(
     `id`                       BIGINT UNSIGNED NOT NULL COMMENT 'ID',
     `paper_record_id`          BIGINT UNSIGNED NOT NULL COMMENT '作答ID',
     `paper_question_record_id` BIGINT UNSIGNED NOT NULL COMMENT '题目答题记录ID',
@@ -632,17 +687,18 @@ CREATE TABLE `sys_paper_option_record` (
     `created_by`               BIGINT UNSIGNED COMMENT '创建人',
     CONSTRAINT `pk_sys_paper_option_record` PRIMARY KEY (`id`)
 );
-ALTER TABLE `sys_paper_option_record` COMMENT '选项记录表';
+ALTER TABLE `sys_paper_option_record`
+    COMMENT '选项记录表';
 
-CREATE INDEX `sys_paper_option_record_paper_record_id` ON `sys_paper_option_record`(`paper_record_id`);
-CREATE INDEX `sys_paper_option_record_paper_question_record_id` ON `sys_paper_option_record`(`paper_question_record_id`);
-CREATE INDEX `sys_paper_option_record_activity_id` ON `sys_paper_option_record`(`activity_id`);
-CREATE INDEX `sys_paper_option_record_enrollment_id` ON `sys_paper_option_record`(`enrollment_id`);
-CREATE INDEX `sys_paper_option_record_resource_id` ON `sys_paper_option_record`(`resource_id`);
-CREATE INDEX `sys_paper_option_record_user_id` ON `sys_paper_option_record`(`user_id`);
-CREATE INDEX `sys_paper_option_record_question_id` ON `sys_paper_option_record`(`question_id`);
-CREATE INDEX `sys_paper_option_record_option_id` ON `sys_paper_option_record`(`option_id`);
-CREATE INDEX `sys_paper_option_record_session_id` ON `sys_paper_option_record`(`session_id`);
+CREATE INDEX `sys_paper_option_record_paper_record_id` ON `sys_paper_option_record` (`paper_record_id`);
+CREATE INDEX `sys_paper_option_record_paper_question_record_id` ON `sys_paper_option_record` (`paper_question_record_id`);
+CREATE INDEX `sys_paper_option_record_activity_id` ON `sys_paper_option_record` (`activity_id`);
+CREATE INDEX `sys_paper_option_record_enrollment_id` ON `sys_paper_option_record` (`enrollment_id`);
+CREATE INDEX `sys_paper_option_record_resource_id` ON `sys_paper_option_record` (`resource_id`);
+CREATE INDEX `sys_paper_option_record_user_id` ON `sys_paper_option_record` (`user_id`);
+CREATE INDEX `sys_paper_option_record_question_id` ON `sys_paper_option_record` (`question_id`);
+CREATE INDEX `sys_paper_option_record_option_id` ON `sys_paper_option_record` (`option_id`);
+CREATE INDEX `sys_paper_option_record_session_id` ON `sys_paper_option_record` (`session_id`);
 
 
 /* 系统角色 */
@@ -659,8 +715,10 @@ INSERT INTO `sys_role` (`id`, `code`, `label`, `active`, `created_at`, `modified
 VALUES (4, 'learner', 'label_role_type_learner', 1, now(), now());
 
 /* 系统管理员 */
-INSERT INTO `sys_user` (`id`, `username`, `nickname`, `status`, `active`, `password`, `created_at`, `created_by`, `modified_at`, `modified_by`)
-VALUES (1, 'admin', 'Administrator', 1, 1, '$2a$10$xq4enPCLvDBgiJX6rczJK.LgwaLyLtbgqgaC8Nj0kqsVdHZ6KJEg.', now(), 1, now(), 1);
+INSERT INTO `sys_user` (`id`, `username`, `nickname`, `status`, `active`, `password`, `created_at`, `created_by`,
+                        `modified_at`, `modified_by`)
+VALUES (1, 'admin', 'Administrator', 1, 1, '$2a$10$xq4enPCLvDBgiJX6rczJK.LgwaLyLtbgqgaC8Nj0kqsVdHZ6KJEg.', now(), 1,
+        now(), 1);
 
 INSERT INTO `sys_user_role_relation` (`id`, `user_id`, `role_id`, `created_at`, `created_by`)
 VALUES (1, 1, 1, now(), 1);

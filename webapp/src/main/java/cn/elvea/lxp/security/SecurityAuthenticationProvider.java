@@ -1,6 +1,6 @@
 package cn.elvea.lxp.security;
 
-import cn.elvea.lxp.security.service.SecurityService;
+import cn.elvea.lxp.security.service.SecurityUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 public class SecurityAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    private SecurityService securityService;
+    private SecurityUserService securityService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

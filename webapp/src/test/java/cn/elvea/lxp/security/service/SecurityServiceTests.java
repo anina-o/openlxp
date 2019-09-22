@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class SecurityServiceTests extends BaseTests {
 
     @Autowired
-    SecurityService securityService;
+    SecurityUserService securityService;
 
     @Test
     public void encryptPasswordTest() {

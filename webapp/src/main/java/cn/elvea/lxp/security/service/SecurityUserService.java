@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  *
  * @author elvea
  */
-public interface SecurityService extends UserDetailsService {
+public interface SecurityUserService extends UserDetailsService {
 
     /**
      * 密码加密

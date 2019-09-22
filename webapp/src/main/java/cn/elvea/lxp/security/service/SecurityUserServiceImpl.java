@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * @author elvea
  */
 @Service
-public class SecurityServiceImpl implements SecurityService {
+public class SecurityUserServiceImpl implements SecurityUserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -48,7 +48,7 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     /**
-     * @see SecurityService#encryptPassword(String)
+     * @see SecurityUserService#encryptPassword(String)
      */
     @Override
     public String encryptPassword(String password) {
@@ -56,7 +56,7 @@ public class SecurityServiceImpl implements SecurityService {
     }
 
     /**
-     * @see SecurityService#isPasswordMatch(String, String)
+     * @see SecurityUserService#isPasswordMatch(String, String)
      */
     @Override
     public boolean isPasswordMatch(String presentedPassword, String encodedPassword) {

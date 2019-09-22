@@ -1,6 +1,7 @@
-package cn.elvea.lxp.xapi.service;
+package cn.elvea.lxp.xapi.service.impl;
 
 import cn.elvea.lxp.xapi.entity.ActivityProfileEntity;
+import cn.elvea.lxp.xapi.service.ActivityProfileService;
 import cn.elvea.lxp.xapi.utils.XApiUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

@@ -1,8 +1,9 @@
-package cn.elvea.lxp.xapi.service;
+package cn.elvea.lxp.xapi.service.impl;
 
 import cn.elvea.lxp.xapi.model.Actor;
 import cn.elvea.lxp.xapi.model.Agent;
 import cn.elvea.lxp.xapi.entity.ActivityStateEntity;
+import cn.elvea.lxp.xapi.service.ActivityStateService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.mongodb.core.query.Criteria;

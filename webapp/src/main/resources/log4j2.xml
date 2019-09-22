@@ -17,7 +17,7 @@
         <logger name="cn.elvea" level="DEBUG"/>
         <logger name="org.springframework.boot" level="WARN"/>
         <logger name="org.springframework" level="WARN"/>
-        <logger name="org.hibernate" level="WARN"/>
+        <logger name="org.hibernate" level="DEBUG"/>
         <logger name="de.codecentric" level="DEBUG"/>
 
         <Root level="ERROR">

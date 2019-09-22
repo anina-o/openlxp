@@ -1,8 +1,9 @@
-package cn.elvea.lxp.xapi.service;
+package cn.elvea.lxp.xapi.service.impl;
 
 import cn.elvea.lxp.xapi.entity.AgentProfileEntity;
 import cn.elvea.lxp.xapi.exception.InvalidRequestException;
 import cn.elvea.lxp.xapi.model.Agent;
+import cn.elvea.lxp.xapi.service.AgentProfileService;
 import cn.elvea.lxp.xapi.utils.XApiUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;

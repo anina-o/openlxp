@@ -1,9 +1,10 @@
-package cn.elvea.lxp.xapi.service;
+package cn.elvea.lxp.xapi.service.impl;
 
 import cn.elvea.lxp.common.utils.ConvertUtils;
 import cn.elvea.lxp.xapi.entity.StatementEntity;
 import cn.elvea.lxp.xapi.model.Statement;
 import cn.elvea.lxp.xapi.model.StatementsResult;
+import cn.elvea.lxp.xapi.service.StatementService;
 import cn.elvea.lxp.xapi.utils.XApiUtils;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;

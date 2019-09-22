@@ -2,7 +2,7 @@ package cn.elvea.lxp.security.filter;
 
 import cn.elvea.lxp.security.SecurityAuthenticationDetailsSource;
 import cn.elvea.lxp.security.SecurityUtils;
-import cn.elvea.lxp.security.service.SecurityService;
+import cn.elvea.lxp.security.service.SecurityUserService;
 import com.nimbusds.jwt.JWTClaimsSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -29,7 +29,7 @@ public class SecurityTokenAuthenticationFilter extends BasicAuthenticationFilter
     private SecurityAuthenticationDetailsSource securityAuthenticationDetailsSource;
 
     @Autowired
-    private SecurityService securityService;
+    private SecurityUserService securityService;
 
     public SecurityTokenAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
