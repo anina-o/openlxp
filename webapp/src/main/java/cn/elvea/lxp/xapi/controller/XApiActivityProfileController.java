@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.*;
 public class XApiActivityProfileController extends XApiAbstractController {
 
     /**
-     * Get
+     * @param activityId The Activity id associated with this Profile document.
+     * @param profileId  The profile id associated with this Profile document.
+     * @param since      Only ids of Profile documents stored since the specified Timestamp (exclusive) are returned.
      */
     @GetMapping
     @ResponseBody
@@ -23,7 +25,7 @@ public class XApiActivityProfileController extends XApiAbstractController {
                                               @RequestParam(name = "profileId", required = false) String profileId,
                                               @RequestParam(name = "since", required = false) String since) {
         if (StringUtils.isNotEmpty(profileId)) {
-            return XAPIResponse.success(this.activityProfileService.getSingleActivityProfile(activityId, profileId));
+            return XAPIResponse.success(this.activityProfileService.getActivityProfile(activityId, profileId));
         } else {
             return XAPIResponse.success(this.activityProfileService.getActivityProfileIdList(activityId, since));
         }

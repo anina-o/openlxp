@@ -10,84 +10,47 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author elvea
  */
 public abstract class XApiAbstractController {
+
     /**
      * ObjectMapper
      */
-    ObjectMapper objectMapper;
+    @Autowired
+    protected ObjectMapper objectMapper;
 
     /**
      * XAPIService
      */
-    AboutService xapiService;
-
-    /**
-     * AgentService
-     */
-    AgentService agentService;
+    @Autowired
+    protected AboutService xapiService;
 
     /**
      * AgentProfileService
      */
-    AgentProfileService agentProfileService;
+    @Autowired
+    protected AgentProfileService agentProfileService;
 
     /**
      * ActivityService
      */
-    ActivityService activityService;
+    @Autowired
+    protected ActivityService activityService;
 
     /**
      * ActivityProfileService
      */
-    ActivityProfileService activityProfileService;
+    @Autowired
+    protected ActivityProfileService activityProfileService;
 
     /**
      * ActivityStateService
      */
-    ActivityStateService activityStateService;
+    @Autowired
+    protected ActivityStateService activityStateService;
 
     /**
      * StatementService
      */
-    StatementService statementService;
-
     @Autowired
-    public void setXapiService(AboutService xapiService) {
-        this.xapiService = xapiService;
-    }
-
-    @Autowired
-    public void setAgentService(AgentService agentService) {
-        this.agentService = agentService;
-    }
-
-    @Autowired
-    public void setAgentProfileService(AgentProfileService agentProfileService) {
-        this.agentProfileService = agentProfileService;
-    }
-
-    @Autowired
-    public void setActivityService(ActivityService activityService) {
-        this.activityService = activityService;
-    }
-
-    @Autowired
-    public void setActivityProfileService(ActivityProfileService activityProfileService) {
-        this.activityProfileService = activityProfileService;
-    }
-
-    @Autowired
-    public void setActivityStateService(ActivityStateService activityStateService) {
-        this.activityStateService = activityStateService;
-    }
-
-    @Autowired
-    public void setStatementService(StatementService statementService) {
-        this.statementService = statementService;
-    }
-
-    @Autowired
-    public void setObjectMapper(ObjectMapper objectMapper) {
-        this.objectMapper = objectMapper;
-    }
+    protected StatementService statementService;
 
 }

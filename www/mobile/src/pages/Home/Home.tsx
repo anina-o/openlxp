@@ -18,7 +18,7 @@ export default class HomePage extends React.Component<HomePageProps> {
     render() {
         return (
             <div>
-                <Button>xx1</Button>
+                <Button>React Application</Button>
             </div>
         );
     }

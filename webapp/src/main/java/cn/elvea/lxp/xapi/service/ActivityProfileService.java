@@ -12,7 +12,7 @@ public interface ActivityProfileService {
     /**
      * Get a single activity document
      */
-    String getSingleActivityProfile(String activityId, String profileId);
+    String getActivityProfile(String activityId, String profileId);
 
     /**
      * Get multiple activity document and return the available ids

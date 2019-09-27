@@ -23,10 +23,10 @@ import java.util.stream.Collectors;
 public class ActivityProfileServiceImpl extends AbstractService implements ActivityProfileService {
 
     /**
-     * @see ActivityProfileService#getSingleActivityProfile(String, String)
+     * @see ActivityProfileService#getActivityProfile(String, String)
      */
     @Override
-    public String getSingleActivityProfile(String activityId, String profileId) {
+    public String getActivityProfile(String activityId, String profileId) {
         Criteria criteria = Criteria.where("activityId").is(activityId).and("profileId").is(profileId);
         Query query = new Query(criteria);
         ActivityProfileEntity entity = this.mongoTemplate.findOne(query, ActivityProfileEntity.class);
