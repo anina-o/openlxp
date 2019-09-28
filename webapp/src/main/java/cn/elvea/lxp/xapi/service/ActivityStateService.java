@@ -1,6 +1,5 @@
 package cn.elvea.lxp.xapi.service;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -13,7 +12,7 @@ public interface ActivityStateService {
     /**
      * Get a single state document
      */
-    String getActivityState(String activityId, String agentJson, String registration, String stateId, String since);
+    String getActivityState(String activityId, String agentJson, String registration, String stateId);
 
     /**
      * Get multiple document and return the available ids
@@ -23,7 +22,7 @@ public interface ActivityStateService {
     /**
      * Put or Post
      */
-    void saveActivityState(String activityId, String agentJson, String registration, String stateId, String document) throws IOException;
+    void saveActivityState(String activityId, String agentJson, String registration, String stateId, String document);
 
     /**
      * Delete single state

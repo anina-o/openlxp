@@ -25,7 +25,7 @@ public class XApiActivityStateController extends XApiAbstractController {
                                          @RequestParam(name = "registration", required = false) String registration,
                                          @RequestParam(name = "since", required = false) String since) {
         if (StringUtils.isNotEmpty(stateId)) {
-            return XAPIResponse.success(this.activityStateService.getActivityState(activityId, agent, registration, stateId, since));
+            return XAPIResponse.success(this.activityStateService.getActivityState(activityId, agent, registration, stateId));
         } else {
             return XAPIResponse.success(this.activityStateService.getActivityStateList(activityId, agent, registration, since));
         }

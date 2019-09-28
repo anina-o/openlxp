@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class ActivityProfileServiceImpl extends AbstractService implements ActivityProfileService {
+public class ActivityProfileServiceImpl extends AbstractXApiService implements ActivityProfileService {
 
     /**
      * @see ActivityProfileService#getActivityProfile(String, String)

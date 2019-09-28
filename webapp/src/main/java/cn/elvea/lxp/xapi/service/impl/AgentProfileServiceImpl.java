@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class AgentProfileServiceImpl extends AbstractService implements AgentProfileService {
+public class AgentProfileServiceImpl extends AbstractXApiService implements AgentProfileService {
 
     /**
      * @see AgentProfileService#getSingleAgentProfile(String, String)

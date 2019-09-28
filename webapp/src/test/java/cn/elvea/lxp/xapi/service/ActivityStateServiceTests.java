@@ -2,6 +2,7 @@ package cn.elvea.lxp.xapi.service;
 
 import cn.elvea.lxp.common.utils.UUIDUtils;
 import cn.elvea.lxp.xapi.BaseXapiTests;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,56 +20,100 @@ public class ActivityStateServiceTests extends BaseXapiTests {
     private ActivityStateService activityStateService;
 
     @Test
-    public void getMultipleTests() throws Exception {
-        String activityId1 = "http://elvea.cn/activities/1";
-        String activityId2 = "http://elvea.cn/activities/2";
-        String activityId3 = "http://elvea.cn/activities/3";
-        String stateId1 = "http://elvea.cn/states/1";
-        String stateId2 = "http://elvea.cn/states/2";
-        String stateId3 = "http://elvea.cn/states/3";
-        //
-        String agentJson = getDefaultAgent().toJson();
-        String mboxAgentJson = getMboxAgent().toJson();
-        String openIdAgentJson = getOpenIdAgent().toJson();
-        //
-        String reg = UUIDUtils.randomUUID();
+    public void multipleGetAndDeleteTests() {
+        String[] agentJsonList = new String[]{
+                getMboxAgent().toJson(),
+                getDefaultAgent().toJson(),
+                getMboxSha1Agent().toJson(),
+                getOpenIdAgent().toJson()
+        };
 
-        // put state
-        this.activityStateService.saveActivityState(activityId1, agentJson, reg, stateId1, agentJson);
-        this.activityStateService.saveActivityState(activityId2, mboxAgentJson, reg, stateId2, mboxAgentJson);
-        this.activityStateService.saveActivityState(activityId3, openIdAgentJson, reg, stateId1, openIdAgentJson);
-        this.activityStateService.saveActivityState(activityId3, openIdAgentJson, reg, stateId2, openIdAgentJson);
-        this.activityStateService.saveActivityState(activityId3, openIdAgentJson, reg, stateId3, openIdAgentJson);
+        String activityId = "http://elvea.cn/activities/" + this.idWorker.nextId();
+        String stateId1 = "http://elvea.cn/states/" + this.idWorker.nextId();
+        String stateId2 = "http://elvea.cn/states/" + this.idWorker.nextId();
+        String stateId3 = "http://elvea.cn/states/" + this.idWorker.nextId();
+        String stateId4 = "http://elvea.cn/states/" + this.idWorker.nextId();
+        String registration = UUIDUtils.randomUUID();
 
-        // get states
-        List<String> getResult = this.activityStateService.getActivityStateList(
-                activityId3, openIdAgentJson, reg, null);
-        Assertions.assertEquals(3, getResult.size());
+        for (String agentJson : agentJsonList) {
+            this.activityStateService.saveActivityState(activityId, agentJson, registration, stateId1, agentJson);
+            this.activityStateService.saveActivityState(activityId, agentJson, registration, stateId2, agentJson);
+            this.activityStateService.saveActivityState(activityId, agentJson, null, stateId3, agentJson);
+            this.activityStateService.saveActivityState(activityId, agentJson, null, stateId4, agentJson);
 
-        // post first state
-        this.activityStateService.saveActivityState(
-                activityId1, agentJson, reg, stateId1, mboxAgentJson);
+            List<String> stateIdList1 = this.activityStateService.getActivityStateList(activityId, agentJson, registration, null);
+            Assertions.assertNotNull(stateIdList1);
+            Assertions.assertEquals(2, stateIdList1.size());
+            Assertions.assertTrue(stateIdList1.contains(stateId1));
+            Assertions.assertTrue(stateIdList1.contains(stateId2));
 
-        // get new first state
-        String getStateResult = this.activityStateService.getActivityState(
-                activityId1, mboxAgentJson, reg, stateId1, null);
-        Assertions.assertEquals(getStateResult, mboxAgentJson);
+            List<String> stateIdList2 = this.activityStateService.getActivityStateList(activityId, agentJson, null, null);
+            Assertions.assertNotNull(stateIdList2);
+            Assertions.assertEquals(4, stateIdList2.size());
+            Assertions.assertTrue(stateIdList2.contains(stateId1));
+            Assertions.assertTrue(stateIdList2.contains(stateId2));
+            Assertions.assertTrue(stateIdList2.contains(stateId3));
+            Assertions.assertTrue(stateIdList2.contains(stateId4));
 
-        // delete first state
-        this.activityStateService.deleteActivityState(
-                activityId1, mboxAgentJson, stateId1, null);
+            this.activityStateService.deleteActivityStateList(activityId, agentJson, registration);
+            List<String> stateIdList3 = this.activityStateService.getActivityStateList(activityId, agentJson, registration, null);
+            Assertions.assertNotNull(stateIdList3);
+            Assertions.assertEquals(0, stateIdList3.size());
 
-        List<String> afterResult = this.activityStateService.getActivityStateList(
-                activityId1, null, null, null);
-        Assertions.assertEquals(afterResult.size(), 0);
+            this.activityStateService.deleteActivityStateList(activityId, agentJson, null);
+            List<String> stateIdList4 = this.activityStateService.getActivityStateList(activityId, agentJson, null, null);
+            Assertions.assertNotNull(stateIdList4);
+            Assertions.assertEquals(0, stateIdList4.size());
+        }
+    }
 
-        // delete all
-        this.activityStateService.deleteActivityStateList(activityId2, null, null);
-        this.activityStateService.deleteActivityStateList(activityId3, null, null);
+    @Test
+    public void baseTests() {
+        String[] agentJsonList = new String[]{
+                getMboxAgent().toJson(),
+                getDefaultAgent().toJson(),
+                getMboxSha1Agent().toJson(),
+                getOpenIdAgent().toJson()
+        };
+        String contentJson1 = getMboxAgent().toJson();
+        String contentJson2 = getMboxSha1Agent().toJson();
+        String activityId = "http://elvea.cn/activities/" + this.idWorker.nextId();
+        String stateId1 = "http://elvea.cn/states/" + this.idWorker.nextId();
+        String stateId2 = "http://elvea.cn/states/" + this.idWorker.nextId();
+        String registration = UUIDUtils.randomUUID();
 
-        List<String> afterDelResult = this.activityStateService.getActivityStateList(
-                activityId3, null, null, null);
-        Assertions.assertEquals(afterDelResult.size(), 0);
+        for (String agentJson : agentJsonList) {
+            this.activityStateService.saveActivityState(activityId, agentJson, registration, stateId1, contentJson1);
+            this.activityStateService.saveActivityState(activityId, agentJson, registration, stateId2, contentJson1);
+            String content1 = this.activityStateService.getActivityState(activityId, agentJson, registration, stateId1);
+            String content2 = this.activityStateService.getActivityState(activityId, agentJson, registration, stateId2);
+            Assertions.assertNotNull(content1);
+            Assertions.assertNotNull(content2);
+            Assertions.assertEquals(contentJson1, content1);
+            Assertions.assertEquals(contentJson1, content2);
+
+            this.activityStateService.saveActivityState(activityId, agentJson, null, stateId1, contentJson2);
+            this.activityStateService.saveActivityState(activityId, agentJson, null, stateId2, contentJson2);
+            String content3 = this.activityStateService.getActivityState(activityId, agentJson, null, stateId1);
+            String content4 = this.activityStateService.getActivityState(activityId, agentJson, null, stateId2);
+            Assertions.assertNotNull(content3);
+            Assertions.assertNotNull(content4);
+            Assertions.assertEquals(contentJson2, content3);
+            Assertions.assertEquals(contentJson2, content4);
+            this.activityStateService.deleteActivityState(activityId, agentJson, stateId1, registration);
+            this.activityStateService.deleteActivityState(activityId, agentJson, stateId2, registration);
+            String content5 = this.activityStateService.getActivityState(activityId, agentJson, registration, stateId1);
+            String content6 = this.activityStateService.getActivityState(activityId, agentJson, registration, stateId2);
+            Assertions.assertTrue(StringUtils.isEmpty(content5));
+            Assertions.assertTrue(StringUtils.isEmpty(content6));
+
+            List<String> stateIdList1 = this.activityStateService.getActivityStateList(activityId, agentJson, registration, null);
+            List<String> stateIdList2 = this.activityStateService.getActivityStateList(activityId, agentJson, null, null);
+            Assertions.assertNotNull(stateIdList1);
+            Assertions.assertNotNull(stateIdList2);
+            Assertions.assertEquals(0, stateIdList1.size());
+            Assertions.assertEquals(0, stateIdList2.size());
+        }
     }
 
 }

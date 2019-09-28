@@ -19,7 +19,7 @@ import java.util.List;
  * @author elvea
  */
 @Service
-public class StatementServiceImpl extends AbstractService implements StatementService {
+public class StatementServiceImpl extends AbstractXApiService implements StatementService {
 
     @Override
     public void saveStatement(String statementId, Statement statement) {

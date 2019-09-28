@@ -1,5 +1,6 @@
 package cn.elvea.lxp.xapi;
 
+import cn.elvea.lxp.common.utils.IdWorker;
 import cn.elvea.lxp.xapi.model.Account;
 import cn.elvea.lxp.xapi.model.Agent;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +27,9 @@ public abstract class BaseXapiTests {
 
     @Autowired
     protected WebApplicationContext context;
+
+    @Autowired
+    protected IdWorker idWorker;
 
     @BeforeEach
     public void setUp() {
