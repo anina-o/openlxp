@@ -55,12 +55,12 @@ public class ActivityStateServiceTests extends BaseXapiTests {
             Assertions.assertTrue(stateIdList2.contains(stateId3));
             Assertions.assertTrue(stateIdList2.contains(stateId4));
 
-            this.activityStateService.deleteActivityStateList(activityId, agentJson, registration);
+            this.activityStateService.deleteActivityStateList(activityId, agentJson, registration, null);
             List<String> stateIdList3 = this.activityStateService.getActivityStateList(activityId, agentJson, registration, null);
             Assertions.assertNotNull(stateIdList3);
             Assertions.assertEquals(0, stateIdList3.size());
 
-            this.activityStateService.deleteActivityStateList(activityId, agentJson, null);
+            this.activityStateService.deleteActivityStateList(activityId, agentJson, null, null);
             List<String> stateIdList4 = this.activityStateService.getActivityStateList(activityId, agentJson, null, null);
             Assertions.assertNotNull(stateIdList4);
             Assertions.assertEquals(0, stateIdList4.size());

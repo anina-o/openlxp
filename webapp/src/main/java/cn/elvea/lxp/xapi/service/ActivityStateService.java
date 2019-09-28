@@ -32,6 +32,6 @@ public interface ActivityStateService {
     /**
      * Delete all state
      */
-    void deleteActivityStateList(String activityId, String agentJson, String registration);
+    void deleteActivityStateList(String activityId, String agentJson, String registration, String since);
 
 }

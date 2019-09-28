@@ -109,7 +109,7 @@ public class ActivityStateServiceImpl extends AbstractXApiService implements Act
     }
 
     @Override
-    public void deleteActivityStateList(String activityId, String agentJson, String registration) {
+    public void deleteActivityStateList(String activityId, String agentJson, String registration, String since) {
         Criteria criteria = Criteria.where("activityId").is(activityId);
         //
         processAgentCriteria(criteria, agentJson);
