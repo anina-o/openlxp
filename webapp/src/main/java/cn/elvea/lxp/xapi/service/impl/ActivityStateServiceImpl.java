@@ -4,6 +4,7 @@ import cn.elvea.lxp.xapi.entity.ActivityStateEntity;
 import cn.elvea.lxp.xapi.model.Actor;
 import cn.elvea.lxp.xapi.model.Agent;
 import cn.elvea.lxp.xapi.service.ActivityStateService;
+import cn.elvea.lxp.xapi.utils.XApiUtils;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -28,14 +29,7 @@ public class ActivityStateServiceImpl extends AbstractXApiService implements Act
      */
     @Override
     public String getActivityState(String activityId, String agentJson, String registration, String stateId) {
-        Criteria criteria = new Criteria().and("activityId").is(activityId).and("stateId").is(stateId);
-        //
-        processAgentCriteria(criteria, agentJson);
-        //
-        if (StringUtils.isNotEmpty(registration)) {
-            criteria.and("registration").is(registration);
-        }
-        Query query = new Query(criteria);
+        Query query = new Query(createCriteria(activityId, stateId, agentJson, registration, null));
         ActivityStateEntity entity = this.mongoTemplate.findOne(query, ActivityStateEntity.class);
         return entity != null ? entity.getContent() : "";
     }
@@ -45,15 +39,7 @@ public class ActivityStateServiceImpl extends AbstractXApiService implements Act
      */
     @Override
     public List<String> getActivityStateList(String activityId, String agentJson, String registration, String since) {
-        Criteria criteria = new Criteria().and("activityId").is(activityId);
-        //
-        processAgentCriteria(criteria, agentJson);
-        //
-        if (StringUtils.isNotEmpty(registration)) {
-            criteria.and("registration").is(registration);
-        }
-        //
-        Query query = new Query(criteria);
+        Query query = new Query(createCriteria(activityId, null, agentJson, registration, since));
         List<ActivityStateEntity> entityList = this.mongoTemplate.find(query, ActivityStateEntity.class);
         return entityList.stream().map(ActivityStateEntity::getStateId).collect(Collectors.toList());
     }
@@ -63,15 +49,7 @@ public class ActivityStateServiceImpl extends AbstractXApiService implements Act
      */
     @Override
     public void saveActivityState(String activityId, String agentJson, String registration, String stateId, String content) {
-        Criteria criteria = new Criteria().and("activityId").is(activityId).and("stateId").is(stateId);
-        //
-        processAgentCriteria(criteria, agentJson);
-        //
-        if (StringUtils.isNotEmpty(registration)) {
-            criteria.and("registration").is(registration);
-        }
-        Query query = new Query();
-        query.addCriteria(criteria);
+        Query query = new Query(createCriteria(activityId, stateId, agentJson, registration, null));
         ActivityStateEntity entity = this.mongoTemplate.findOne(query, ActivityStateEntity.class);
         if (entity != null) {
             entity.setContent(content);
@@ -93,15 +71,7 @@ public class ActivityStateServiceImpl extends AbstractXApiService implements Act
 
     @Override
     public void deleteActivityState(String activityId, String agentJson, String stateId, String registration) {
-        Criteria criteria = Criteria.where("activityId").is(activityId).and("stateId").is(stateId);
-        //
-        processAgentCriteria(criteria, agentJson);
-        //
-        if (StringUtils.isNotEmpty(registration)) {
-            criteria.and("registration").is(registration);
-        }
-
-        Query query = new Query(criteria);
+        Query query = new Query(createCriteria(activityId, stateId, agentJson, registration, null));
         ActivityStateEntity entity = this.mongoTemplate.findOne(query, ActivityStateEntity.class);
         if (entity != null) {
             this.activityStateRepository.delete(entity);
@@ -110,19 +80,40 @@ public class ActivityStateServiceImpl extends AbstractXApiService implements Act
 
     @Override
     public void deleteActivityStateList(String activityId, String agentJson, String registration, String since) {
-        Criteria criteria = Criteria.where("activityId").is(activityId);
+        Query query = new Query(createCriteria(activityId, null, agentJson, registration, since));
+        List<ActivityStateEntity> entityList = this.mongoTemplate.find(query, ActivityStateEntity.class);
+        if (CollectionUtils.isNotEmpty(entityList)) {
+            this.activityStateRepository.deleteAll(entityList);
+        }
+    }
+
+    /**
+     * 私有方法用于构建查询条件
+     */
+    private Criteria createCriteria(String activityId, String stateId, String agentJson, String registration, String since) {
+        Criteria criteria = new Criteria();
+        //
+        if (StringUtils.isNotEmpty(activityId)) {
+            criteria.and("activityId").is(activityId);
+        }
+        //
+        if (StringUtils.isNotEmpty(stateId)) {
+            criteria.and("stateId").is(stateId);
+        }
         //
         processAgentCriteria(criteria, agentJson);
         //
         if (StringUtils.isNotEmpty(registration)) {
             criteria.and("registration").is(registration);
         }
-
-        Query query = new Query(criteria);
-        List<ActivityStateEntity> entityList = this.mongoTemplate.find(query, ActivityStateEntity.class);
-        if (CollectionUtils.isNotEmpty(entityList)) {
-            this.activityStateRepository.deleteAll(entityList);
+        //
+        if (StringUtils.isNotEmpty(since)) {
+            Date sinceDateObject = XApiUtils.parseTimestamp(since);
+            if (sinceDateObject != null) {
+                criteria.and("createdAt").gt(sinceDateObject);
+            }
         }
+        return criteria;
     }
 
 }
