@@ -17,7 +17,7 @@ public interface ActivityProfileService {
     /**
      * Get multiple activity document and return the available ids
      */
-    List<String> getActivityProfileIdList(String activityId, String since);
+    List<String> getActivityProfileList(String activityId, String since);
 
     /**
      * Put or Post

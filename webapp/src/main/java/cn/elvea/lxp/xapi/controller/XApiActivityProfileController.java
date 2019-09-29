@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * @author elvea
  */
 @Controller
-@RequestMapping("/xAPI/activites/profile")
+@RequestMapping("/xAPI/activities/profile")
 public class XApiActivityProfileController extends XApiAbstractController {
 
     /**
@@ -27,7 +27,7 @@ public class XApiActivityProfileController extends XApiAbstractController {
         if (StringUtils.isNotEmpty(profileId)) {
             return XAPIResponse.success(this.activityProfileService.getActivityProfile(activityId, profileId));
         } else {
-            return XAPIResponse.success(this.activityProfileService.getActivityProfileIdList(activityId, since));
+            return XAPIResponse.success(this.activityProfileService.getActivityProfileList(activityId, since));
         }
     }
 

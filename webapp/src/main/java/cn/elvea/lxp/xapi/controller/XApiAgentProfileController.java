@@ -20,9 +20,9 @@ public class XApiAgentProfileController extends XApiAbstractController {
                                            @RequestParam(name = "profileId", required = false) String profileId,
                                            @RequestParam(name = "since", required = false) String since) {
         if (StringUtils.isNotEmpty(profileId)) {
-            return XAPIResponse.success(this.agentProfileService.getSingleAgentProfile(agent, profileId));
+            return XAPIResponse.success(this.agentProfileService.getAgentProfile(agent, profileId));
         } else {
-            return XAPIResponse.success(this.agentProfileService.getAgentProfileIdList(agent, since));
+            return XAPIResponse.success(this.agentProfileService.getAgentProfileList(agent, since));
         }
     }
 

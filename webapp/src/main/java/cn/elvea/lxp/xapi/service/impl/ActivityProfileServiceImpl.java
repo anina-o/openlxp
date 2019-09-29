@@ -27,27 +27,21 @@ public class ActivityProfileServiceImpl extends AbstractXApiService implements A
      */
     @Override
     public String getActivityProfile(String activityId, String profileId) {
-        Criteria criteria = Criteria.where("activityId").is(activityId).and("profileId").is(profileId);
-        Query query = new Query(criteria);
+        //
+        Query query = new Query(this.createCriteria(activityId, profileId, null));
+        //
         ActivityProfileEntity entity = this.mongoTemplate.findOne(query, ActivityProfileEntity.class);
         return entity != null ? entity.getContent() : "";
     }
 
     /**
-     * @see ActivityProfileService#getActivityProfileIdList(String, String)
+     * @see ActivityProfileService#getActivityProfileList(String, String)
      */
     @Override
-    public List<String> getActivityProfileIdList(String activityId, String since) {
+    public List<String> getActivityProfileList(String activityId, String since) {
         //
-        Criteria criteria = Criteria.where("activityId").is(activityId);
-        if (StringUtils.isNotEmpty(since)) {
-            Date sinceDateObject = XApiUtils.parseTimestamp(since);
-            if (sinceDateObject != null) {
-                criteria.and("createdAt").gt(sinceDateObject);
-            }
-        }
+        Query query = new Query(this.createCriteria(activityId, null, since));
         //
-        Query query = new Query(criteria);
         List<ActivityProfileEntity> entityList = this.mongoTemplate.find(query, ActivityProfileEntity.class);
         return entityList.stream().map(ActivityProfileEntity::getProfileId).collect(Collectors.toList());
     }
@@ -57,11 +51,9 @@ public class ActivityProfileServiceImpl extends AbstractXApiService implements A
      */
     @Override
     public void saveActivityProfile(String activityId, String profileId, String content) {
-        Criteria criteria = new Criteria();
-        criteria.and("activityId").is(activityId);
-        criteria.and("profileId").is(profileId);
-        Query query = new Query();
-        query.addCriteria(criteria);
+        //
+        Query query = new Query(this.createCriteria(activityId, profileId, null));
+        //
         ActivityProfileEntity entity = this.mongoTemplate.findOne(query, ActivityProfileEntity.class);
         if (entity != null) {
             entity.setContent(content);
@@ -84,12 +76,36 @@ public class ActivityProfileServiceImpl extends AbstractXApiService implements A
      */
     @Override
     public void deleteActivityProfile(String activityId, String profileId) {
-        Criteria criteria = Criteria.where("activityId").is(activityId).and("profileId").is(profileId);
-        Query query = new Query(criteria);
+        //
+        Query query = new Query(this.createCriteria(activityId, profileId, null));
+        //
         ActivityProfileEntity entity = this.mongoTemplate.findOne(query, ActivityProfileEntity.class);
         if (entity != null) {
             this.activityProfileRepository.delete(entity);
         }
+    }
+
+    /**
+     * 私有方法用于构建查询条件
+     */
+    private Criteria createCriteria(String activityId, String profileId, String since) {
+        Criteria criteria = new Criteria();
+        //
+        if (StringUtils.isNotEmpty(activityId)) {
+            criteria.and("activityId").is(activityId);
+        }
+        //
+        if (StringUtils.isNotEmpty(profileId)) {
+            criteria.and("profileId").is(profileId);
+        }
+        //
+        if (StringUtils.isNotEmpty(since)) {
+            Date sinceDateObject = XApiUtils.parseTimestamp(since);
+            if (sinceDateObject != null) {
+                criteria.and("createdAt").gt(sinceDateObject);
+            }
+        }
+        return criteria;
     }
 
 }

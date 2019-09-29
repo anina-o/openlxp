@@ -2,7 +2,6 @@ package cn.elvea.lxp.xapi.service.impl;
 
 import cn.elvea.lxp.xapi.entity.AgentProfileEntity;
 import cn.elvea.lxp.xapi.exception.InvalidRequestException;
-import cn.elvea.lxp.xapi.model.Agent;
 import cn.elvea.lxp.xapi.service.AgentProfileService;
 import cn.elvea.lxp.xapi.utils.XApiUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -26,36 +25,24 @@ import java.util.stream.Collectors;
 public class AgentProfileServiceImpl extends AbstractXApiService implements AgentProfileService {
 
     /**
-     * @see AgentProfileService#getSingleAgentProfile(String, String)
+     * @see AgentProfileService#getAgentProfile(String, String)
      */
     @Override
-    public String getSingleAgentProfile(String agent, String profileId) {
+    public String getAgentProfile(String agent, String profileId) {
         //
-        Agent agentObject = XApiUtils.extractAgentObject(agent);
-        //
-        Criteria criteria = Criteria.where("profileId").is(profileId).and("agent").is(agentObject);
-        Query query = new Query(criteria);
+        Query query = new Query(this.createCriteria(agent, profileId, null));
         //
         AgentProfileEntity entity = this.mongoTemplate.findOne(query, AgentProfileEntity.class);
         return entity != null ? entity.getContent() : "";
     }
 
     /**
-     * @see AgentProfileService#getAgentProfileIdList(String, String)
+     * @see AgentProfileService#getAgentProfileList(String, String)
      */
     @Override
-    public List<String> getAgentProfileIdList(String agent, String since) throws InvalidRequestException {
+    public List<String> getAgentProfileList(String agent, String since) throws InvalidRequestException {
         //
-        Agent agentObject = XApiUtils.extractAgentObject(agent);
-        //
-        Criteria criteria = Criteria.where("agent").is(agentObject);
-        if (StringUtils.isNotEmpty(since)) {
-            Date sinceDateObject = XApiUtils.parseTimestamp(since);
-            if (sinceDateObject != null) {
-                criteria.and("createdAt").gt(sinceDateObject);
-            }
-        }
-        Query query = new Query(criteria);
+        Query query = new Query(this.createCriteria(agent, null, since));
         //
         List<AgentProfileEntity> entityList = this.mongoTemplate.find(query, AgentProfileEntity.class);
         return entityList.stream().map(AgentProfileEntity::getProfileId).collect(Collectors.toList());
@@ -67,12 +54,7 @@ public class AgentProfileServiceImpl extends AbstractXApiService implements Agen
     @Override
     public void saveAgentProfile(String agent, String profileId, String content) {
         //
-        Agent agentObject = XApiUtils.extractAgentObject(agent);
-        //
-        Criteria criteria = Criteria.where("profileId").is(profileId)
-                .and("agent").is(agentObject);
-        Query query = new Query();
-        query.addCriteria(criteria);
+        Query query = new Query(this.createCriteria(agent, profileId, null));
         //
         AgentProfileEntity entity = this.mongoTemplate.findOne(query, AgentProfileEntity.class);
         if (entity != null) { // Update
@@ -81,7 +63,7 @@ public class AgentProfileServiceImpl extends AbstractXApiService implements Agen
         } else { // Create
             entity = new AgentProfileEntity();
             entity.setProfileId(profileId);
-            entity.setAgent(agentObject);
+            entity.setAgent(XApiUtils.extractAgentObject(agent));
             entity.setContent(content);
             entity.setActive(Boolean.TRUE);
         }
@@ -94,15 +76,33 @@ public class AgentProfileServiceImpl extends AbstractXApiService implements Agen
     @Override
     public void deleteAgentProfile(String agent, String profileId) {
         //
-        Agent agentObject = XApiUtils.extractAgentObject(agent);
-        //
-        Criteria criteria = Criteria.where("profileId").is(profileId).and("agent").is(agentObject);
-        Query query = new Query(criteria);
+        Query query = new Query(this.createCriteria(agent, profileId, null));
         //
         List<AgentProfileEntity> entityList = this.mongoTemplate.find(query, AgentProfileEntity.class);
         if (CollectionUtils.isNotEmpty(entityList)) {
             this.agentProfileRepository.deleteAll(entityList);
         }
+    }
+
+    /**
+     * 私有方法用于构建查询条件
+     */
+    private Criteria createCriteria(String agentJson, String profileId, String since) {
+        Criteria criteria = new Criteria();
+        //
+        if (StringUtils.isNotEmpty(profileId)) {
+            criteria.and("profileId").is(profileId);
+        }
+        //
+        processAgentCriteria(criteria, agentJson);
+        //
+        if (StringUtils.isNotEmpty(since)) {
+            Date sinceDateObject = XApiUtils.parseTimestamp(since);
+            if (sinceDateObject != null) {
+                criteria.and("createdAt").gt(sinceDateObject);
+            }
+        }
+        return criteria;
     }
 
 }

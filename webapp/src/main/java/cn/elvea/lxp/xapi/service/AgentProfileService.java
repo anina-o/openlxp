@@ -12,12 +12,12 @@ public interface AgentProfileService {
     /**
      * Get a single agent document
      */
-    String getSingleAgentProfile(String agent, String profileId);
+    String getAgentProfile(String agent, String profileId);
 
     /**
      * Get multiple agent document and return the available ids
      */
-    List<String> getAgentProfileIdList(String agent, String since);
+    List<String> getAgentProfileList(String agent, String since);
 
     /**
      * Put or Post
