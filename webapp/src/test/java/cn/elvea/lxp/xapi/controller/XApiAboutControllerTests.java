@@ -4,7 +4,7 @@ import cn.elvea.lxp.BaseWebTests;
 import cn.elvea.lxp.xapi.enums.VersionEnum;
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.core.IsCollectionContaining.hasItem;
+import static org.hamcrest.core.IsIterableContaining.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;

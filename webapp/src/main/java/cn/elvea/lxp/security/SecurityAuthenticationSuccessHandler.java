@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -30,7 +29,7 @@ public class SecurityAuthenticationSuccessHandler extends SimpleUrlAuthenticatio
      * @see SimpleUrlAuthenticationSuccessHandler#handle(HttpServletRequest, HttpServletResponse, Authentication)
      */
     @Override
-    public void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException {
         // 生成唯一会话ID
         String uuid = UUIDUtils.randomUUID();
         SecurityUser user = SecurityUtils.getCurrentUser();
@@ -46,12 +45,7 @@ public class SecurityAuthenticationSuccessHandler extends SimpleUrlAuthenticatio
             log.error("Token generate failed.");
             throw new ServiceException("Token generate failed.");
         }
-
-        if (WebUtils.isAjaxRequest(request) || SecurityUtils.isApiRequest(request)) {
-            WebUtils.renderJson(response, WebResponse.success(resultMap));
-        } else {
-            super.onAuthenticationSuccess(request, response, authentication);
-        }
+        WebUtils.renderJson(response, WebResponse.success(resultMap));
     }
 
 }

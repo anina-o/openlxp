@@ -25,11 +25,23 @@ public interface StatementService {
     /**
      *
      */
-    Statement getStatement(String statementId);
+    Statement getStatement(String statementId, String voidedStatementId);
 
     /**
      *
      */
-    StatementsResult getStatements();
+    StatementsResult getStatements(String agentJson,
+                                   String verb,
+                                   String activity,
+                                   String registration,
+                                   Boolean relatedActivities,
+                                   Boolean relatedAgents,
+                                   String since,
+                                   String until,
+                                   String format,
+                                   Boolean attachments,
+                                   Boolean ascending,
+                                   String limit
+    );
 
 }

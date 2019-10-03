@@ -69,6 +69,9 @@ public class ActivityStateServiceImpl extends AbstractXApiService implements Act
         this.activityStateRepository.save(entity);
     }
 
+    /**
+     * @see ActivityStateService#deleteActivityState(String, String, String, String)
+     */
     @Override
     public void deleteActivityState(String activityId, String agentJson, String stateId, String registration) {
         Query query = new Query(createCriteria(activityId, stateId, agentJson, registration, null));
@@ -78,6 +81,9 @@ public class ActivityStateServiceImpl extends AbstractXApiService implements Act
         }
     }
 
+    /**
+     * @see ActivityStateService#deleteActivityStateList(String, String, String, String)
+     */
     @Override
     public void deleteActivityStateList(String activityId, String agentJson, String registration, String since) {
         Query query = new Query(createCriteria(activityId, null, agentJson, registration, since));
