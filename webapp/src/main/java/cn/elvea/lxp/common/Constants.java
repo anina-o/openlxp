@@ -17,6 +17,11 @@ public class Constants {
     public final static String ENCODING = "UTF-8";
 
     /**
+     *
+     */
+    public static final String CONTENT_TYPE_JSON = "application/json;charset=UTF-8";
+
+    /**
      * 默认分隔符
      */
     public final static String DELIMITER = "~|~";

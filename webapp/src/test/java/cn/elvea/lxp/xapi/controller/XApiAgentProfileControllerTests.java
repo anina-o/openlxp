@@ -5,17 +5,18 @@ import cn.elvea.lxp.xapi.BaseXapiTests;
 import org.junit.jupiter.api.Test;
 
 import static cn.elvea.lxp.xapi.utils.XApiConstants.XAPI_CONTENT_TYPE;
-import static org.hamcrest.core.IsCollectionContaining.hasItem;
+import static org.hamcrest.core.IsIterableContaining.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
- * Agent Profile ResourceEntity
+ * XApiAgentProfileControllerTests
  *
  * @author elvea
  */
 public class XApiAgentProfileControllerTests extends BaseXapiTests {
+
     @Test
     public void baseTests() throws Exception {
         String[] agentJsonList = new String[]{
@@ -61,7 +62,6 @@ public class XApiAgentProfileControllerTests extends BaseXapiTests {
             ).andExpect(status().isOk());
         }
     }
-
 
     @Test
     public void baseMultipleTests() throws Exception {

@@ -715,10 +715,11 @@ INSERT INTO `sys_role` (`id`, `code`, `label`, `active`, `created_at`, `modified
 VALUES (4, 'learner', 'label_role_type_learner', 1, now(), now());
 
 /* 系统管理员 */
-INSERT INTO `sys_user` (`id`, `username`, `nickname`, `status`, `active`, `password`, `created_at`, `created_by`,
-                        `modified_at`, `modified_by`)
-VALUES (1, 'admin', 'Administrator', 1, 1, '$2a$10$xq4enPCLvDBgiJX6rczJK.LgwaLyLtbgqgaC8Nj0kqsVdHZ6KJEg.', now(), 1,
-        now(), 1);
+INSERT INTO `sys_user` (`id`, `tenant_id`, `username`, `nickname`, `status`, `active`, `password`,
+                        `created_at`, `created_by`, `modified_at`, `modified_by`)
+VALUES (1, 1, 'admin', 'Administrator', 1, 1,
+        '$2a$10$xq4enPCLvDBgiJX6rczJK.LgwaLyLtbgqgaC8Nj0kqsVdHZ6KJEg.',
+        now(), 1, now(), 1);
 
 INSERT INTO `sys_user_role_relation` (`id`, `user_id`, `role_id`, `created_at`, `created_by`)
 VALUES (1, 1, 1, now(), 1);

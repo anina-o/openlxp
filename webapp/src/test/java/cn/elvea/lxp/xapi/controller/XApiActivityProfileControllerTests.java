@@ -3,14 +3,14 @@ package cn.elvea.lxp.xapi.controller;
 import cn.elvea.lxp.xapi.BaseXapiTests;
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.core.IsCollectionContaining.hasItem;
+import static org.hamcrest.core.IsIterableContaining.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Agent Profile ResourceEntity
+ * XApiActivityProfileControllerTests
  *
  * @author elvea
  */

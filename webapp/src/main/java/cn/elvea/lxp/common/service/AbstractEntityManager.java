@@ -1,7 +1,7 @@
 package cn.elvea.lxp.common.service;
 
 import cn.elvea.lxp.common.model.BaseEntity;
-import cn.elvea.lxp.core.entity.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
@@ -15,6 +15,7 @@ public abstract class AbstractEntityManager<R extends PagingAndSortingRepository
     /**
      * PagingAndSortingRepository
      */
+    @Autowired
     protected R repository;
 
     /**

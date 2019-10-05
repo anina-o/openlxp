@@ -7,7 +7,7 @@
         "build" : "npx cross-env environment=production webpack --mode production"
     },
     "dependencies" : {
-        "antd" : "^3.23.5",
+        "antd" : "^3.23.6",
         "antd-mobile" : "^2.3.1",
         "react" : "^16.10.2",
         "react-dom" : "^16.10.2",

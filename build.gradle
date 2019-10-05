@@ -59,4 +59,5 @@ allprojects {
             mavenBom SpringBootPlugin.BOM_COORDINATES
         }
     }
+
 }
