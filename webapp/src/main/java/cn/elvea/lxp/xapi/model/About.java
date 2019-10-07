@@ -1,6 +1,6 @@
 package cn.elvea.lxp.xapi.model;
 
-import cn.elvea.lxp.xapi.enums.VersionEnum;
+import cn.elvea.lxp.xapi.enums.XApiVersionEnum;
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import cn.elvea.lxp.xapi.json.JsonObject;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -38,14 +38,14 @@ public class About implements AbstractJsonObject {
     private Map<String, String> extensions;
 
     public About() {
-        this.version = VersionEnum.versions();
+        this.version = XApiVersionEnum.versions();
     }
 
     public About(JsonNode jsonNode) {
         if (jsonNode.hasNonNull("version")) {
             Iterator it = jsonNode.get("version").elements();
             while (it.hasNext()) {
-                String version = VersionEnum.fromString(((JsonNode) it.next()).textValue()).getText();
+                String version = XApiVersionEnum.fromString(((JsonNode) it.next()).textValue()).getText();
                 if (!this.version.contains(version)) {
                     this.version.add(version);
                 }
@@ -57,10 +57,10 @@ public class About implements AbstractJsonObject {
     }
 
     /**
-     * @see JsonObject#toJsonNode(VersionEnum)
+     * @see JsonObject#toJsonNode(XApiVersionEnum)
      */
     @Override
-    public ObjectNode toJsonNode(VersionEnum version) {
+    public ObjectNode toJsonNode(XApiVersionEnum version) {
         ObjectNode result = new ObjectNode(JsonMapper.getInstance().getNodeFactory());
         if (!this.version.isEmpty()) {
             ArrayNode versions = JsonMapper.getInstance().createArrayNode();

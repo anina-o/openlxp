@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * OAuth ResourceEntity
+ * XApiOAuthController
  *
  * @author elvea
  */
@@ -24,7 +24,7 @@ public class XApiOAuthController extends XApiAbstractController {
     }
 
     /**
-     * ResourceEntity Owner Authorization
+     * Resource Owner Authorization
      */
     @RequestMapping("authorize")
     @ResponseBody

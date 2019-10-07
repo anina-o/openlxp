@@ -1,6 +1,6 @@
 package cn.elvea.lxp.xapi.model;
 
-import cn.elvea.lxp.xapi.enums.VersionEnum;
+import cn.elvea.lxp.xapi.enums.XApiVersionEnum;
 import cn.elvea.lxp.xapi.exception.InvalidRequestException;
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -74,10 +74,10 @@ public abstract class Actor implements AbstractObject {
     }
 
     /**
-     * @see AbstractObject#toJsonNode(VersionEnum)
+     * @see AbstractObject#toJsonNode(XApiVersionEnum)
      */
     @Override
-    public ObjectNode toJsonNode(VersionEnum version) {
+    public ObjectNode toJsonNode(XApiVersionEnum version) {
         ObjectNode node = JsonMapper.getInstance().createObjectNode();
         node.put("objectType", this.getObjectType());
         if (Strings.isNotEmpty(this.getName())) {

@@ -1,6 +1,6 @@
 package cn.elvea.lxp.xapi.model;
 
-import cn.elvea.lxp.xapi.enums.VersionEnum;
+import cn.elvea.lxp.xapi.enums.XApiVersionEnum;
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import cn.elvea.lxp.xapi.json.JsonObject;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -45,10 +45,10 @@ public class Verb implements AbstractJsonObject {
     }
 
     /**
-     * @see JsonObject#toJsonNode(VersionEnum)
+     * @see JsonObject#toJsonNode(XApiVersionEnum)
      */
     @Override
-    public ObjectNode toJsonNode(VersionEnum version) {
+    public ObjectNode toJsonNode(XApiVersionEnum version) {
         ObjectNode node = JsonMapper.getInstance().createObjectNode();
         if (this.id != null) {
             node.put("id", this.getId().toString());

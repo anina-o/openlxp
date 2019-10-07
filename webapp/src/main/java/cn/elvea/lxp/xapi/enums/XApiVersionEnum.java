@@ -11,14 +11,14 @@ import java.util.List;
  * @author elvea
  */
 @Getter
-public enum VersionEnum {
+public enum XApiVersionEnum {
     V101("1.0.1"),
     V102("1.0.2"),
     V103("1.0.3");
 
     private final String text;
 
-    VersionEnum(final String text) {
+    XApiVersionEnum(final String text) {
         this.text = text;
     }
 
@@ -30,10 +30,10 @@ public enum VersionEnum {
     /**
      * 获取支持的最新版本
      *
-     * @return {{@link VersionEnum}}
+     * @return {{@link XApiVersionEnum}}
      */
-    public static VersionEnum latest() {
-        return VersionEnum.V103;
+    public static XApiVersionEnum latest() {
+        return XApiVersionEnum.V103;
     }
 
     /**
@@ -41,7 +41,7 @@ public enum VersionEnum {
      */
     public static List<String> versions() {
         List<String> versionList = Lists.newLinkedList();
-        for (VersionEnum v : VersionEnum.values()) {
+        for (XApiVersionEnum v : XApiVersionEnum.values()) {
             versionList.add(v.text);
         }
         return versionList;
@@ -50,15 +50,15 @@ public enum VersionEnum {
     /**
      * 获取对应的版本，找不到对应的版本时，将返回支持的最新版本
      *
-     * @return {{@link VersionEnum}}
+     * @return {{@link XApiVersionEnum}}
      */
-    public static VersionEnum fromString(String text) {
-        for (VersionEnum v : VersionEnum.values()) {
+    public static XApiVersionEnum fromString(String text) {
+        for (XApiVersionEnum v : XApiVersionEnum.values()) {
             if (v.text.equalsIgnoreCase(text)) {
                 return v;
             }
         }
-        return VersionEnum.latest();
+        return XApiVersionEnum.latest();
     }
 
 }

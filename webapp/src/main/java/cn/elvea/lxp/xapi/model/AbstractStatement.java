@@ -1,6 +1,6 @@
 package cn.elvea.lxp.xapi.model;
 
-import cn.elvea.lxp.xapi.enums.VersionEnum;
+import cn.elvea.lxp.xapi.enums.XApiVersionEnum;
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -131,10 +131,10 @@ public abstract class AbstractStatement implements AbstractJsonObject {
     }
 
     /**
-     * @see AbstractJsonObject#toJsonNode(VersionEnum)
+     * @see AbstractJsonObject#toJsonNode(XApiVersionEnum)
      */
     @Override
-    public ObjectNode toJsonNode(VersionEnum version) {
+    public ObjectNode toJsonNode(XApiVersionEnum version) {
         ObjectNode node = JsonMapper.getInstance().createObjectNode();
         DateTimeFormatter fmt = ISODateTimeFormat.dateTime().withZoneUTC();
 

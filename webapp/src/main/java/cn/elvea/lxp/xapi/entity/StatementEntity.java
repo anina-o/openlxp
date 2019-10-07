@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Statement
+ * StatementEntity
  *
  * @author elvea
  */

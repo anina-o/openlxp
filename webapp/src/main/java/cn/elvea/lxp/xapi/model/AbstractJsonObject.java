@@ -1,6 +1,6 @@
 package cn.elvea.lxp.xapi.model;
 
-import cn.elvea.lxp.xapi.enums.VersionEnum;
+import cn.elvea.lxp.xapi.enums.XApiVersionEnum;
 import cn.elvea.lxp.xapi.json.JsonMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -18,19 +18,19 @@ public interface AbstractJsonObject extends Serializable {
     /**
      *
      */
-    ObjectNode toJsonNode(VersionEnum version);
+    ObjectNode toJsonNode(XApiVersionEnum version);
 
     /**
      *
      */
     default ObjectNode toJsonNode() {
-        return this.toJsonNode(VersionEnum.latest());
+        return this.toJsonNode(XApiVersionEnum.latest());
     }
 
     /**
      *
      */
-    default String toJson(VersionEnum version, Boolean pretty) {
+    default String toJson(XApiVersionEnum version, Boolean pretty) {
         ObjectWriter writer = JsonMapper.getWriter(pretty);
         try {
             return writer.writeValueAsString(this.toJsonNode(version));
@@ -43,7 +43,7 @@ public interface AbstractJsonObject extends Serializable {
     /**
      * 按指定版本输出
      */
-    default String toJson(VersionEnum version) {
+    default String toJson(XApiVersionEnum version) {
         return this.toJson(version, true);
     }
 
@@ -51,14 +51,14 @@ public interface AbstractJsonObject extends Serializable {
      * 是否格式化
      */
     default String toJson(Boolean pretty) {
-        return this.toJson(VersionEnum.latest(), pretty);
+        return this.toJson(XApiVersionEnum.latest(), pretty);
     }
 
     /**
      * 未指定版本时默认按最新版本输出
      */
     default String toJson() {
-        return this.toJson(VersionEnum.latest(), true);
+        return this.toJson(XApiVersionEnum.latest(), true);
     }
 
 }

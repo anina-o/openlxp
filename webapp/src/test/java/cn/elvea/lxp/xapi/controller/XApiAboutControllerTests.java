@@ -1,7 +1,7 @@
 package cn.elvea.lxp.xapi.controller;
 
 import cn.elvea.lxp.BaseWebTests;
-import cn.elvea.lxp.xapi.enums.VersionEnum;
+import cn.elvea.lxp.xapi.enums.XApiVersionEnum;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.core.IsIterableContaining.hasItem;
@@ -22,9 +22,9 @@ public class XApiAboutControllerTests extends BaseWebTests {
         mockMvc.perform(get("/xAPI/about"))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.version").isArray())
-                .andExpect(jsonPath("$.data.version", hasItem(VersionEnum.V103.getText())))
-                .andExpect(jsonPath("$.data.version", hasItem(VersionEnum.V102.getText())))
-                .andExpect(jsonPath("$.data.version", hasItem(VersionEnum.V101.getText())));
+                .andExpect(jsonPath("$.data.version", hasItem(XApiVersionEnum.V103.getText())))
+                .andExpect(jsonPath("$.data.version", hasItem(XApiVersionEnum.V102.getText())))
+                .andExpect(jsonPath("$.data.version", hasItem(XApiVersionEnum.V101.getText())));
     }
 
 }

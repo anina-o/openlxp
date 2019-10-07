@@ -1,6 +1,6 @@
 package cn.elvea.lxp.xapi.json;
 
-import cn.elvea.lxp.xapi.enums.VersionEnum;
+import cn.elvea.lxp.xapi.enums.XApiVersionEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -21,14 +21,14 @@ public abstract class AbstractJsonObject implements JsonObject, Serializable {
      */
     @Override
     public ObjectNode toJsonNode() {
-        return this.toJsonNode(VersionEnum.latest());
+        return this.toJsonNode(XApiVersionEnum.latest());
     }
 
     /**
-     * @see JsonObject#toJson(VersionEnum, Boolean)
+     * @see JsonObject#toJson(XApiVersionEnum, Boolean)
      */
     @Override
-    public String toJson(VersionEnum version, Boolean pretty) {
+    public String toJson(XApiVersionEnum version, Boolean pretty) {
         ObjectWriter writer = JsonMapper.getWriter(pretty);
         try {
             return writer.writeValueAsString(this.toJsonNode(version));
@@ -39,10 +39,10 @@ public abstract class AbstractJsonObject implements JsonObject, Serializable {
     }
 
     /**
-     * @see AbstractJsonObject#toJson(VersionEnum)
+     * @see AbstractJsonObject#toJson(XApiVersionEnum)
      */
     @Override
-    public String toJson(VersionEnum version) {
+    public String toJson(XApiVersionEnum version) {
         return this.toJson(version, false);
     }
 
@@ -51,7 +51,7 @@ public abstract class AbstractJsonObject implements JsonObject, Serializable {
      */
     @Override
     public String toJson(Boolean pretty) {
-        return this.toJson(VersionEnum.latest(), pretty);
+        return this.toJson(XApiVersionEnum.latest(), pretty);
     }
 
     /**
@@ -59,7 +59,7 @@ public abstract class AbstractJsonObject implements JsonObject, Serializable {
      */
     @Override
     public String toJson() {
-        return this.toJson(VersionEnum.latest(), false);
+        return this.toJson(XApiVersionEnum.latest(), false);
     }
 
 }
