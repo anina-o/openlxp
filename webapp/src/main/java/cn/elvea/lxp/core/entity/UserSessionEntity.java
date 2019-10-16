@@ -1,12 +1,10 @@
 package cn.elvea.lxp.core.entity;
 
 import cn.elvea.lxp.common.model.BaseEntity;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
 /**
  * 用户会话实体
@@ -16,8 +14,7 @@ import javax.persistence.Table;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Entity
-@Table(name = "sys_user_session")
+@TableName("sys_user_session")
 public class UserSessionEntity extends BaseEntity {
     /**
      * 用户ID

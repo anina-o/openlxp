@@ -1,4 +1,4 @@
-package cn.elvea.lxp.core.repository;
+package cn.elvea.lxp.core.mapper;
 
 import cn.elvea.lxp.BaseTests;
 import org.apache.commons.collections4.CollectionUtils;
@@ -13,16 +13,16 @@ import java.util.List;
  *
  * @author elvea
  */
-public class UserRoleRelationRepositoryTests extends BaseTests {
+public class UserRoleRelationMapperTests extends BaseTests {
 
     @Autowired
-    UserRoleRelationRepository userRoleRelationRepository;
+    UserRoleRelationMapper userRoleRelationMapper;
 
     @Test
     public void baseTests() {
-        List<Long> roleIdList = this.userRoleRelationRepository.findByUserId(1L);
+        List<Long> roleIdList = this.userRoleRelationMapper.findByUserId(1L);
         Assertions.assertTrue(CollectionUtils.isNotEmpty(roleIdList));
-        List<Long> idList = this.userRoleRelationRepository.findByUserId(1L);
+        List<Long> idList = this.userRoleRelationMapper.findByUserId(1L);
         Assertions.assertTrue(CollectionUtils.isNotEmpty(idList));
     }
 

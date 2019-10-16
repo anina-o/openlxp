@@ -4,8 +4,8 @@ import cn.elvea.lxp.common.utils.ConvertUtils;
 import cn.elvea.lxp.core.dto.RoleDto;
 import cn.elvea.lxp.core.entity.RoleEntity;
 import cn.elvea.lxp.core.entity.UserRoleRelationEntity;
-import cn.elvea.lxp.core.repository.RoleRepository;
-import cn.elvea.lxp.core.repository.UserRoleRelationRepository;
+import cn.elvea.lxp.core.mapper.RoleMapper;
+import cn.elvea.lxp.core.mapper.UserRoleRelationMapper;
 import cn.elvea.lxp.core.service.RoleService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static cn.elvea.lxp.core.CoreConstants.DEFAULT_USER_ROLE_ID;
@@ -30,18 +29,18 @@ import static cn.elvea.lxp.core.CoreConstants.DEFAULT_USER_ROLE_ID;
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
-    private RoleRepository roleRepository;
+    private RoleMapper roleRepository;
 
     @Autowired
-    private UserRoleRelationRepository userRoleRelationRepository;
+    private UserRoleRelationMapper userRoleRelationRepository;
 
     /**
      * @see RoleService#findById(Long)
      */
     @Override
     public RoleDto findById(Long id) {
-        Optional<RoleEntity> entity = this.roleRepository.findById(id);
-        return entity.map(this::getRoleDto).orElse(null);
+        RoleEntity entity = this.roleRepository.findById(id);
+        return this.getRoleDto(entity);
     }
 
     /**
@@ -61,10 +60,8 @@ public class RoleServiceImpl implements RoleService {
     public List<RoleDto> findByUserId(Long userId) {
         List<Long> entityList = this.userRoleRelationRepository.findByUserId(userId);
         return entityList.stream().map(entity -> {
-            Optional<RoleEntity> roleEntity = this.roleRepository.findById(entity);
-            return roleEntity.map(e -> {
-                return ConvertUtils.sourceToTarget(e, RoleDto.class);
-            }).orElse(null);
+            RoleEntity roleEntity = this.roleRepository.findById(entity);
+            return ConvertUtils.sourceToTarget(roleEntity, RoleDto.class);
         }).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
@@ -73,8 +70,8 @@ public class RoleServiceImpl implements RoleService {
      */
     @Override
     public RoleDto getDefaultRole() {
-        Optional<RoleEntity> roleEntity = this.roleRepository.findById(DEFAULT_USER_ROLE_ID);
-        return roleEntity.map(this::getRoleDto).orElse(null);
+        RoleEntity roleEntity = this.roleRepository.findById(DEFAULT_USER_ROLE_ID);
+        return this.getRoleDto(roleEntity);
     }
 
     /**
@@ -89,7 +86,7 @@ public class RoleServiceImpl implements RoleService {
             for (Long roleId : roleIdList) {
                 entityList.add(new UserRoleRelationEntity(userId, roleId));
             }
-            this.userRoleRelationRepository.saveAll(entityList);
+//            this.userRoleRelationRepository.selectList(entityList);
         }
         //
         return this.findByUserId(userId);

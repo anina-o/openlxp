@@ -1,12 +1,9 @@
 package cn.elvea.lxp.common.model;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
 /**
@@ -16,13 +13,9 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
-@MappedSuperclass
 public class BaseEntity implements Serializable {
 
-    @Id
-    @GeneratedValue(generator = "SnowflakeGenerator")
-    @GenericGenerator(name = "SnowflakeGenerator",
-            strategy = "cn.elvea.lxp.common.jpa.SnowflakeGenerator")
+    @TableId
     private Long id;
 
     public BaseEntity(Long id) {

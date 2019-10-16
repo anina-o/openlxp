@@ -1,4 +1,4 @@
-package cn.elvea.lxp.core.repository;
+package cn.elvea.lxp.core.mapper;
 
 import cn.elvea.lxp.BaseTests;
 import cn.elvea.lxp.common.utils.IdWorker;
@@ -12,13 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author elvea
  */
-public class RoleRepositoryTests extends BaseTests {
+public class RoleMapperTests extends BaseTests {
 
     @Autowired
     IdWorker idWorker;
 
     @Autowired
-    RoleRepository roleRepository;
+    RoleMapper roleMapper;
 
     @Test
     public void baseCrudTests() {
@@ -27,16 +27,16 @@ public class RoleRepositoryTests extends BaseTests {
         roleEntity.setCode("code_" + randomString);
         roleEntity.setTitle("title_" + randomString);
         roleEntity.setActive(true);
-        this.roleRepository.save(roleEntity);
+        this.roleMapper.save(roleEntity);
         Assertions.assertNotNull(roleEntity.getId());
 
         Long id = roleEntity.getId();
 
-        RoleEntity roleEntity2 = this.roleRepository.findById(id).orElse(null);
+        RoleEntity roleEntity2 = this.roleMapper.findById(id);
         Assertions.assertNotNull(roleEntity2);
 
         roleEntity2.setTitle("title_title_" + randomString);
-        this.roleRepository.save(roleEntity);
+        this.roleMapper.save(roleEntity);
 
         Assertions.assertEquals(roleEntity2.getTitle(), "title_title_" + randomString);
     }

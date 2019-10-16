@@ -3,11 +3,9 @@ package cn.elvea.lxp.xapi.entity;
 import cn.elvea.lxp.xapi.model.Agent;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.data.annotation.*;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.EntityListeners;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,7 +16,6 @@ import java.util.Date;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-@EntityListeners(AuditingEntityListener.class)
 @Document(collection = "olxp_agent_profile")
 public class AgentProfileEntity implements Serializable {
     /**
@@ -45,22 +42,18 @@ public class AgentProfileEntity implements Serializable {
     /**
      * 创建人
      */
-    @CreatedBy
     private Long createdBy;
     /**
      * 创建日期
      */
-    @CreatedDate
     private Date createdAt;
     /**
      * 更新人
      */
-    @LastModifiedBy
     private Long updatedBy;
     /**
      * 更新日期
      */
-    @LastModifiedDate
     private Date updatedAt;
     /**
      * 删除人

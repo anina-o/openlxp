@@ -2,7 +2,7 @@ package cn.elvea.lxp.activity.service.impl;
 
 import cn.elvea.lxp.activity.dto.ActivityTypeDto;
 import cn.elvea.lxp.activity.entity.ActivityTypeEntity;
-import cn.elvea.lxp.activity.repository.ActivityTypeRepository;
+import cn.elvea.lxp.activity.mapper.ActivityTypeMapper;
 import cn.elvea.lxp.activity.service.ActivityTypeService;
 import cn.elvea.lxp.common.utils.ConvertUtils;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +20,7 @@ import java.util.Optional;
 public class ActivityTypeServiceImpl implements ActivityTypeService {
 
     @Autowired
-    ActivityTypeRepository activityTypeRepository;
+    ActivityTypeMapper activityTypeRepository;
 
     /**
      * @see ActivityTypeService#getActivityType(String)

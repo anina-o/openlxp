@@ -73,6 +73,12 @@ class DefaultLayout extends React.Component<any, any> {
                         <Menu.Item key="menu-key-home">
                             <Link to='/'>Home</Link>
                         </Menu.Item>
+                        <Menu.Item key="menu-key-classroom">
+                            <Link to='/classroom'>Classroom</Link>
+                        </Menu.Item>
+                        <Menu.Item key="menu-key-course">
+                            <Link to='/course'>Course</Link>
+                        </Menu.Item>
                         {store.authenticated ? (
                             <Menu.Item key="menu-key-my-course">
                                 <Link to='/my-course'>My Course</Link>

@@ -1,4 +1,4 @@
-package cn.elvea.lxp.core.repository;
+package cn.elvea.lxp.core.mapper;
 
 import cn.elvea.lxp.BaseTests;
 import cn.elvea.lxp.common.utils.IdWorker;
@@ -8,28 +8,26 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Optional;
-
 /**
  * UserRepositoryTests
  *
  * @author elvea
  */
-public class UserRepositoryTests extends BaseTests {
+public class UserMapperTests extends BaseTests {
 
     @Autowired
     IdWorker idWorker;
 
     @Autowired
-    UserRepository userRepository;
+    UserMapper userMapper;
 
     @Autowired
-    RoleRepository roleRepository;
+    RoleMapper roleMapper;
 
     @Test
     public void baseTests() {
-        Optional<UserEntity> userEntityFindByUsername = this.userRepository.findByUsername("admin");
-        Optional<UserEntity> userEntityFindById = this.userRepository.findById(1L);
+        UserEntity userEntityFindByUsername = this.userMapper.findByUsername("admin");
+        UserEntity userEntityFindById = this.userMapper.selectById(1L);
         System.out.println(1);
     }
 
@@ -44,20 +42,19 @@ public class UserRepositoryTests extends BaseTests {
         userEntity.setActive(true);
         userEntity.setStatus(UserStatusTypeEnum.OK.getValue());
 
-        UserEntity entitySaved = this.userRepository.save(userEntity);
+        this.userMapper.insert(userEntity);
         Assertions.assertNotNull(userEntity.getId());
-        Assertions.assertNotNull(entitySaved.getId());
 
-        Optional<UserEntity> entityByUsername = this.userRepository.findByUsername(username);
-        Assertions.assertTrue(entityByUsername.isPresent());
+        UserEntity entityByUsername = this.userMapper.findByUsername(username);
+        Assertions.assertNotNull(entityByUsername);
 
-        Optional<UserEntity> entityById = this.userRepository.findById(userEntity.getId());
-        Assertions.assertTrue(entityById.isPresent());
+        UserEntity entityById = this.userMapper.selectById(userEntity.getId());
+        Assertions.assertNotNull(entityById);
 
-        this.userRepository.findById(userEntity.getId());
-        this.userRepository.findByUsername(username);
-        this.userRepository.findById(userEntity.getId());
-        this.userRepository.findByUsername(username);
+        this.userMapper.selectById(userEntity.getId());
+        this.userMapper.findByUsername(username);
+        this.userMapper.selectById(userEntity.getId());
+        this.userMapper.findByUsername(username);
     }
 
 }

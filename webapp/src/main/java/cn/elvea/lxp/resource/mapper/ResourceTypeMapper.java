@@ -1,24 +1,24 @@
-package cn.elvea.lxp.resource.repository;
+package cn.elvea.lxp.resource.mapper;
 
 import cn.elvea.lxp.resource.entity.ResourceTypeEntity;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 import static cn.elvea.lxp.core.CoreConstants.CACHE_RESOURCE_TYPE_KEY;
 
 /**
- * ResourceTypeRepository
+ * ResourceTypeMapper
  *
  * @author elvea
  */
-@Repository
-public interface ResourceTypeRepository extends PagingAndSortingRepository<ResourceTypeEntity, Long> {
+@Mapper
+public interface ResourceTypeMapper extends BaseMapper<ResourceTypeEntity> {
 
     /**
      * 获取资源类型
@@ -29,7 +29,6 @@ public interface ResourceTypeRepository extends PagingAndSortingRepository<Resou
     /**
      * 获取资源类型
      */
-    @Override
     @Cacheable(value = CACHE_RESOURCE_TYPE_KEY, key = "#p0")
     Optional<ResourceTypeEntity> findById(@NotNull Long id);
 

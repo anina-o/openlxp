@@ -34,10 +34,15 @@ allprojects {
         springBootAdminVersion = "2.1.6"
         // 3rd party
         asmVersion = "7.2"
-        okIoVersion = "2.4.0"
-        okhttpVersion = "4.2.0"
+        okIoVersion = "2.4.1"
+        okhttpVersion = "4.2.2"
         guavaVersion = "28.1-jre"
-        nimbusJoseJwtVersion = "7.8"
+        nimbusJoseJwtVersion = "7.9"
+        poiVersion = '4.1.0'
+        easyExcelVersion = '2.0.5'
+        libreofficeVersion = '6.3.2'
+        jodconverterVersion = '4.2.2'
+        mybatisPlusVersion = '3.2.0'
         // apache commons
         commonsIoVersion = '2.6'
         commonsLangVersion = '3.9'
@@ -47,7 +52,7 @@ allprojects {
         commonsCollectionsVersion = '4.4'
         commonsCompressVersion = '1.19'
         commonsMailVersion = '1.5'
-        //
+        // apache commons - by spring boot
         commonsPoolVersion = '2.7.0'
         commonsCodecVersion = '1.13'
     }

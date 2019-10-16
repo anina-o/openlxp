@@ -3,7 +3,7 @@ package cn.elvea.lxp.core.manager.impl;
 import cn.elvea.lxp.common.service.AbstractEntityManager;
 import cn.elvea.lxp.core.entity.UserEntity;
 import cn.elvea.lxp.core.manager.UserManager;
-import cn.elvea.lxp.core.repository.UserRepository;
+import cn.elvea.lxp.core.mapper.UserMapper;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -19,7 +19,7 @@ import static cn.elvea.lxp.core.CoreConstants.CACHE_USER_KEY;
  * @author elvea
  */
 @Service
-public class UserManagerImpl extends AbstractEntityManager<UserRepository, UserEntity, Long> implements UserManager {
+public class UserManagerImpl extends AbstractEntityManager<UserMapper, UserEntity, Long> implements UserManager {
 
     /**
      * @see UserManager#findByUsername(String)
@@ -27,7 +27,7 @@ public class UserManagerImpl extends AbstractEntityManager<UserRepository, UserE
     @Override
     @Cacheable(value = CACHE_USER_KEY, key = "#username", condition = "#result != null")
     public UserEntity findByUsername(String username) {
-        return repository.findByUsername(username).orElse(null);
+        return repository.findByUsername(username);
     }
 
     /**
@@ -36,7 +36,7 @@ public class UserManagerImpl extends AbstractEntityManager<UserRepository, UserE
     @Override
     @Cacheable(value = CACHE_USER_KEY, key = "#id", condition = "#result != null")
     public UserEntity findById(Long id) {
-        return repository.findById(id).orElse(null);
+        return repository.selectById(id);
     }
 
     /**

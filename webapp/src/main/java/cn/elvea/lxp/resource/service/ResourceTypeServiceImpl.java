@@ -3,7 +3,7 @@ package cn.elvea.lxp.resource.service;
 import cn.elvea.lxp.common.utils.ConvertUtils;
 import cn.elvea.lxp.resource.dto.ResourceTypeDto;
 import cn.elvea.lxp.resource.entity.ResourceTypeEntity;
-import cn.elvea.lxp.resource.repository.ResourceTypeRepository;
+import cn.elvea.lxp.resource.mapper.ResourceTypeMapper;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.Optional;
 public class ResourceTypeServiceImpl implements ResourceTypeService {
 
     @Autowired
-    ResourceTypeRepository resourceTypeRepository;
+    ResourceTypeMapper resourceTypeRepository;
 
     /**
      * @see ResourceTypeService#getResourceType(String)

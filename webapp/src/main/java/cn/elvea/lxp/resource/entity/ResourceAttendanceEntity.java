@@ -1,16 +1,13 @@
 package cn.elvea.lxp.resource.entity;
 
 import cn.elvea.lxp.common.model.BaseEntity;
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 /**
  * ResourceAttendanceEntity
  *
  * @author elvea
  */
-@Entity
-@Table(name = "sys_res_attendance")
+@TableName("sys_res_attendance")
 public class ResourceAttendanceEntity extends BaseEntity {
 }

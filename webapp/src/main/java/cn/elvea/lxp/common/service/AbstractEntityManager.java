@@ -1,8 +1,8 @@
 package cn.elvea.lxp.common.service;
 
 import cn.elvea.lxp.common.model.BaseEntity;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.PagingAndSortingRepository;
 
 /**
  * AbstractEntityManager
@@ -10,7 +10,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
  * @author elvea
  * @see BaseManager
  */
-public abstract class AbstractEntityManager<R extends PagingAndSortingRepository<T, K>, T extends BaseEntity, K> implements BaseManager<T, K> {
+public abstract class AbstractEntityManager<R extends BaseMapper<T>, T extends BaseEntity, K extends Long>
+        implements BaseManager<T, K> {
 
     /**
      * PagingAndSortingRepository
@@ -23,7 +24,8 @@ public abstract class AbstractEntityManager<R extends PagingAndSortingRepository
      */
     @Override
     public T save(T entity) {
-        return repository.save(entity);
+        repository.updateById(entity);
+        return entity;
     }
 
     /**
@@ -31,7 +33,7 @@ public abstract class AbstractEntityManager<R extends PagingAndSortingRepository
      */
     @Override
     public T findById(K k) {
-        return repository.findById(k).orElse(null);
+        return repository.selectById(k);
     }
 
     /**
@@ -39,7 +41,7 @@ public abstract class AbstractEntityManager<R extends PagingAndSortingRepository
      */
     @Override
     public void delete(T entity) {
-        repository.delete(entity);
+        repository.deleteById(entity);
     }
 
 }

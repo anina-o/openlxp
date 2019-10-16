@@ -12,6 +12,7 @@ repositories {
 }
 
 configurations {
+    compile.exclude group: 'org.openoffice'
     compile.exclude module: 'spring-boot-starter-logging'
     compile.exclude module: 'spring-boot-starter-tomcat'
 
@@ -25,42 +26,55 @@ configurations {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-amqp'
-    implementation 'org.springframework.boot:spring-boot-starter-cache'
-    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-undertow'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    // spring boot admin
-    implementation group: 'de.codecentric', name: 'spring-boot-admin-starter-client', version: springBootAdminVersion
+    // spring boot
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-amqp")
+    implementation("org.springframework.boot:spring-boot-starter-cache")
+    implementation("org.springframework.boot:spring-boot-starter-log4j2")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-undertow")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    // spring boot 3rd party
+    implementation("de.codecentric:spring-boot-admin-starter-client:${springBootAdminVersion}")
+    implementation("com.baomidou:mybatis-plus-boot-starter:${mybatisPlusVersion}")
     // lombok
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    implementation("org.projectlombok:lombok")
+    testImplementation("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+    testAnnotationProcessor("org.projectlombok:lombok")
     // commons
-    implementation group: 'org.apache.commons', name: 'commons-text', version: commonsTextVersion
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: commonsLangVersion
-    implementation group: 'org.apache.commons', name: 'commons-collections4', version: commonsCollectionsVersion
-    implementation group: 'org.apache.commons', name: 'commons-compress', version: commonsCompressVersion
-    implementation group: 'commons-codec', name: 'commons-codec', version: commonsCodecVersion
-    implementation group: 'commons-io', name: 'commons-io', version: commonsIoVersion
+    implementation("org.apache.commons:commons-text:${commonsTextVersion}")
+    implementation("org.apache.commons:commons-lang3:${commonsLangVersion}")
+    implementation("org.apache.commons:commons-collections4:${commonsCollectionsVersion}")
+    implementation("org.apache.commons:commons-compress:${commonsCompressVersion}")
+    implementation("commons-codec:commons-codec:${commonsCodecVersion}")
+    implementation("commons-io:commons-io:${commonsIoVersion}")
     // 3rd party
-    implementation 'joda-time:joda-time'
-    implementation 'mysql:mysql-connector-java'
-    implementation group: 'org.ow2.asm', name: 'asm', version: asmVersion
-    implementation group: 'com.squareup.okio', name: 'okio', version: okIoVersion
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: okhttpVersion
-    implementation group: 'com.google.guava', name: 'guava', version: guavaVersion
-    implementation group: 'com.nimbusds', name: 'nimbus-jose-jwt', version: nimbusJoseJwtVersion
+    implementation("joda-time:joda-time")
+    implementation("mysql:mysql-connector-java")
+    implementation("org.ow2.asm:asm:${asmVersion}")
+    implementation("com.squareup.okio:okio:${okIoVersion}")
+    implementation("com.squareup.okhttp3:okhttp:${okhttpVersion}")
+    implementation("com.google.guava:guava:${guavaVersion}")
+    implementation("com.nimbusds:nimbus-jose-jwt:${nimbusJoseJwtVersion}")
+    // poi & easyexcel
+    implementation("org.apache.poi:poi:${poiVersion}")
+    implementation("org.apache.poi:poi-ooxml:${poiVersion}")
+    implementation("com.alibaba:easyexcel:${easyExcelVersion}")
+    // jodconverter & libreoffice
+    implementation("org.jodconverter:jodconverter-local:${jodconverterVersion}")
+    implementation("org.jodconverter:jodconverter-spring-boot-starter:${jodconverterVersion}")
+    implementation("org.libreoffice:juh:${libreofficeVersion}")
+    implementation("org.libreoffice:jurt:${libreofficeVersion}")
+    implementation("org.libreoffice:ridl:${libreofficeVersion}")
+    implementation("org.libreoffice:unoil:${libreofficeVersion}")
     // development
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     // test
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }

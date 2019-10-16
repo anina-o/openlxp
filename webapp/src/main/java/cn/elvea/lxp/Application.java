@@ -14,14 +14,14 @@ import java.lang.reflect.Method;
 @SpringBootApplication
 public class Application {
 
-    /**
-     *
-     */
     public static void main(String[] args) {
         disableAccessWarning();
         SpringApplication.run(Application.class, args);
     }
 
+    /**
+     * 用于消除高版本JDK下面的警告信息
+     */
     @SuppressWarnings("unchecked")
     public static void disableAccessWarning() {
         try {

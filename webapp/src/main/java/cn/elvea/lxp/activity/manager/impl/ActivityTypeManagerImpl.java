@@ -2,7 +2,7 @@ package cn.elvea.lxp.activity.manager.impl;
 
 import cn.elvea.lxp.activity.entity.ActivityTypeEntity;
 import cn.elvea.lxp.activity.manager.ActivityTypeManager;
-import cn.elvea.lxp.activity.repository.ActivityTypeRepository;
+import cn.elvea.lxp.activity.mapper.ActivityTypeMapper;
 import cn.elvea.lxp.common.service.AbstractEntityManager;
 import cn.elvea.lxp.resource.entity.ResourceTypeEntity;
 import org.jetbrains.annotations.NotNull;
@@ -21,11 +21,11 @@ import static cn.elvea.lxp.core.CoreConstants.CACHE_ACTIVITY_TYPE_KEY;
  */
 @Service
 public class ActivityTypeManagerImpl
-        extends AbstractEntityManager<ActivityTypeRepository, ActivityTypeEntity, Long>
+        extends AbstractEntityManager<ActivityTypeMapper, ActivityTypeEntity, Long>
         implements ActivityTypeManager {
 
     @Autowired
-    private ActivityTypeRepository activityTypeRepository;
+    private ActivityTypeMapper activityTypeRepository;
 
     @Override
     @Cacheable(value = CACHE_ACTIVITY_TYPE_KEY, key = "#p0")
