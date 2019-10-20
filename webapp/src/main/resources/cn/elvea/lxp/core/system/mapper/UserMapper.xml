@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.elvea.lxp.core.system.mapper.UserMapper">
+
+    <sql id="baseColumns">
+        u.id,
+        u.username,
+        u.email,
+        u.mobile,
+        u.password,
+        u.nickname,
+        u.created_at,
+        u.created_by,
+        u.modified_at,
+        u.modified_by,
+        u.deleted_at,
+        u.deleted_by
+    </sql>
+
+    <sql id="searchConditionSql">
+        <!-- 机构 -->
+        <choose>
+            <when test="condition != null and condition.tenantId != null">
+                where u.tenant_id = #{condition.tenantId}
+            </when>
+            <!-- 不指定机构时，强制赋值，避免未授权的跨机构查询 -->
+            <otherwise>
+                where u.tenant_id = 1
+            </otherwise>
+        </choose>
+        <!-- 用户名 -->
+        <if test="condition != null and condition.username != null and condition.username != ''">
+            <choose>
+                <when test="condition.usernameExactMatch != null and condition.usernameExactMatch == true">
+                    and u.username = #{condition.username}
+                </when>
+                <otherwise>
+                    and UPPER(u.username) like UPPER(#{condition.usernameLike})
+                </otherwise>
+            </choose>
+        </if>
+        <!-- 邮箱 -->
+        <if test="condition != null and condition.email != null and condition.email != ''">
+            and u.email = #{condition.email}
+        </if>
+        <!-- 手机号码 -->
+        <if test="condition != null and condition.mobile != null and condition.mobile != ''">
+            and u.mobile = #{condition.mobile}
+        </if>
+    </sql>
+
+    <select id="findByUsername" resultType="cn.elvea.lxp.core.system.entity.UserEntity">
+        select
+        <include refid="baseColumns"/>
+        from sys_user u
+        <include refid="searchConditionSql"/>
+    </select>
+
+    <select id="findByEmail" resultType="cn.elvea.lxp.core.system.entity.UserEntity">
+        select
+        <include refid="baseColumns"/>
+        from sys_user u
+        <include refid="searchConditionSql"/>
+    </select>
+
+    <select id="findByMobile" resultType="cn.elvea.lxp.core.system.entity.UserEntity">
+        select
+        <include refid="baseColumns"/>
+        from sys_user u
+        <include refid="searchConditionSql"/>
+    </select>
+
+</mapper>

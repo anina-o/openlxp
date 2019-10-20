@@ -1,11 +1,11 @@
 package cn.elvea.lxp.config;
 
-import cn.elvea.lxp.security.SecurityAuthenticationDetailsSource;
-import cn.elvea.lxp.security.SecurityAuthenticationFailureHandler;
-import cn.elvea.lxp.security.SecurityAuthenticationProvider;
-import cn.elvea.lxp.security.SecurityAuthenticationSuccessHandler;
-import cn.elvea.lxp.security.filter.SecurityAuthenticationFilter;
-import cn.elvea.lxp.security.service.SecurityUserService;
+import cn.elvea.lxp.core.security.SecurityAuthenticationDetailsSource;
+import cn.elvea.lxp.core.security.SecurityAuthenticationFailureHandler;
+import cn.elvea.lxp.core.security.SecurityAuthenticationProvider;
+import cn.elvea.lxp.core.security.SecurityAuthenticationSuccessHandler;
+import cn.elvea.lxp.core.security.filter.SecurityAuthenticationFilter;
+import cn.elvea.lxp.core.security.service.SecurityUserService;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,8 +22,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import static cn.elvea.lxp.security.SecurityConstants.API_REQUEST_URL;
-import static cn.elvea.lxp.security.SecurityConstants.XAPI_REQUEST_URL;
+import static cn.elvea.lxp.core.security.SecurityConstants.API_REQUEST_URL;
+import static cn.elvea.lxp.core.security.SecurityConstants.XAPI_REQUEST_URL;
 
 /**
  * WebSecurityConfig

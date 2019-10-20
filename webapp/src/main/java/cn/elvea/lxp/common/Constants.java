@@ -1,6 +1,6 @@
 package cn.elvea.lxp.common;
 
-import cn.elvea.lxp.core.type.LangTypeEnum;
+import cn.elvea.lxp.core.system.type.LangTypeEnum;
 
 import java.util.Locale;
 

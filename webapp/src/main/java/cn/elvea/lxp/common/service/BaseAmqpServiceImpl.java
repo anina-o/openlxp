@@ -12,7 +12,8 @@ import org.springframework.messaging.handler.annotation.Header;
 import java.io.IOException;
 
 /**
- * 核心队列服务，有关系统业务方便的通用封装在这个服务里面实现
+ * 核心队列服务
+ * 有关系统业务方便的通用封装在这个服务里面实现
  *
  * @author elvea
  */
@@ -59,15 +60,9 @@ public abstract class BaseAmqpServiceImpl<T> implements BaseAmqpService {
      */
     public abstract void execute(T t);
 
-    public RabbitTemplate getRabbitTemplate() {
-        return rabbitTemplate;
-    }
-
+    @Autowired
     public void setRabbitTemplate(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    protected boolean isAmqpEnable() {
-        return true;
-    }
 }

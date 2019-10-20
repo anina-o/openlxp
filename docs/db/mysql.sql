@@ -108,6 +108,28 @@ CREATE TABLE `sys_user_group_member`
 ALTER TABLE `sys_user_group_member`
     COMMENT '用户组成员表';
 
+CREATE TABLE `sys_actor_relation`
+(
+    `id`         BIGINT UNSIGNED COMMENT 'ID'    NOT NULL,
+    `type`       VARCHAR(50) COMMENT '关联类型'      NOT NULL,
+    `parent_id`  BIGINT UNSIGNED COMMENT '父节点ID' NOT NULL,
+    `child_id`   BIGINT UNSIGNED COMMENT '子节点ID' NOT NULL,
+    `parent_ind` INT UNSIGNED COMMENT '是否直属父节点'  NOT NULL,
+    `idx`        INT UNSIGNED COMMENT '层级序号'     NOT NULL,
+    `path`       VARCHAR(255) COMMENT '关联的完整路径',
+    `created_at` DATETIME COMMENT '创建时间',
+    `created_by` BIGINT UNSIGNED COMMENT '创建人',
+    CONSTRAINT `pk_sys_entity_relation_id` PRIMARY KEY (`id`)
+);
+ALTER TABLE `sys_actor_relation`
+    COMMENT '实体关联表';
+
+CREATE INDEX `ix_sar_type` ON `sys_actor_relation` (`type`);
+
+CREATE INDEX `ix_sar_parent_id` ON `sys_actor_relation` (`parent_id`);
+
+CREATE INDEX `ix_sar_child_id` ON `sys_actor_relation` (`child_id`);
+
 /*
 用户会话记录表
 */
@@ -800,22 +822,23 @@ CREATE INDEX `sys_paper_option_record_option_id` ON `sys_paper_option_record` (`
 CREATE INDEX `sys_paper_option_record_session_id` ON `sys_paper_option_record` (`session_id`);
 
 /* 系统角色 */
-INSERT INTO `sys_role` (`id`, `code`, `label`, `active`, `created_at`, `modified_at`)
-VALUES (1, 'sysadmin', 'label_role_type_system_administrator', 1, now(), now());
+INSERT INTO `sys_role` (`id`, `tenant_id`, `code`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (1, 1, 'sysadmin', 'label_role_type_system_administrator', 1, now(), now());
 
-INSERT INTO `sys_role` (`id`, `code`, `label`, `active`, `created_at`, `modified_at`)
-VALUES (2, 'admin', 'label_role_type_administrator', 1, now(), now());
+INSERT INTO `sys_role` (`id`, `tenant_id`, `code`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (2, 1, 'admin', 'label_role_type_administrator', 1, now(), now());
 
-INSERT INTO `sys_role` (`id`, `code`, `label`, `active`, `created_at`, `modified_at`)
-VALUES (3, 'trainer', 'label_role_type_trainer', 1, now(), now());
+INSERT INTO `sys_role` (`id`, `tenant_id`, `code`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (3, 1, 'trainer', 'label_role_type_trainer', 1, now(), now());
 
-INSERT INTO `sys_role` (`id`, `code`, `label`, `active`, `created_at`, `modified_at`)
-VALUES (4, 'learner', 'label_role_type_learner', 1, now(), now());
+INSERT INTO `sys_role` (`id`, `tenant_id`, `code`, `label`, `active`, `created_at`, `modified_at`)
+VALUES (4, 1, 'learner', 'label_role_type_learner', 1, now(), now());
 
 /* 系统管理员 */
-INSERT INTO `sys_user` (`id`, `tenant_id`, `username`, `nickname`, `status`, `active`, `password`,
+INSERT INTO `sys_user` (`id`, `tenant_id`, `username`, `email`, `mobile`,
+                        `nickname`, `status`, `active`, `password`,
                         `created_at`, `created_by`, `modified_at`, `modified_by`)
-VALUES (1, 1, 'admin', 'Administrator', 1, 1,
+VALUES (1, 1, 'admin', 'master@elvea.cn', '13800138000', 'Administrator', 1, 1,
         '$2a$10$xq4enPCLvDBgiJX6rczJK.LgwaLyLtbgqgaC8Nj0kqsVdHZ6KJEg.',
         now(), 1, now(), 1);
 
