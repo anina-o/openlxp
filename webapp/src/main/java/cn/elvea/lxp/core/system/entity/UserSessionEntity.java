@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 /**
  * 用户会话实体
  *
@@ -55,33 +57,33 @@ public class UserSessionEntity extends BaseEntity {
     /**
      * 会话开始时间
      */
-    private String startDatetime;
+    private Date startDatetime;
     /**
      * 最近访问时间
      */
-    private String lastAccessDatetime;
+    private Date lastAccessDatetime;
     /**
      * 会话结束时间
      */
-    private String endDatetime;
+    private Date endDatetime;
     /**
      * 会话开始年
      */
-    private String startYear;
+    private Integer year;
     /**
      * 会话开始月
      */
-    private String startMonth;
+    private Integer month;
     /**
      * 会话开始日
      */
-    private String startDay;
+    private Integer day;
     /**
      * 会话开始时
      */
-    private String startHour;
+    private Integer hour;
     /**
      * 会话开始分
      */
-    private String startMinute;
+    private Integer minute;
 }

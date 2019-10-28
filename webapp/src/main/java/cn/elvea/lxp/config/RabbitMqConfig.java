@@ -13,9 +13,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMqConfig {
 
+    /**
+     * 用户登录会话
+     */
     @Bean
     public Queue userSessionQueue() {
         return new Queue(CoreConstants.QUEUE_USER_SESSION);
+    }
+
+    /**
+     * 用户登录历史记录
+     */
+    @Bean
+    public Queue userLoginHistoryQueue() {
+        return new Queue(CoreConstants.QUEUE_USER_LOGIN_HISTORY);
     }
 
 }

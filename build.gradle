@@ -31,8 +31,8 @@ allprojects {
         okIoVersion = "2.4.1"
         okhttpVersion = "4.2.2"
         guavaVersion = "28.1-jre"
-        nimbusJoseJwtVersion = "7.9"
-        poiVersion = '4.1.0'
+        nimbusJoseJwtVersion = "8.2"
+        poiVersion = '4.1.1'
         easyExcelVersion = '2.0.5'
         libreofficeVersion = '6.3.2'
         jodconverterVersion = '4.2.2'

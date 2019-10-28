@@ -60,6 +60,13 @@ public abstract class BaseAmqpServiceImpl<T> implements BaseAmqpService {
      */
     public abstract void execute(T t);
 
+    /**
+     * 是否全局启动AMQP队列
+     */
+    protected boolean isAmqpEnable() {
+        return true;
+    }
+
     @Autowired
     public void setRabbitTemplate(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;

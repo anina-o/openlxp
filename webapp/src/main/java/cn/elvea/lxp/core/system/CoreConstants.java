@@ -12,6 +12,7 @@ public class CoreConstants {
     //
     public final static String CACHE_TENANT_KEY = "TENANT";
     public final static String CACHE_USER_KEY = "USER";
+    public final static String CACHE_USER_SESSION_KEY = "USER_SESSION";
     public final static String CACHE_ROLE_KEY = "ROLE";
     public final static String CACHE_USER_ROLE_KEY = "USER_ROLE";
 
@@ -24,6 +25,14 @@ public class CoreConstants {
     public final static String CACHE_ACTIVITY_KEY = "ACTIVITY";
 
     // AMQP
+
+    /**
+     * 用户登录会话
+     */
     public final static String QUEUE_USER_SESSION = "QUEUE_USER_SESSION";
+    /**
+     * 用户登录历史记录
+     */
+    public final static String QUEUE_USER_LOGIN_HISTORY = "QUEUE_USER_LOGIN_HISTORY";
 
 }

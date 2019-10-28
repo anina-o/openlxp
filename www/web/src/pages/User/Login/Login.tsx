@@ -8,6 +8,7 @@ import "./Login.less";
 import environment from "@common/environments/environment";
 import {UserService} from "@common/services";
 import {handleValidationResult} from "@common/utils";
+import {Constants} from "@web/commons/Constants";
 
 /**
  * 登录页面
@@ -18,12 +19,16 @@ class LoginPage extends React.Component<any, any> {
     /**
      * 登录处理
      */
-    handleSubmit = (e: any) => {
+    handleSubmit = (e : any) => {
         e.preventDefault();
 
-        this.props.form.validateFields((err: any, values: any) => {
+        this.props.form.validateFields((err : any, values : any) => {
             if (!err) {
-                UserService.login(values.username, values.password).then(async (result: any) => {
+                UserService.login({
+                    username : values.username,
+                    password : values.password,
+                    clientVersion : Constants.VERSION
+                }).then(async (result : any) => {
                     if (result.status === 1) {
                         // 更新登陆成功信息
                         await this.props.store.loginSuccess(result.data.token);
@@ -44,8 +49,8 @@ class LoginPage extends React.Component<any, any> {
         // 如果测试环境初始开发账号方便调试
         if (!environment.production) {
             this.props.form.setFieldsValue({
-                username: 'admin',
-                password: '123456',
+                username : 'admin',
+                password : '123456',
             });
         }
     };
@@ -63,9 +68,9 @@ class LoginPage extends React.Component<any, any> {
                             <Form.Item>
                                 {
                                     getFieldDecorator('username', {
-                                        rules: [{
-                                            message: intl.get("user_validation_username_not_empty"),
-                                            required: true,
+                                        rules : [{
+                                            message : intl.get("user_validation_username_not_empty"),
+                                            required : true,
                                         }],
                                     })(
                                         <Input prefix={<Icon type="user"/>}
@@ -75,9 +80,9 @@ class LoginPage extends React.Component<any, any> {
                             </Form.Item>
                             <Form.Item>
                                 {getFieldDecorator('password', {
-                                    rules: [{
-                                        message: intl.get("user_validation_password_not_empty"),
-                                        required: true,
+                                    rules : [{
+                                        message : intl.get("user_validation_password_not_empty"),
+                                        required : true,
                                     }],
                                 })(
                                     <Input prefix={<Icon type="lock"/>}

@@ -1,4 +1,5 @@
 import {post, postJson} from '@common/utils/request'
+import {Credentials} from "@/types/credentials";
 
 /**
  * 用户服务
@@ -7,11 +8,8 @@ class UserService {
     /**
      * 用户登录
      */
-    login = (username: string, password: string) => {
-        return post('/api/login', {
-            username: username,
-            password: password
-        })
+    login = (credentials : Credentials) => {
+        return post('/api/login', credentials)
     };
     /**
      * 用户注册

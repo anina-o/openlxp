@@ -23,8 +23,8 @@
             "@mobile/*" : [
                 "../mobile/src/*"
             ],
-            "@admin/*" : [
-                "../admin/src/*"
+            "@web/*" : [
+                "../web/src/*"
             ],
             "@/*" : [
                 "./src/*"

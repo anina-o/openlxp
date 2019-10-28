@@ -1,5 +1,5 @@
 import {decode} from "jsonwebtoken";
-import {Principal} from '@common/types/principal';
+import {Principal} from '@/types/principal';
 import {JwtPayload} from "@common/types/jwt-payload";
 
 /**

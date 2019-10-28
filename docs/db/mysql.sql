@@ -39,7 +39,6 @@ ALTER TABLE `sys_tenant`
 CREATE TABLE `sys_user`
 (
     `id`          BIGINT UNSIGNED     NOT NULL COMMENT 'ID',
-    `tenant_id`   BIGINT UNSIGNED     NOT NULL COMMENT 'Tenant ID',
     `username`    VARCHAR(150) COMMENT '用户名',
     `email`       VARCHAR(255) COMMENT '邮箱',
     `mobile`      VARCHAR(255) COMMENT '手机',
@@ -59,10 +58,28 @@ CREATE TABLE `sys_user`
 ALTER TABLE `sys_user`
     COMMENT '用户表';
 
-CREATE INDEX `ix_sys_user_tenant_id` ON `sys_user` (`tenant_id`);
 CREATE INDEX `ix_sys_user_username` ON `sys_user` (`username`);
 CREATE INDEX `ix_sys_user_mobile` ON `sys_user` (`mobile`);
 CREATE INDEX `ix_sys_user_email` ON `sys_user` (`email`);
+
+/*
+租户-用户关联表
+*/
+CREATE TABLE `sys_user_tenant_relation`
+(
+    `id`          BIGINT UNSIGNED COMMENT 'ID'   NOT NULL,
+    `tenant_id`   BIGINT UNSIGNED COMMENT '租户ID' NOT NULL,
+    `user_id`     BIGINT UNSIGNED COMMENT '用户ID' NOT NULL,
+    `current_ind` TINYINT UNSIGNED COMMENT '当前租户',
+    `created_at`  DATETIME COMMENT '创建时间',
+    `created_by`  BIGINT UNSIGNED COMMENT '创建人',
+    CONSTRAINT `pk_sys_user_tenant_relation_id` PRIMARY KEY (`id`)
+);
+ALTER TABLE `sys_user_tenant_relation`
+    COMMENT '租户-用户关联表';
+
+CREATE INDEX `ix_sutr_tenant_id` ON `sys_user_tenant_relation` (`tenant_id`);
+CREATE INDEX `ix_sutr_user_id` ON `sys_user_tenant_relation` (`user_id`);
 
 /*
 用户组表
@@ -149,11 +166,11 @@ CREATE TABLE `sys_user_session`
     `last_access_datetime` DATETIME COMMENT '最近访问时间',
     `end_datetime`         DATETIME COMMENT '会话结束时间',
     `total_time`           INT UNSIGNED COMMENT '会话时长',
-    `start_year`           INT UNSIGNED COMMENT '会话开始年',
-    `start_month`          INT UNSIGNED COMMENT '会话开始月',
-    `start_day`            INT UNSIGNED COMMENT '会话开始天',
-    `start_hour`           INT UNSIGNED COMMENT '会话开始小时',
-    `start_minute`         INT UNSIGNED COMMENT '会话开始分钟',
+    `year`                 INT UNSIGNED COMMENT '会话开始年',
+    `month`                INT UNSIGNED COMMENT '会话开始月',
+    `day`                  INT UNSIGNED COMMENT '会话开始天',
+    `hour`                 INT UNSIGNED COMMENT '会话开始小时',
+    `minute`               INT UNSIGNED COMMENT '会话开始分钟',
     CONSTRAINT `pk_sys_user_session_id` PRIMARY KEY (`id`)
 );
 ALTER TABLE `sys_user_session`
@@ -162,11 +179,11 @@ ALTER TABLE `sys_user_session`
 CREATE INDEX `ix_sys_user_session_tenant_id` ON `sys_user_session` (`tenant_id`);
 CREATE INDEX `ix_sys_user_session_user_id` ON `sys_user_session` (`user_id`);
 CREATE INDEX `ix_sys_user_session_session_id` ON `sys_user_session` (`session_id`);
-CREATE INDEX `ix_sys_user_session_start_year` ON `sys_user_session` (`start_year`);
-CREATE INDEX `ix_sys_user_session_start_month` ON `sys_user_session` (`start_month`);
-CREATE INDEX `ix_sys_user_session_start_day` ON `sys_user_session` (`start_day`);
-CREATE INDEX `ix_sys_user_session_start_hour` ON `sys_user_session` (`start_hour`);
-CREATE INDEX `ix_sys_user_session_start_minute` ON `sys_user_session` (`start_minute`);
+CREATE INDEX `ix_sys_user_session_year` ON `sys_user_session` (`year`);
+CREATE INDEX `ix_sys_user_session_month` ON `sys_user_session` (`month`);
+CREATE INDEX `ix_sys_user_session_day` ON `sys_user_session` (`day`);
+CREATE INDEX `ix_sys_user_session_hour` ON `sys_user_session` (`hour`);
+CREATE INDEX `ix_sys_user_session_minute` ON `sys_user_session` (`minute`);
 
 /*
 用户会话时长统计表
@@ -220,6 +237,26 @@ ALTER TABLE `sys_user_session_history`
 CREATE INDEX `ix_sys_user_session_history_user_id` ON `sys_user_session_history` (`user_id`);
 CREATE INDEX `ix_sys_user_session_history_tenant_id` ON `sys_user_session_history` (`tenant_id`);
 CREATE INDEX `ix_sys_user_session_history_session_id` ON `sys_user_session_history` (`session_id`);
+
+/*
+用户登录历史记录表
+*/
+CREATE TABLE `sys_user_login_history`
+(
+    `id`         BIGINT UNSIGNED NOT NULL COMMENT 'ID',
+    `tenant_id`  BIGINT UNSIGNED NOT NULL COMMENT 'Tenant ID',
+    `user_id`    BIGINT UNSIGNED NOT NULL COMMENT 'User ID',
+    `status`     TINYINT(1) COMMENT '登录状态',
+    `host`       VARCHAR(100) COMMENT '登录主机',
+    `created_at` DATETIME COMMENT '创建时间',
+    `created_by` BIGINT UNSIGNED COMMENT '创建人',
+    CONSTRAINT `pk_sys_user_login_history_id` PRIMARY KEY (`id`)
+);
+ALTER TABLE `sys_user_login_history`
+    COMMENT '用户登录历史记录表';
+
+CREATE INDEX `ix_sys_usr_ses_his_user_id` ON `sys_user_login_history` (`user_id`);
+CREATE INDEX `ix_sys_usr_ses_his_tenant_id` ON `sys_user_login_history` (`tenant_id`);
 
 /*
 角色表
@@ -835,12 +872,15 @@ INSERT INTO `sys_role` (`id`, `tenant_id`, `code`, `label`, `active`, `created_a
 VALUES (4, 1, 'learner', 'label_role_type_learner', 1, now(), now());
 
 /* 系统管理员 */
-INSERT INTO `sys_user` (`id`, `tenant_id`, `username`, `email`, `mobile`,
+INSERT INTO `sys_user` (`id`, `username`, `email`, `mobile`,
                         `nickname`, `status`, `active`, `password`,
                         `created_at`, `created_by`, `modified_at`, `modified_by`)
-VALUES (1, 1, 'admin', 'master@elvea.cn', '13800138000', 'Administrator', 1, 1,
+VALUES (1, 'admin', 'master@elvea.cn', '13800138000', 'Administrator', 1, 1,
         '$2a$10$xq4enPCLvDBgiJX6rczJK.LgwaLyLtbgqgaC8Nj0kqsVdHZ6KJEg.',
         now(), 1, now(), 1);
+
+INSERT INTO `sys_user_tenant_relation` (`id`, `tenant_id`, `user_id`, `current_ind`, `created_at`, `created_by`)
+VALUES (1, 1, 1, 1, now(), 1);
 
 INSERT INTO `sys_user_role_relation` (`id`, `user_id`, `role_id`, `created_at`, `created_by`)
 VALUES (1, 1, 1, now(), 1);

@@ -2,36 +2,36 @@ package cn.elvea.lxp.core.system.service.impl;
 
 import cn.elvea.lxp.common.service.BaseAmqpServiceImpl;
 import cn.elvea.lxp.core.system.CoreConstants;
-import cn.elvea.lxp.core.system.dto.UserSessionDto;
-import cn.elvea.lxp.core.system.service.UserSessionAmqpService;
+import cn.elvea.lxp.core.system.dto.UserLoginHistoryDto;
+import cn.elvea.lxp.core.system.service.UserLoginHistoryAmqpService;
 import cn.elvea.lxp.core.system.service.UserSessionService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * UserSessionAmqpServiceImpl
+ * UserLoginHistoryAmqpServiceImpl
  *
  * @author elvea
  */
 @Service
-@RabbitListener(queues = CoreConstants.QUEUE_USER_SESSION)
-public class UserSessionAmqpServiceImpl extends BaseAmqpServiceImpl<UserSessionDto> implements UserSessionAmqpService {
+@RabbitListener(queues = CoreConstants.QUEUE_USER_LOGIN_HISTORY)
+public class UserLoginHistoryAmqpServiceImpl extends BaseAmqpServiceImpl<UserLoginHistoryDto> implements UserLoginHistoryAmqpService {
 
     private UserSessionService userSessionService;
 
     @Override
-    public void saveUserSession(UserSessionDto userSessionDto) {
+    public void saveUserLoginHistory(UserLoginHistoryDto userLoginHistoryDto) {
         if (isAmqpEnable()) {
-            this.rabbitTemplate.convertAndSend(CoreConstants.QUEUE_USER_SESSION, userSessionDto);
+            this.rabbitTemplate.convertAndSend(CoreConstants.QUEUE_USER_LOGIN_HISTORY, userLoginHistoryDto);
         } else {
-            execute(userSessionDto);
+            execute(userLoginHistoryDto);
         }
     }
 
     @Override
-    public void execute(UserSessionDto userSessionDto) {
-        this.userSessionService.saveUserSession(userSessionDto);
+    public void execute(UserLoginHistoryDto userLoginHistoryDto) {
+        this.userSessionService.saveUserLoginHistory(userLoginHistoryDto);
     }
 
     @Autowired
