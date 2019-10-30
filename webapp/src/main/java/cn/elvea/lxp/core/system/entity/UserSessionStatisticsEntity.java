@@ -19,10 +19,6 @@ import java.util.Date;
 @TableName("sys_user_session_statistics")
 public class UserSessionStatisticsEntity extends BaseEntity {
     /**
-     * 租户ID
-     */
-    private Long tenantId;
-    /**
      * 用户ID
      */
     private Long userId;

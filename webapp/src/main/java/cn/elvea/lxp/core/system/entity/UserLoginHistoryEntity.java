@@ -19,10 +19,6 @@ import java.util.Date;
 @TableName("sys_user_group")
 public class UserLoginHistoryEntity extends BaseEntity {
     /**
-     * 租户ID
-     */
-    private Long tenantId;
-    /**
      * 用户ID
      */
     private Long userId;

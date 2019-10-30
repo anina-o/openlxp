@@ -19,10 +19,6 @@ import java.util.Date;
 @TableName("sys_user_session")
 public class UserSessionEntity extends BaseEntity {
     /**
-     * 租户ID
-     */
-    private String tenantId;
-    /**
      * 用户ID
      */
     private String userId;

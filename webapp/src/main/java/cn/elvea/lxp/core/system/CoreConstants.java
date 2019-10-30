@@ -10,7 +10,6 @@ public class CoreConstants {
     public final static Long DEFAULT_USER_ROLE_ID = 4L;
 
     //
-    public final static String CACHE_TENANT_KEY = "TENANT";
     public final static String CACHE_USER_KEY = "USER";
     public final static String CACHE_USER_SESSION_KEY = "USER_SESSION";
     public final static String CACHE_ROLE_KEY = "ROLE";

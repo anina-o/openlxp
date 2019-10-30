@@ -18,16 +18,7 @@
     </sql>
 
     <sql id="searchConditionSql">
-        <!-- 机构 -->
-        <choose>
-            <when test="condition != null and condition.tenantId != null">
-                where u.tenant_id = #{condition.tenantId}
-            </when>
-            <!-- 不指定机构时，强制赋值，避免未授权的跨机构查询 -->
-            <otherwise>
-                where u.tenant_id = 1
-            </otherwise>
-        </choose>
+        where u.active = 1
         <!-- 用户名 -->
         <if test="condition != null and condition.username != null and condition.username != ''">
             <choose>

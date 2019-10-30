@@ -18,10 +18,6 @@ public class UserLoginHistoryDto implements Serializable {
      */
     private Long ID;
     /**
-     * 租户ID
-     */
-    private Long tenantId;
-    /**
      * 用户ID
      */
     private Long userId;

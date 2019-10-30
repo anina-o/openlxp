@@ -17,10 +17,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class UserSessionDto implements Serializable {
     /**
-     * 租户ID
-     */
-    private Long tenantId;
-    /**
      * 用户ID
      */
     private Long userId;
