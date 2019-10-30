@@ -8,7 +8,7 @@ import lombok.Getter;
  * @author elvea
  */
 @Getter
-public enum ActorRelationTypeEnum {
+public enum EntityRelationTypeEnum {
     /**
      * 部门-部门
      */
@@ -39,14 +39,14 @@ public enum ActorRelationTypeEnum {
      */
     private final String desc;
 
-    ActorRelationTypeEnum(final String type, final String desc) {
+    EntityRelationTypeEnum(final String type, final String desc) {
         this.type = type;
         this.desc = desc;
     }
 
-    public static ActorRelationTypeEnum getRelationType(String type) {
-        ActorRelationTypeEnum[] ts = ActorRelationTypeEnum.values();
-        for (ActorRelationTypeEnum t : ts) {
+    public static EntityRelationTypeEnum getRelationType(String type) {
+        EntityRelationTypeEnum[] ts = EntityRelationTypeEnum.values();
+        for (EntityRelationTypeEnum t : ts) {
             if (t.getType().equalsIgnoreCase(type)) {
                 return t;
             }

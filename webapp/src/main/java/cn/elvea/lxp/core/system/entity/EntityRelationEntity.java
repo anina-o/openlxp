@@ -16,8 +16,8 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@TableName("sys_actor_relation")
-public class ActorRelationEntity extends BaseEntity {
+@TableName("sys_entity_relation")
+public class EntityRelationEntity extends BaseEntity {
     /**
      * 实体关联父ID
      */
@@ -36,14 +36,18 @@ public class ActorRelationEntity extends BaseEntity {
     private Integer idx;
     /**
      * 实体关联类型
-     *
-     * @see ActorTypeEnum
      */
     private String type;
-    // 实体关联完整路径
+    /**
+     * 实体关联完整路径
+     */
     private String path;
-    // 实体关联时间
+    /**
+     * 实体关联时间
+     */
     private Date createdAt;
-    // 实体关联人
+    /**
+     * 实体关联人
+     */
     private Long createdBy;
 }
