@@ -18,7 +18,14 @@
     </sql>
 
     <sql id="searchConditionSql">
-        where u.active = 1
+        <choose>
+            <when test="condition.active != null and condition.active == false">
+                where u.active = 0
+            </when>
+            <otherwise>
+                where u.active = 1
+            </otherwise>
+        </choose>
         <!-- 用户名 -->
         <if test="condition != null and condition.username != null and condition.username != ''">
             <choose>

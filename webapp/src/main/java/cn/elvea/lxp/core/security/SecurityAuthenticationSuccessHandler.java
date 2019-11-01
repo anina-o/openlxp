@@ -5,7 +5,6 @@ import cn.elvea.lxp.common.utils.UUIDUtils;
 import cn.elvea.lxp.common.utils.WebUtils;
 import cn.elvea.lxp.common.web.WebResponse;
 import cn.elvea.lxp.core.system.dto.UserSessionDto;
-import cn.elvea.lxp.core.system.service.UserSessionAmqpService;
 import cn.elvea.lxp.core.system.service.UserSessionService;
 import com.google.common.collect.Maps;
 import com.nimbusds.jose.JOSEException;
@@ -28,8 +27,6 @@ import java.util.Map;
 @Slf4j
 @Service
 public class SecurityAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-    @Autowired
-    private UserSessionAmqpService userSessionAmqpService;
 
     @Autowired
     private UserSessionService userSessionService;
@@ -51,6 +48,8 @@ public class SecurityAuthenticationSuccessHandler extends SimpleUrlAuthenticatio
         UserSessionDto sessionDto = new UserSessionDto();
         sessionDto.setSessionId(uuid);
         sessionDto.setUserId(user.getId());
+        sessionDto.setUsername(user.getUsername());
+        sessionDto.setHost(WebUtils.getHost(request));
         this.userSessionService.createSession(sessionDto);
 
         Map<String, Object> resultMap = Maps.newHashMap();

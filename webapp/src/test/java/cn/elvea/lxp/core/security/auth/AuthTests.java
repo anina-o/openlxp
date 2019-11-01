@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AuthTests extends BaseWebTests {
 
     @Autowired
-    SecurityAuthenticationFilter securityAuthenticationFilter;
+    private SecurityAuthenticationFilter securityAuthenticationFilter;
 
     @Test
     public void testLoginByUsername() throws Exception {

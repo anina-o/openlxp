@@ -47,22 +47,23 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     /**
-     * @see WebMvcConfigurer#addCorsMappings(CorsRegistry)
-     */
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("*")
-                .allowedMethods("HEAD", "OPTIONS", "GET", "POST", "PUT", "PATCH", "DELETE")
-                .maxAge(3600);
-    }
-
-    /**
      * @see WebMvcConfigurer#addArgumentResolvers(List)
      */
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
 
+    }
+
+    /**
+     * @see WebMvcConfigurer#addCorsMappings(CorsRegistry)
+     */
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowCredentials(true)
+                .allowedHeaders("*")
+                .allowedMethods("*")
+                .allowedOrigins("*");
     }
 
     /**

@@ -770,7 +770,7 @@ INSERT INTO `sys_user` (`id`, `username`, `email`, `mobile`,
                         `nickname`, `status`, `active`, `password`,
                         `created_at`, `created_by`, `modified_at`, `modified_by`)
 VALUES (1, 'admin', 'master@elvea.cn', '13800138000', 'Administrator', 1, 1,
-        '$2a$10$xq4enPCLvDBgiJX6rczJK.LgwaLyLtbgqgaC8Nj0kqsVdHZ6KJEg.',
+        '$2a$10$NCaQsuUAmjMGYpDFCexkDumlA7aexspqelQews287jBk0cF5koypy',
         now(), 1, now(), 1);
 
 INSERT INTO `sys_user_role_relation` (`id`, `user_id`, `role_id`, `created_at`, `created_by`)

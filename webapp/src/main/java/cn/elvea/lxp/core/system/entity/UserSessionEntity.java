@@ -21,7 +21,7 @@ public class UserSessionEntity extends BaseEntity {
     /**
      * 用户ID
      */
-    private String userId;
+    private Long userId;
     /**
      * 会话ID
      */

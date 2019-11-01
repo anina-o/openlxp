@@ -8,7 +8,6 @@ import Helmet from "react-helmet";
 import zhCnProvider from 'antd/lib/locale-provider/zh_CN';
 //
 import {applicationLocales, defaultApplicationLocale} from "@common/constants";
-import {setupAxios} from "@common/utils/request";
 import store from '@/stores';
 //
 import HomePage from "@/pages/Home";
@@ -19,24 +18,21 @@ import AccountPage from "@/pages/User/Acount";
 import ChangePasswordPage from "@/pages/User/ChangePassword";
 import DashboardPage from "@/pages/Admin/Dashboard";
 
-//
-setupAxios().then();
-
 class App extends React.Component<any> {
     state = {
-        initDone: false,
+        initDone : false,
     };
 
     async componentDidMount() {
         // 多语言国际化初始化
         await intl.init({
-            currentLocale: defaultApplicationLocale,
-            locales: applicationLocales,
+            currentLocale : defaultApplicationLocale,
+            locales : applicationLocales,
         });
         // 初始全局状态信息
         await store.init();
         //
-        this.setState({initDone: true});
+        this.setState({initDone : true});
     }
 
     render() {
