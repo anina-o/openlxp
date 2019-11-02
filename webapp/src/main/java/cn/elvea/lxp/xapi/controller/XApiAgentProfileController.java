@@ -1,6 +1,7 @@
 package cn.elvea.lxp.xapi.controller;
 
 import cn.elvea.lxp.xapi.http.XAPIResponse;
+import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @RequestMapping("/xAPI/agents/profile")
+@Api(tags = "XApi Agents Profile Resource")
 public class XApiAgentProfileController extends XApiAbstractController {
 
     @GetMapping

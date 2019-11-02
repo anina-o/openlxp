@@ -2,6 +2,7 @@ package cn.elvea.lxp.xapi.controller;
 
 import cn.elvea.lxp.xapi.http.XAPIResponse;
 import cn.elvea.lxp.xapi.model.Statement;
+import io.swagger.annotations.Api;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import static cn.elvea.lxp.xapi.utils.XApiConstants.XAPI_CONTENT_TYPE;
  */
 @Controller
 @RequestMapping("/xAPI/statements")
+@Api(tags = "XApi Statement Resource")
 public class XApiStatementController extends XApiAbstractController {
 
     /**

@@ -46,7 +46,7 @@ public class ActionLogInterceptor implements HandlerInterceptor {
      */
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        this.actionStartTime = System.currentTimeMillis();
+        this.actionEndTime = System.currentTimeMillis();
         //
         log.debug("{} - {}", request.getRequestURI(), this.actionEndTime - this.actionStartTime);
     }

@@ -3,6 +3,8 @@ package cn.elvea.lxp.core.system.controller;
 import cn.elvea.lxp.common.web.WebResponse;
 import cn.elvea.lxp.core.system.form.Register;
 import cn.elvea.lxp.core.system.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -18,6 +20,7 @@ import static cn.elvea.lxp.common.utils.ValidationUtils.handleEntityValidationEx
  */
 @Controller
 @RequestMapping("/api/user")
+@Api(tags = "用户接口")
 public class UserController {
 
     private UserService userService;
@@ -27,6 +30,7 @@ public class UserController {
      */
     @PostMapping("register")
     @ResponseBody
+    @ApiOperation("用户注册")
     public WebResponse register(@RequestBody @Validated Register register, BindingResult result) {
         if (result.hasFieldErrors()) {
             return handleEntityValidationException(result);
@@ -40,6 +44,7 @@ public class UserController {
      */
     @GetMapping("profile")
     @ResponseBody
+    @ApiOperation("获取用户个人信息接口")
     public WebResponse profile() {
         return WebResponse.success();
     }
@@ -49,6 +54,7 @@ public class UserController {
      */
     @PostMapping("profile")
     @ResponseBody
+    @ApiOperation("修改用户个人信息接口")
     public WebResponse postProfile() {
         return WebResponse.success();
     }
@@ -58,6 +64,7 @@ public class UserController {
      */
     @PostMapping("change-password")
     @ResponseBody
+    @ApiOperation("修改用户密码信息接口")
     public WebResponse changePassword() {
         return WebResponse.success();
     }

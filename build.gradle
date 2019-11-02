@@ -26,6 +26,7 @@ allprojects {
     ext {
         //
         springBootAdminVersion = "2.1.6"
+        swaggerVersion = "2.9.2"
         // 3rd party
         asmVersion = "7.2"
         okIoVersion = "2.4.1"
@@ -62,7 +63,6 @@ allprojects {
     configurations {
         compile.exclude group: 'org.openoffice'
         compile.exclude module: 'spring-boot-starter-logging'
-        compile.exclude module: 'spring-boot-starter-tomcat'
 
         developmentOnly
         runtimeClasspath {

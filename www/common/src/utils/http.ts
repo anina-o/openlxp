@@ -12,27 +12,17 @@ axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 // 创建实例
 const http = axios.create({});
 
-http.interceptors.response.use((response) => {
-    console.log(response);
-    return response
-}, (error) => {
-    if (error.response) {
-        switch (error.response.status) {
-            case 400:
-                console.log(error.response.data.message);
-                break;
-            case 401:
-                break;
-            default:
-                console.log(error.response);
-                break
-        }
-    } else {
-        console.log(error);
-    }
+// Add a request interceptor
+http.interceptors.request.use(function (config) {
+    return config;
+}, function (error) {
     return Promise.reject(error);
 });
-
+http.interceptors.response.use(function (response) {
+    return response;
+}, function (error) {
+    return Promise.reject(error);
+});
 
 /**
  * 文件上传的表单头信息
