@@ -1,5 +1,6 @@
 package cn.elvea.lxp.config;
 
+import com.google.common.base.Predicates;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
@@ -24,10 +25,15 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .pathMapping("/")
                 .select()
                 .apis(RequestHandlerSelectors.any())
+                .paths(Predicates.not(PathSelectors.regex("/error.*")))
+                .paths(Predicates.not(PathSelectors.regex("/actuator")))
+                .paths(Predicates.not(PathSelectors.regex("/actuator/.*")))
                 .paths(PathSelectors.any())
-                .build().apiInfo(apiInfo());
+                .build();
     }
 
     private ApiInfo apiInfo() {
@@ -41,4 +47,3 @@ public class SwaggerConfig {
     }
 
 }
-
