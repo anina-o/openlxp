@@ -30,6 +30,10 @@ public class CoreConstants {
      */
     public final static String QUEUE_USER_SESSION = "QUEUE_USER_SESSION";
     /**
+     * 用户登录会话历史记录
+     */
+    public final static String QUEUE_USER_SESSION_HISTORY = "QUEUE_USER_SESSION_HISTORY";
+    /**
      * 用户登录历史记录
      */
     public final static String QUEUE_USER_LOGIN_HISTORY = "QUEUE_USER_LOGIN_HISTORY";

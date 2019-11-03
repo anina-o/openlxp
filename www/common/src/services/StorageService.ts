@@ -4,8 +4,8 @@ import * as localforage from "localforage";
  * 存储设置
  */
 localforage.config({
-    name: 'react',
-    driver: localforage.LOCALSTORAGE
+    name : 'lxp-application',
+    driver : localforage.LOCALSTORAGE
 });
 
 /**
@@ -13,7 +13,7 @@ localforage.config({
  * @type {{token: string}}
  */
 const keys = {
-    token: 'token'
+    token : 'token'
 };
 
 /**
@@ -30,7 +30,7 @@ class StorageService {
     /**
      * 设置Token
      */
-    setToken = (val: any) => {
+    setToken = (val : any) => {
         if (val) {
             return this.setItem(keys.token, val);
         } else {
@@ -38,15 +38,15 @@ class StorageService {
         }
     };
 
-    getItem = (key: string) => {
+    getItem = (key : string) => {
         return localforage.getItem(key);
     };
 
-    removeItem = (key: string) => {
+    removeItem = (key : string) => {
         return localforage.removeItem(key);
     };
 
-    setItem = (key: string, val: any) => {
+    setItem = (key : string, val : any) => {
         if (val) {
             return localforage.setItem(key, val);
         } else {

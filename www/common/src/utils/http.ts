@@ -1,23 +1,28 @@
 import axios, {AxiosRequestConfig,} from 'axios';
 import qs from 'qs';
 //
+//
 import environment from '@common/environments/environment'
+import {StorageService} from "@common/services";
 
 // 设置基本参数
 axios.defaults.timeout = 60000;
 axios.defaults.baseURL = environment.server;
 axios.defaults.withCredentials = true;
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-
 // 创建实例
 const http = axios.create({});
-
-// Add a request interceptor
-http.interceptors.request.use(function (config) {
+// 请求拦截
+http.interceptors.request.use(async (config : AxiosRequestConfig) => {
+    let token = await StorageService.getToken();
+    if (token) {
+        config.headers['Authorization'] = 'Bearer ' + token;
+    }
     return config;
-}, function (error) {
+}, (error : any) => {
     return Promise.reject(error);
 });
+// 响应拦截
 http.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
@@ -55,7 +60,6 @@ const postHeaders : AxiosRequestConfig = {
     transformRequest : (data : any, headers : any) => {
         console.log('transformRequest...');
         console.log(headers);
-        console.log(data);
         console.log(qs.stringify(data));
         return qs.stringify(data);
     },

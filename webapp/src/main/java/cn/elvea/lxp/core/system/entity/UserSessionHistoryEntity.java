@@ -42,12 +42,4 @@ public class UserSessionHistoryEntity extends BaseEntity {
      * 创建人
      */
     private Long createdBy;
-    /**
-     * 更新时间
-     */
-    private Date modifiedAt;
-    /**
-     * 更新人
-     */
-    private Long modifiedBy;
 }

@@ -23,33 +23,29 @@ public class UserSessionStatisticsEntity extends BaseEntity {
      */
     private Long userId;
     /**
-     * 会话ID
-     */
-    private String sessionId;
-    /**
-     * 首次访问时间
-     */
-    private Date firstAccessDatetime;
-    /**
-     * 最后访问时间
-     */
-    private Date lastAccessDatetime;
-    /**
-     * 总时长
-     */
-    private Long totalTime;
-    /**
      * 年份
      */
-    private Integer startYear;
+    private Integer year;
     /**
      * 月份
      */
-    private Integer startMonth;
+    private Integer month;
     /**
      * 日期
      */
-    private Integer startDay;
+    private Integer day;
+    /**
+     * 当天首次访问时间
+     */
+    private Date firstAccessDatetime;
+    /**
+     * 当天最后访问时间
+     */
+    private Date lastAccessDatetime;
+    /**
+     * 当天在线时长
+     */
+    private Long totalTime;
     /**
      * 创建时间
      */

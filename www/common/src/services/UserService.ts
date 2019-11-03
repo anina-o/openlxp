@@ -18,6 +18,12 @@ class UserService {
         return postJson('/api/user/register', params)
     };
     /**
+     * 获取登录账号个人信息
+     */
+    profile = () => {
+        return post('/api/user/profile');
+    };
+    /**
      * 获取用户列表
      */
     getUserList = (params = {}, config = {}) => {

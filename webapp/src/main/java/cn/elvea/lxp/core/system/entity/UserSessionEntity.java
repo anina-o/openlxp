@@ -59,6 +59,10 @@ public class UserSessionEntity extends BaseEntity {
      */
     private Date lastAccessDatetime;
     /**
+     * 当天在线总时长
+     */
+    private Long totalTime;
+    /**
      * 会话结束时间
      */
     private Date endDatetime;

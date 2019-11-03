@@ -22,6 +22,14 @@ public class RabbitMqConfig {
     }
 
     /**
+     * 用户登录会话历史记录
+     */
+    @Bean
+    public Queue userSessionHistoryQueue() {
+        return new Queue(CoreConstants.QUEUE_USER_SESSION_HISTORY);
+    }
+
+    /**
      * 用户登录历史记录
      */
     @Bean

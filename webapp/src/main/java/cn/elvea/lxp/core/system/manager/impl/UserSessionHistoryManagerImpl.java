@@ -13,4 +13,13 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserSessionHistoryManagerImpl extends ServiceImpl<UserSessionHistoryMapper, UserSessionHistoryEntity> implements UserSessionHistoryManager {
+
+    /**
+     * @see UserSessionHistoryManager#saveUserSessionHistory(UserSessionHistoryEntity)
+     */
+    @Override
+    public void saveUserSessionHistory(UserSessionHistoryEntity entity) {
+        this.save(entity);
+    }
+
 }

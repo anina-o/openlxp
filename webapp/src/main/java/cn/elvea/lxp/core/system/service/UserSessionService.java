@@ -2,6 +2,7 @@ package cn.elvea.lxp.core.system.service;
 
 import cn.elvea.lxp.core.system.dto.UserLoginHistoryDto;
 import cn.elvea.lxp.core.system.dto.UserSessionDto;
+import cn.elvea.lxp.core.system.dto.UserSessionHistoryDto;
 
 /**
  * UserSessionService
@@ -34,6 +35,11 @@ public interface UserSessionService {
      * 保存用户会话记录
      */
     void saveUserSession(UserSessionDto userSessionDto);
+
+    /**
+     * 用户会话历史记录表
+     */
+    void saveUserSessionHistory(UserSessionHistoryDto userSessionHistoryDto);
 
     /**
      * 创建用户登录历史记录

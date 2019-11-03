@@ -76,7 +76,7 @@ CREATE TABLE `sys_user_session`
     `start_datetime`       DATETIME COMMENT '会话开始时间',
     `last_access_datetime` DATETIME COMMENT '最近访问时间',
     `end_datetime`         DATETIME COMMENT '会话结束时间',
-    `total_time`           INT UNSIGNED COMMENT '会话时长',
+    `total_time`           BIGINT UNSIGNED COMMENT '当天在线时长',
     `year`                 INT UNSIGNED COMMENT '会话开始年',
     `month`                INT UNSIGNED COMMENT '会话开始月',
     `day`                  INT UNSIGNED COMMENT '会话开始天',
@@ -102,13 +102,12 @@ CREATE TABLE `sys_user_session_statistics`
 (
     `id`                    BIGINT UNSIGNED NOT NULL COMMENT 'ID',
     `user_id`               BIGINT UNSIGNED NOT NULL COMMENT 'User ID',
-    `session_id`            VARCHAR(150) COMMENT '会话ID',
-    `first_access_datetime` DATETIME COMMENT '首次访问时间',
-    `last_access_datetime`  DATETIME COMMENT '最近访问时间',
-    `total_time`            DATETIME COMMENT '在线时长',
     `year`                  INT UNSIGNED COMMENT '年份',
     `month`                 INT UNSIGNED COMMENT '月份',
     `day`                   INT UNSIGNED COMMENT '日期',
+    `first_access_datetime` DATETIME COMMENT '当天首次访问时间',
+    `last_access_datetime`  DATETIME COMMENT '当天最后访问时间',
+    `total_time`            BIGINT UNSIGNED COMMENT '当天在线时长',
     `created_at`            DATETIME COMMENT '创建时间',
     `created_by`            BIGINT UNSIGNED COMMENT '创建人',
     `modified_at`           DATETIME COMMENT '修改时间',
@@ -119,7 +118,6 @@ ALTER TABLE `sys_user_session_statistics`
     COMMENT '用户会话时长统计表';
 
 CREATE INDEX `ix_uss_user_id` ON `sys_user_session_statistics` (`user_id`);
-CREATE INDEX `ix_uss_session_id` ON `sys_user_session_statistics` (`session_id`);
 CREATE INDEX `ix_uss_year` ON `sys_user_session_statistics` (`year`);
 CREATE INDEX `ix_uss_month` ON `sys_user_session_statistics` (`month`);
 CREATE INDEX `ix_uss_day` ON `sys_user_session_statistics` (`day`);
