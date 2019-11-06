@@ -120,7 +120,7 @@ export default class GlobalStore {
      * 用于页面初始后，从浏览器缓存加载已保存的信息，比如用户登录信息，界面设置，多语言等等。
      */
     @action init = async () : Promise<boolean> => {
-        this.preference = await storageService.getItem(STORAGE_PREFERENCE_KEY) as Preference;
+        this.preference = defaultPreference;
         this.token = await storageService.getToken() as string;
         this.principal = parseJwtToken(this.token);
         console.log(this.token);

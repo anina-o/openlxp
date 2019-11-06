@@ -11,18 +11,18 @@ const {Content, Header, Footer} = Layout;
 /**
  * 站点布局
  */
-@inject('store')
+@inject("store")
 @observer
 class DefaultLayout extends React.Component<any, any> {
     state = {
-        selectedKeys: ['menu-key-home']
+        selectedKeys : ['menu-key-home']
     };
 
-    constructor(props: any) {
+    constructor(props : any) {
         super(props);
     }
 
-    onMenuClick = async (item: any) => {
+    onMenuClick = async (item : any) => {
         if (item.key === 'logout') {
             await this.props.store.clear();
             this.props.history.replace('/');
@@ -67,7 +67,7 @@ class DefaultLayout extends React.Component<any, any> {
                     <div className="logo"/>
 
                     <Menu className="page-nav" mode="horizontal"
-                          style={{lineHeight: '64px'}}
+                          style={{lineHeight : '64px'}}
                           defaultSelectedKeys={['1']}
                           selectedKeys={selectedKeys}>
                         <Menu.Item key="menu-key-home">

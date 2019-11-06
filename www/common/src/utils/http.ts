@@ -1,9 +1,8 @@
-import axios, {AxiosRequestConfig,} from 'axios';
+import axios, {AxiosError, AxiosRequestConfig, AxiosResponse,} from 'axios';
 import qs from 'qs';
 //
-//
-import environment from '@common/environments/environment'
 import {StorageService} from "@common/services";
+import environment from '@common/environments/environment'
 
 // 设置基本参数
 axios.defaults.timeout = 60000;
@@ -19,13 +18,13 @@ http.interceptors.request.use(async (config : AxiosRequestConfig) => {
         config.headers['Authorization'] = 'Bearer ' + token;
     }
     return config;
-}, (error : any) => {
+}, (error : AxiosError) => {
     return Promise.reject(error);
 });
 // 响应拦截
-http.interceptors.response.use(function (response) {
+http.interceptors.response.use(async (response : AxiosResponse) => {
     return response;
-}, function (error) {
+}, (error : AxiosError) => {
     return Promise.reject(error);
 });
 

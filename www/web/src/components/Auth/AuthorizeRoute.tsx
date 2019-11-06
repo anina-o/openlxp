@@ -8,7 +8,7 @@ import Authorize from './Authorize';
 export default class AuthorizeRoute extends React.Component<any, any> {
     render() {
         const {
-            component: Component,
+            component : Component,
             render,
             authority,
             redirectPath,
@@ -20,8 +20,8 @@ export default class AuthorizeRoute extends React.Component<any, any> {
                 authority={authority}
                 noMatch={
                     <Redirect to={{
-                        pathname: redirectPath ? redirectPath : "/login",
-                        state: {from: this.props.location}
+                        pathname : redirectPath ? redirectPath : "/login",
+                        state : {from : this.props.location}
                     }}
                     />
                 }>

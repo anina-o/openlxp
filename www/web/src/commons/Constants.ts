@@ -8,11 +8,11 @@ export abstract class Constants {
     /**
      * 版本
      */
-    static readonly VERSION: string = '1.0.0';
+    static readonly VERSION : string = '1.0.0';
 
     /**
      * 服务器
      */
-    static readonly SERVER: string = env.server;
+    static readonly SERVER : string = env.server;
 
 }

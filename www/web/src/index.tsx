@@ -6,7 +6,7 @@ import 'moment/locale/zh-hk';
 //
 import App from "@/components/App";
 //
-import './index.less';
+import '@/index.less';
 
 const render = () => {
     ReactDOM.render(
