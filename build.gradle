@@ -10,7 +10,7 @@ buildscript {
     }
 
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.0.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.2.1.RELEASE")
     }
 }
 
@@ -34,7 +34,7 @@ allprojects {
         guavaVersion = "28.1-jre"
         nimbusJoseJwtVersion = "8.2"
         poiVersion = '4.1.1'
-        easyExcelVersion = '2.0.5'
+        easyExcelVersion = '2.1.1'
         libreofficeVersion = '6.3.2'
         jodconverterVersion = '4.2.2'
         mybatisPlusVersion = '3.2.0'
